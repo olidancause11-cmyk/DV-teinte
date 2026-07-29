@@ -266,9 +266,16 @@
       headers: { 'Accept': 'application/json' },
       body: data
     }).then(function(res){
-      if (!res.ok) throw new Error('bad response');
-      showConfirm();
-    }).catch(function(){
+      return res.text().then(function(text){
+        var parsed = null;
+        try { parsed = JSON.parse(text); } catch (e) {}
+        window.__lastFormSubmitResponse = { status: res.status, ok: res.ok, raw: text };
+        var success = parsed && (parsed.success === true || parsed.success === 'true');
+        if (!res.ok || !success) throw new Error(parsed && parsed.message ? parsed.message : 'bad response');
+        showConfirm();
+      });
+    }).catch(function(err){
+      window.__lastFormSubmitError = String(err);
       submitError.classList.add('show');
     }).finally(function(){
       submitBtn.disabled = false;
