@@ -475,7 +475,7 @@
         <button aria-label="Fermer" class="wizard-close" data-wizard-close>×</button>
       </div>
 
-      <form data-wizard-form action="https://formsubmit.co/contact@dvteinte.com" method="POST" enctype="multipart/form-data">
+      <form data-wizard-form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
         <div class="wizard-progress-wrap">
           <div class="wizard-progress-labels">
             <span class="wizard-step-num" data-step-num></span>
@@ -618,12 +618,10 @@
           <input type="hidden" name="types_personnalises" data-hidden-field="customTypes" />
           <input type="hidden" name="quantite_de_fenetres" data-hidden-field="quantite" />
 
-          <!-- FormSubmit.co configuration -->
-          <input type="hidden" name="_subject" value="Nouvelle demande de soumission — DV Teinte" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-
-          <input data-field="hp" name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" />
+          <!-- Web3Forms configuration -->
+          <input type="hidden" name="access_key" value="4db52b51-8dac-4cd9-9f70-117dba6fbf82" />
+          <input type="hidden" name="subject" value="Nouvelle demande de soumission — DV Teinte" />
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" />
         </div>
 
         <div class="wizard-footer">

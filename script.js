@@ -96,7 +96,7 @@
   var answers = {
     type: '', category: '', preference: '', customText: '', customTypes: [],
     quantite: '', dimensions: '', prenom: '', nom: '', telephone: '', courriel: '',
-    ville: '', rappel: '', infos: '', hp: ''
+    ville: '', rappel: '', infos: ''
   };
   try {
     var saved = localStorage.getItem(STORAGE_KEY);
@@ -238,7 +238,6 @@
   });
 
   submitBtn.addEventListener('click', function(){
-    if (answers.hp) { showConfirm(); return; }
     if (hasValidationError()) {
       showErr = true;
       var keys = stepKeys();
@@ -246,32 +245,28 @@
       renderStep();
       return;
     }
-    sendToFormSubmit();
+    sendToWeb3Forms();
   });
 
-  function sendToFormSubmit(){
+  function sendToWeb3Forms(){
     submitError.classList.remove('show');
     submitBtn.disabled = true;
     var originalLabel = submitBtn.textContent;
     submitBtn.textContent = 'Envoi en cours…';
 
-    var data = new FormData(formEl);
-    photos.forEach(function(ph, i){
-      if (ph.file) data.append('photo_' + (i + 1), ph.file, ph.name);
-    });
+    var formData = new FormData(formEl);
+    formData.delete('photos');
+    var payload = Object.fromEntries(formData);
+    if (photos.length) payload.photos_selectionnees = photos.length + ' photo(s) choisie(s) (non incluses par courriel — demander au client de les envoyer directement)';
 
-    var ajaxUrl = formEl.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
-    fetch(ajaxUrl, {
+    fetch(formEl.getAttribute('action'), {
       method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: data
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
     }).then(function(res){
-      return res.text().then(function(text){
-        var parsed = null;
-        try { parsed = JSON.parse(text); } catch (e) {}
-        window.__lastFormSubmitResponse = { status: res.status, ok: res.ok, raw: text };
-        var success = parsed && (parsed.success === true || parsed.success === 'true');
-        if (!res.ok || !success) throw new Error(parsed && parsed.message ? parsed.message : 'bad response');
+      return res.json().then(function(json){
+        window.__lastFormSubmitResponse = { status: res.status, ok: res.ok, json: json };
+        if (res.status !== 200 || json.success === false) throw new Error(json.message || 'bad response');
         showConfirm();
       });
     }).catch(function(err){
