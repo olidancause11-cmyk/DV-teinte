@@ -1,2 +1,5 @@
 serve.ps1
 .claude/
+.env
+.env.local
+.env*.local

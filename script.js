@@ -1,6 +1,39 @@
 (function(){
   'use strict';
 
+  /* ===== Meta Pixel + Conversions API (Lead) ===== */
+  function getCookie(name){
+    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+  function generateEventId(){
+    if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+    return 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+  }
+  function trackLead(leadAnswers){
+    var eventId = generateEventId();
+    try {
+      if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: eventId });
+    } catch (e) {}
+    try {
+      fetch('/api/capi-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventId: eventId,
+          eventSourceUrl: window.location.href,
+          email: leadAnswers.courriel,
+          phone: leadAnswers.telephone,
+          firstName: leadAnswers.prenom,
+          lastName: leadAnswers.nom,
+          zip: leadAnswers.ville,
+          fbp: getCookie('_fbp'),
+          fbc: getCookie('_fbc')
+        })
+      }).catch(function(){});
+    } catch (e) {}
+  }
+
   /* ===== Sticky header + floating CTA ===== */
   var header = document.getElementById('site-header');
   var floatCta = document.querySelector('[data-float-cta]');
@@ -272,6 +305,7 @@
         window.__lastFormSubmitResponse = { status: res.status, ok: res.ok, raw: text };
         var success = parsed && (parsed.success === true || parsed.success === 'true');
         if (!res.ok || !success) throw new Error(parsed && parsed.message ? parsed.message : 'bad response');
+        trackLead(answers);
         showConfirm();
       });
     }).catch(function(err){
