@@ -5,7 +5,12 @@ function sha256(value) {
 }
 function normEmail(v) { return v ? String(v).trim().toLowerCase() : ''; }
 function normName(v) { return v ? String(v).trim().toLowerCase() : ''; }
-function normZip(v) { return v ? String(v).trim().toLowerCase().replace(/\s+/g, '') : ''; }
+function normCity(v) {
+  if (!v) return '';
+  var diacriticsRange = String.fromCharCode(0x0300) + '-' + String.fromCharCode(0x036f);
+  var diacritics = new RegExp('[' + diacriticsRange + ']', 'g');
+  return String(v).normalize('NFD').replace(diacritics, '').toLowerCase().replace(/[^a-z]/g, '');
+}
 function normPhone(v) {
   if (!v) return '';
   var digits = String(v).replace(/\D/g, '');
@@ -46,8 +51,8 @@ module.exports = async function handler(req, res) {
     if (firstName) userData.fn = [sha256(firstName)];
     var lastName = normName(body.lastName);
     if (lastName) userData.ln = [sha256(lastName)];
-    var zip = normZip(body.zip);
-    if (zip) userData.zp = [sha256(zip)];
+    var city = normCity(body.city);
+    if (city) userData.ct = [sha256(city)];
     if (clientIp) userData.client_ip_address = clientIp;
     if (userAgent) userData.client_user_agent = userAgent;
     if (body.fbp) userData.fbp = body.fbp;

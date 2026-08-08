@@ -26,7 +26,7 @@
           phone: leadAnswers.telephone,
           firstName: leadAnswers.prenom,
           lastName: leadAnswers.nom,
-          zip: leadAnswers.ville,
+          city: leadAnswers.ville,
           fbp: getCookie('_fbp'),
           fbc: getCookie('_fbc')
         })
