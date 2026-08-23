@@ -159,8 +159,8 @@ img{max-width:100%;display:block;}
 .full-gallery-item img{width:100%;height:auto;display:block;}
 .full-gallery-tag{position:absolute;top:16px;left:16px;background:rgba(10,12,16,.7);color:#fff;font-size:13px;font-weight:600;font-family:'Manrope';padding:6px 12px;border-radius:6px;}
 .full-gallery-tag-accent{background:rgba(45,106,143,.9);}
-@media (max-width:900px){
-  .full-gallery{grid-template-columns:1fr;}
+@media (min-width:901px){
+  .comparator-section{display:none;}
 }
 
 /* ===== Process ===== */
@@ -312,6 +312,7 @@ img{max-width:100%;display:block;}
   .coord-grid{grid-template-columns:1fr;}
 
   .ba-slider{aspect-ratio:3/4;}
+  .full-gallery-section{display:none;}
 
   .trust-bar-inner{
     flex-wrap:nowrap;
