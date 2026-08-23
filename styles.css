@@ -311,6 +311,8 @@ img{max-width:100%;display:block;}
   .chip-grid-2{grid-template-columns:1fr;}
   .coord-grid{grid-template-columns:1fr;}
 
+  .ba-slider{aspect-ratio:3/4;}
+
   .trust-bar-inner{
     flex-wrap:nowrap;
     justify-content:flex-start;
