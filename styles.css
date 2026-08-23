@@ -92,7 +92,10 @@ img{max-width:100%;display:block;}
 
 /* ===== Hero ===== */
 .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 22%;background-repeat:no-repeat;}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:url('images/hero.png');background-size:cover;background-position:center 22%;background-repeat:no-repeat;}
+@media (max-width:900px){
+  .hero-bg{background-image:url('images/hero2.jpeg');}
+}
 .hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,12,16,.55) 0%,rgba(10,12,16,.15) 35%,rgba(10,12,16,.75) 100%);pointer-events:none;}
 .hero-content{position:relative;z-index:2;padding:120px 24px 64px;width:100%;}
 .hero-copy{max-width:760px;}
