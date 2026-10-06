@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.dvteinte.com" }],
+      "destination": "https://dvteinte.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "dv-teinte.vercel.app" }],
+      "destination": "https://dvteinte.com/$1",
+      "permanent": false
+    }
+  ]
+}

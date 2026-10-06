@@ -123,12 +123,12 @@
   /* ===== Quote wizard ===== */
   var STORAGE_KEY = 'dvteinte_quote_v1';
   var CUSTOM_PREFS = ['Effet gris', 'Effet miroir ou réfléchissant', 'Effet givré', 'Effet décoratif', 'Autre résultat personnalisé'];
-  var STEP_TITLES = { type: 'Type de projet', preference: 'Préférence', custom: 'Projet personnalisé', quantite: 'Quantité', photos: 'Photos', coordonnees: 'Coordonnées', infos: 'Informations' };
+  var STEP_TITLES = { probleme: 'Votre situation', delai: 'Échéancier', type: 'Type de projet', custom: 'Projet personnalisé', quantite: 'Quantité', photos: 'Photos', coordonnees: 'Coordonnées' };
 
   var answers = {
-    type: '', category: '', preference: '', customText: '', customTypes: [],
+    probleme: '', delai: '', type: '', category: '', preference: '', customText: '', customTypes: [],
     quantite: '', dimensions: '', prenom: '', nom: '', telephone: '', courriel: '',
-    ville: '', rappel: '', infos: '', hp: ''
+    ville: '', rappel: '', hp: ''
   };
   try {
     var saved = localStorage.getItem(STORAGE_KEY);
@@ -158,9 +158,9 @@
 
   function stepKeys(){
     var custom = CUSTOM_PREFS.indexOf(answers.preference) !== -1;
-    var keys = ['type', 'preference'];
+    var keys = ['probleme', 'delai'];
     if (custom) keys.push('custom');
-    keys.push('quantite', 'coordonnees', 'infos');
+    keys.push('type', 'quantite', 'coordonnees');
     return keys;
   }
 
@@ -220,7 +220,7 @@
     progressFill.style.width = Math.round(((idx + 1) / keys.length) * 100) + '%';
 
     prevBtn.style.visibility = idx > 0 ? 'visible' : 'hidden';
-    var isLast = cur === 'infos';
+    var isLast = cur === 'coordonnees';
     nextBtn.style.display = isLast ? 'none' : 'inline-flex';
     submitBtn.style.display = isLast ? 'inline-flex' : 'none';
 
@@ -233,6 +233,11 @@
   }
 
   function openWizard(prefill){
+    if (prefill !== 'custom' && CUSTOM_PREFS.indexOf(answers.preference) !== -1) {
+      answers.preference = '';
+      answers.customText = '';
+      answers.customTypes = [];
+    }
     if (prefill === 'residential') { answers.category = 'Résidentiel'; answers.type = 'Maison'; }
     else if (prefill === 'commercial') { answers.category = 'Commercial'; answers.type = 'Commerce'; }
     else if (prefill === 'fonce') { answers.preference = 'Résultat plus foncé et plus intime'; }

@@ -469,6 +469,31 @@ fbq('track', 'PageView');
 
         <div class="wizard-body">
 
+          <!-- STEP: probleme -->
+          <div class="wizard-step" data-step="probleme">
+            <h3>Qu’est-ce qui vous dérange le plus avec vos fenêtres?</h3>
+            <p class="wizard-hint">Choisissez l’option qui ressemble le plus à votre situation.</p>
+            <div class="chip-grid-1" data-single-group="probleme">
+              <button type="button" class="chip-btn" data-value="On voit trop facilement chez moi">On voit trop facilement chez moi</button>
+              <button type="button" class="chip-btn" data-value="Certaines pièces deviennent trop chaudes">Certaines pièces deviennent trop chaudes</button>
+              <button type="button" class="chip-btn" data-value="Le soleil décolore mes meubles ou mon plancher">Le soleil décolore mes meubles ou mon plancher</button>
+              <button type="button" class="chip-btn" data-value="Je veux améliorer l’apparence de mes fenêtres">Je veux améliorer l’apparence de mes fenêtres</button>
+              <button type="button" class="chip-btn" data-value="J’ai plusieurs de ces problèmes">J’ai plusieurs de ces problèmes</button>
+            </div>
+          </div>
+
+          <!-- STEP: delai -->
+          <div class="wizard-step" data-step="delai">
+            <h3 style="margin-bottom:20px;">Quand aimeriez-vous régler ce problème?</h3>
+            <div class="chip-grid-1" data-single-group="delai">
+              <button type="button" class="chip-btn" data-value="Dès que possible">Dès que possible</button>
+              <button type="button" class="chip-btn" data-value="Dans les 2 à 4 prochaines semaines">Dans les 2 à 4 prochaines semaines</button>
+              <button type="button" class="chip-btn" data-value="Dans les 1 à 3 prochains mois">Dans les 1 à 3 prochains mois</button>
+              <button type="button" class="chip-btn" data-value="Plus tard">Plus tard</button>
+              <button type="button" class="chip-btn" data-value="Je me renseigne pour l’instant">Je me renseigne pour l’instant</button>
+            </div>
+          </div>
+
           <!-- STEP: type -->
           <div class="wizard-step" data-step="type">
             <h3>Quel type de bâtiment est concerné?</h3>
@@ -480,22 +505,6 @@ fbq('track', 'PageView');
               <button type="button" class="chip-btn" data-value="Commerce">Commerce</button>
               <button type="button" class="chip-btn" data-value="Immeuble">Immeuble</button>
               <button type="button" class="chip-btn" data-value="Autre">Autre</button>
-            </div>
-          </div>
-
-          <!-- STEP: preference -->
-          <div class="wizard-step" data-step="preference">
-            <h3>Avez-vous déjà une préférence pour le résultat?</h3>
-            <p class="wizard-hint">Nos options standards incluent actuellement une pellicule 15 % plus foncée et une pellicule 35 % plus légère. La solution finale sera confirmée selon votre projet.</p>
-            <div class="chip-grid-1" data-single-group="preference">
-              <button type="button" class="chip-btn" data-value="Résultat plus foncé et plus intime">Résultat plus foncé et plus intime</button>
-              <button type="button" class="chip-btn" data-value="Résultat léger qui conserve davantage de lumière">Résultat léger qui conserve davantage de lumière</button>
-              <button type="button" class="chip-btn" data-value="Effet gris">Effet gris</button>
-              <button type="button" class="chip-btn" data-value="Effet miroir ou réfléchissant">Effet miroir ou réfléchissant</button>
-              <button type="button" class="chip-btn" data-value="Effet givré">Effet givré</button>
-              <button type="button" class="chip-btn" data-value="Effet décoratif">Effet décoratif</button>
-              <button type="button" class="chip-btn" data-value="Je souhaite une recommandation">Je souhaite une recommandation</button>
-              <button type="button" class="chip-btn" data-value="Autre résultat personnalisé">Autre résultat personnalisé</button>
             </div>
           </div>
 
@@ -528,8 +537,8 @@ fbq('track', 'PageView');
               <button type="button" class="chip-btn" data-value="10 et +">10 et +</button>
               <button type="button" class="chip-btn" data-value="Je ne sais pas">Je ne sais pas</button>
             </div>
-            <label class="field-label">Dimensions approximatives (facultatif)</label>
-            <input class="input" data-field="dimensions" name="dimensions" placeholder="Ex. porte-patio 2 m × 2 m, 3 fenêtres de salon…" />
+            <label class="field-label">Dimensions approximatives en pieds carrés (facultatif)</label>
+            <input class="input" data-field="dimensions" name="dimensions" placeholder="Ex. 60 pi² au total" />
           </div>
 
           <!-- STEP: photos -->
@@ -581,17 +590,12 @@ fbq('track', 'PageView');
               </div>
             </div>
             <p class="error-msg" data-error-msg>Veuillez remplir les champs requis (prénom, téléphone, courriel, ville).</p>
-          </div>
-
-          <!-- STEP: infos -->
-          <div class="wizard-step" data-step="infos">
-            <h3>Y a-t-il autre chose que nous devrions savoir?</h3>
-            <p class="wizard-hint">Facultatif.</p>
-            <textarea class="input" data-field="infos" name="informations_additionnelles" rows="4" placeholder="Parlez-nous de l'exposition au soleil, du niveau d'intimité recherché, de l'apparence souhaitée ou d'une particularité des fenêtres."></textarea>
             <div class="wizard-note">Gratuit • Sans obligation • Matériau et installation évalués ensemble.<br />Vos informations seront uniquement utilisées pour traiter votre demande.</div>
           </div>
 
           <!-- hidden fields carrying chip-selection answers into the real POST -->
+          <input type="hidden" name="probleme_principal" data-hidden-field="probleme" />
+          <input type="hidden" name="delai_installation" data-hidden-field="delai" />
           <input type="hidden" name="type_de_batiment" data-hidden-field="type" />
           <input type="hidden" name="categorie" data-hidden-field="category" />
           <input type="hidden" name="preference" data-hidden-field="preference" />
