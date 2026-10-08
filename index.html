@@ -3,19 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Installation de pellicules pour fenêtres | DV Teinte</title>
-<meta name="description" content="Fourniture et installation de pellicules pour fenêtres résidentielles et commerciales sur la Rive-Sud. Intimité, confort, protection UV et projets personnalisés. Soumission gratuite." />
-<meta property="og:title" content="Installation de pellicules pour fenêtres | DV Teinte" />
-<meta property="og:description" content="Service clé en main de recommandation, fourniture et installation de pellicules pour fenêtres. Résidentiel et commercial, Rive-Sud de Montréal." />
+<title>Pellicules pour fenêtres résidentielles | DV Teinte</title>
+<meta name="description" content="Intimité le jour, moins de chaleur et protection UV, sans fermer vos rideaux. Pellicules pour fenêtres résidentielles installées par DV Teinte. Estimation à domicile." />
 <meta property="og:type" content="website" />
+<meta property="og:title" content="Profitez de vos fenêtres. Pas de vos rideaux. | DV Teinte" />
+<meta property="og:description" content="Pellicules pour fenêtres résidentielles : intimité, chaleur, UV. Estimation à domicile." />
+<meta property="og:image" content="https://dvteinte.com/assets/photos/hero-maison.jpg" />
+<meta property="og:url" content="https://dvteinte.com" />
+<meta name="theme-color" content="#0E1012" />
+<link rel="canonical" href="https://dvteinte.com" />
 <link rel="icon" href="./assets/symbol-dv.png" />
+<link rel="preload" as="image" href="./assets/photos/hero-maison.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./styles.css" />
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Dancause Vaillancourt Teinte","alternateName":"DV Teinte","description":"Fourniture et installation de pellicules pour fenêtres résidentielles et commerciales.","areaServed":"Rive-Sud de Montréal","telephone":"+14388386640","email":"Contact@dvteinte.com","image":"./assets/logo-dvteinte.png","priceRange":"$$","makesOffer":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Installation de pellicules pour fenêtres résidentielles"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Installation de pellicules pour fenêtres commerciales"}}]}
-</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"DV Teinte","url":"https://dvteinte.com","telephone":"+1-450-802-9892","email":"Contact@dvteinte.com","areaServed":"Rive-Sud de Montréal","description":"Installation de pellicules pour fenêtres résidentielles : intimité, réduction de chaleur, protection UV."}</script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -35,375 +38,393 @@ fbq('track', 'PageView');
 <body>
 <div id="top">
 
-  <!-- ============ HEADER ============ -->
-  <header id="site-header">
-    <div class="wrap header-inner">
-      <a href="#top" aria-label="DV Teinte accueil" class="logo-link">
-        <img src="./assets/logo-dvteinte.png" alt="DV Teinte — Dancause Vaillancourt Teinte" class="logo-img" />
+  <!-- ============ EN-TÊTE ============ -->
+  <header class="hdr" data-header>
+    <div class="hdr-in">
+      <a href="#top" aria-label="DV Teinte — accueil" class="hdr-logo">
+        <img src="./assets/logo-dvteinte.png" alt="DV Teinte" width="110" height="35" />
       </a>
-      <nav aria-label="Navigation principale" class="desktop-nav">
-        <a href="#top">Accueil</a>
-        <a href="#residentiel">Résidentiel</a>
-        <a href="#commercial">Commercial</a>
-        <a href="#service">Notre service</a>
+      <nav class="hdr-nav" aria-label="Navigation principale">
+        <a href="#pellicules">Pellicules</a>
+        <a href="#avantages">Avantages</a>
+        <a href="#realisations">Avant / après</a>
+        <a href="#processus">Comment ça marche</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
       </nav>
-      <div class="header-actions">
-        <button class="btn btn-primary desktop-cta" data-open-wizard>Soumission gratuite</button>
-        <button class="burger" aria-label="Ouvrir le menu" data-mobile-toggle>
-          <span></span><span></span><span></span>
-        </button>
+      <div class="hdr-actions">
+        <a href="#estimation" class="hdr-cta"><span class="cta-long">Demander mon estimation</span><span class="cta-short">Estimation</span></a>
+        <button type="button" class="hdr-burger" aria-label="Menu" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
       </div>
     </div>
+    <nav class="hdr-mobile" aria-label="Navigation mobile" data-mobile-nav hidden>
+      <a href="#pellicules" data-menu-close>Pellicules</a>
+      <a href="#avantages" data-menu-close>Avantages</a>
+      <a href="#realisations" data-menu-close>Avant / après</a>
+      <a href="#processus" data-menu-close>Comment ça marche</a>
+      <a href="#faq" data-menu-close>FAQ</a>
+    </nav>
   </header>
 
-  <!-- ============ MOBILE MENU ============ -->
-  <div class="mobile-overlay" data-mobile-overlay></div>
-  <div class="mobile-menu" data-mobile-menu>
-    <div class="mobile-menu-top">
-      <img src="./assets/symbol-dv.png" alt="DV" class="mobile-symbol" />
-      <button aria-label="Fermer" class="mobile-close" data-mobile-close>×</button>
-    </div>
-    <nav class="mobile-nav">
-      <a href="#top" data-mobile-close>Accueil</a>
-      <a href="#residentiel" data-mobile-close>Résidentiel</a>
-      <a href="#commercial" data-mobile-close>Commercial</a>
-      <a href="#service" data-mobile-close>Notre service</a>
-      <a href="#faq" data-mobile-close>FAQ</a>
-      <a href="#contact" data-mobile-close>Contact</a>
-    </nav>
-    <button class="btn btn-primary mobile-cta" data-open-wizard>Obtenir ma soumission gratuite</button>
-    <a href="tel:4388386640" class="btn btn-outline-dark mobile-call">Appeler maintenant</a>
-  </div>
-
   <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-scrim"></div>
-    <div class="wrap hero-content">
-      <div class="reveal hero-copy">
-        <div class="pill"><span class="dot"></span>Service sur la Rive-Sud de Montréal</div>
-        <h1>Transformez vos fenêtres,<br />sans les remplacer.</h1>
-        <p class="hero-sub">Fourniture et installation professionnelle de pellicules pour améliorer l'intimité, le confort et l'apparence de vos fenêtres.</p>
-        <div class="hero-ctas">
-          <button class="btn btn-primary btn-lg" data-open-wizard>Obtenir ma soumission gratuite</button>
-          <a href="#service" class="btn btn-ghost">Voir notre service</a>
-        </div>
-        <p class="hero-footnote">Matériaux inclus • Installation sur mesure • Résidentiel et commercial</p>
-      </div>
+  <section class="hero" data-screen-label="Hero">
+    <div class="hero-media">
+      <img src="./assets/photos/hero-maison.jpg" alt="Maison moderne avec fenêtres traitées par DV Teinte" width="1120" height="1400" loading="eager" fetchpriority="high" />
+      <span class="hero-label">Installation DV Teinte</span>
+    </div>
+    <div class="hero-shade"></div>
+    <div class="hero-text">
+      <a href="#estimation" class="promo-pill"><span class="promo-dot"></span>Jusqu’à 400 $ de réduction sur votre installation.</a>
+      <h1>Profitez de vos fenêtres.<br /><span>Pas de vos rideaux.</span></h1>
+      <p class="hero-p">Gagnez en intimité pendant la journée tout en conservant votre lumière naturelle et votre vue vers l’extérieur. Nos pellicules aident aussi à réduire la chaleur et à protéger votre intérieur contre les rayons UV.</p>
+      <div class="hero-cta"><a href="#estimation" class="btn-blue">Demander mon estimation<span aria-hidden="true">→</span></a></div>
+      <p class="hero-tag">Estimation à domicile • Installation professionnelle • Résidentiel</p>
     </div>
   </section>
 
-  <!-- ============ TRUST BAR ============ -->
-  <div class="trust-bar">
-    <div class="wrap trust-bar-inner">
-      <div class="trust-item"><span class="check">✓</span>Service clé en main</div>
-      <div class="trust-item"><span class="check">✓</span>Matériaux fournis</div>
-      <div class="trust-item"><span class="check">✓</span>Installation sur mesure</div>
-      <div class="trust-item"><span class="check">✓</span>Résidentiel et commercial</div>
-      <div class="trust-item"><span class="check">✓</span>Options adaptées au projet</div>
-      <div class="trust-item"><span class="check">✓</span>Soumission gratuite</div>
+  <!-- ============ INTIMITÉ ============ -->
+  <section id="pellicules" class="sec-line" data-screen-label="Intimité">
+    <div class="intim-head">
+      <div class="stack-18">
+        <p class="eyebrow">Est-ce que je vois encore dehors?</p>
+        <h2 class="h2">La lumière entre.<br />Les regards restent dehors.</h2>
+      </div>
+      <p class="intim-note">L’effet miroir dépend de la différence de luminosité entre l’intérieur et l’extérieur et fonctionne principalement pendant la journée.</p>
     </div>
-  </div>
-
-  <!-- ============ PROBLEMS ============ -->
-  <section class="wrap section two-col">
-    <div>
-      <h2>Vos fenêtres vous causent-elles l'un de ces problèmes?</h2>
-      <p class="lede">Une solution bien choisie peut améliorer le confort et l'apparence de votre espace sans remplacer vos fenêtres.</p>
-      <button class="btn btn-outline" data-open-wizard>Faire évaluer mes fenêtres</button>
-    </div>
-    <div class="problem-list">
-      <div class="problem-row"><span class="num-badge">1</span><span>Manque d'intimité</span></div>
-      <div class="problem-row"><span class="num-badge">2</span><span>Chaleur près des fenêtres</span></div>
-      <div class="problem-row"><span class="num-badge">3</span><span>Reflets sur les télévisions et écrans</span></div>
-      <div class="problem-row"><span class="num-badge">4</span><span>Décoloration des meubles et planchers</span></div>
-      <div class="problem-row"><span class="num-badge">5</span><span>Vitrine trop transparente</span></div>
-      <div class="problem-row"><span class="num-badge">6</span><span>Apparence extérieure peu uniforme</span></div>
-      <div class="problem-row"><span class="num-badge">7</span><span>Lumière trop intense dans certaines pièces</span></div>
+    <div class="intim-grid">
+      <figure class="intim-fig">
+        <img src="./assets/photos/vue-interieur.jpg" alt="Vue de l’intérieur à travers une fenêtre traitée : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" />
+        <figcaption>
+          <span class="fig-eyebrow">De l’intérieur</span>
+          <span class="fig-title" style="max-width:22ch">Vous gardez votre vue vers l’extérieur.</span>
+        </figcaption>
+      </figure>
+      <figure class="intim-fig">
+        <img src="./assets/photos/brique-exterieur.jpg" alt="Fenêtre traitée vue de l’extérieur : le verre reflète le ciel et les arbres" width="1600" height="1600" loading="lazy" decoding="async" />
+        <figcaption>
+          <span class="fig-eyebrow">De l’extérieur</span>
+          <span class="fig-title" style="max-width:26ch">L’effet miroir augmente fortement votre intimité pendant la journée.</span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ============ BENEFITS ============ -->
-  <section class="section-alt">
-    <div class="wrap section">
-      <div class="section-head">
-        <div class="eyebrow">Bénéfices</div>
-        <h2>Un changement visible. Un confort qui se ressent.</h2>
-      </div>
-      <div class="grid-4">
-        <div class="card">
-          <div class="icon-badge">1</div>
-          <h3>Plus d'intimité</h3>
-          <p>Réduisez les regards vers l'intérieur pendant la journée, selon le matériau et les conditions d'éclairage.</p>
-        </div>
-        <div class="card">
-          <div class="icon-badge">2</div>
-          <h3>Moins de chaleur et d'éblouissement</h3>
-          <p>Améliorez le confort près des fenêtres et réduisez les reflets sur les écrans.</p>
-        </div>
-        <div class="card">
-          <div class="icon-badge">3</div>
-          <h3>Protection de l'intérieur</h3>
-          <p>Limitez l'exposition des meubles, planchers et objets aux rayons UV.</p>
-        </div>
-        <div class="card">
-          <div class="icon-badge">4</div>
-          <h3>Apparence plus uniforme</h3>
-          <p>Donnez aux vitrages une apparence plus moderne, propre et cohérente.</p>
-        </div>
-      </div>
+  <!-- ============ PROBLÈMES RÉGLÉS ============ -->
+  <section id="avantages" class="wrap-1320 pad-sec" data-screen-label="Problèmes réglés">
+    <h2 class="h2 problems-title">Une pellicule. Plusieurs problèmes réglés.</h2>
+    <div class="cols-3">
+      <article class="prob">
+        <div class="prob-head"><h3>Intimité</h3><span>01</span></div>
+        <p>Laissez vos rideaux ouverts sans exposer directement votre intérieur.</p>
+      </article>
+      <article class="prob">
+        <div class="prob-head"><h3>Chaleur</h3><span>02</span></div>
+        <p>Réduisez la chaleur qui entre par les fenêtres fortement exposées au soleil.</p>
+      </article>
+      <article class="prob">
+        <div class="prob-head"><h3>UV</h3><span>03</span></div>
+        <p>Aidez à protéger vos meubles, planchers et tissus contre la décoloration liée aux UV.</p>
+      </article>
     </div>
   </section>
 
-  <!-- ============ FULL SERVICE ============ -->
-  <section id="service" class="wrap section">
-    <div class="section-head-wide">
-      <div class="eyebrow">Service clé en main</div>
-      <h2>On s'occupe du projet au complet.</h2>
-      <p class="lede">De la recommandation du matériau jusqu'à l'installation finale, vous obtenez une solution adaptée à vos fenêtres et au résultat que vous recherchez. Vous n'avez ni à acheter, ni à installer le matériau vous-même.</p>
-    </div>
-    <div class="grid-3">
-      <div class="step-card"><span class="step-circle">1</span><span>Analyse du besoin</span></div>
-      <div class="step-card"><span class="step-circle">2</span><span>Recommandation</span></div>
-      <div class="step-card"><span class="step-circle">3</span><span>Vérification du vitrage</span></div>
-      <div class="step-card"><span class="step-circle">4</span><span>Prise de mesures</span></div>
-      <div class="step-card"><span class="step-circle">5</span><span>Matériau fourni</span></div>
-      <div class="step-card"><span class="step-circle">6</span><span>Préparation du verre</span></div>
-      <div class="step-card"><span class="step-circle">7</span><span>Découpe sur mesure</span></div>
-      <div class="step-card"><span class="step-circle">8</span><span>Installation</span></div>
-      <div class="step-card"><span class="step-circle">9</span><span>Inspection finale</span></div>
-    </div>
-    <div class="mt-40">
-      <button class="btn btn-primary btn-lg" data-open-wizard>Faire évaluer mes fenêtres</button>
+  <!-- ============ PROFITEZ DAVANTAGE ============ -->
+  <section class="life" data-screen-label="Avantages">
+    <img src="./assets/photos/maison-pierre.jpg" alt="Maison de plain-pied avec grande fenêtre traitée qui reflète le ciel" width="941" height="1419" loading="lazy" decoding="async" />
+    <div class="life-shade"></div>
+    <div class="life-in">
+      <div class="stack-28">
+        <h2 class="h2 life-title">Profitez davantage de votre maison.</h2>
+        <a href="#estimation" class="btn-cream">Demander mon estimation<span aria-hidden="true">→</span></a>
+      </div>
+      <ul class="life-list">
+        <li>Plus de lumière naturelle</li>
+        <li>Plus d’intimité</li>
+        <li>Des pièces plus confortables</li>
+        <li>Un intérieur protégé</li>
+        <li>Un look moderne et discret</li>
+      </ul>
     </div>
   </section>
 
-  <!-- ============ RESIDENTIAL ============ -->
-  <section id="residentiel" class="section-alt">
-    <div class="wrap section two-col">
-      <div class="img-frame">
-        <img src="images/residentiel2.jpeg" alt="Maison résidentielle avec fenêtres teintées" />
-      </div>
-      <div>
-        <div class="eyebrow">Résidentiel</div>
-        <h2>Plus confortable chez vous.</h2>
-        <p class="lede-sm">Salon, chambre, salle de bain, porte-patio, bureau à domicile ou fenêtres très exposées au soleil : une solution adaptée à chaque pièce.</p>
-        <div class="check-grid">
-          <div class="check-item"><span>✓</span>Davantage d'intimité le jour</div>
-          <div class="check-item"><span>✓</span>Moins de reflets</div>
-          <div class="check-item"><span>✓</span>Meilleur confort</div>
-          <div class="check-item"><span>✓</span>Protection UV</div>
-          <div class="check-item"><span>✓</span>Apparence moderne</div>
-          <div class="check-item"><span>✓</span>Solution adaptée à la pièce</div>
-        </div>
-        <button class="btn btn-primary" data-open-wizard data-prefill="residential">Obtenir une soumission résidentielle</button>
-      </div>
+  <!-- ============ AVANT / APRÈS ============ -->
+  <section id="realisations" class="ba-sec" data-screen-label="Avant / après">
+    <div class="stack-22">
+      <p class="eyebrow">Avant / après</p>
+      <h2 class="h2">Voyez la différence.</h2>
+      <p class="lede">Des installations chez de vrais propriétaires. La même fenêtre, photographiée de l’extérieur avant et après. Glissez pour comparer.</p>
+      <a href="#estimation" class="btn-blue btn-mt">Demander mon estimation<span aria-hidden="true">→</span></a>
     </div>
-  </section>
-
-  <!-- ============ COMMERCIAL ============ -->
-  <section id="commercial" class="section-dark">
-    <div class="wrap section two-col">
-      <div>
-        <div class="eyebrow eyebrow-dark">Commercial</div>
-        <h2 class="text-white">Une solution professionnelle pour vos espaces commerciaux.</h2>
-        <p class="lede-sm text-light">Bureaux, vitrines, salles de conférence, façades vitrées et locaux professionnels : un vitrage plus confortable et une apparence extérieure plus uniforme.</p>
-        <div class="check-grid">
-          <div class="check-item text-light2"><span class="accent">✓</span>Réduction de l'éblouissement</div>
-          <div class="check-item text-light2"><span class="accent">✓</span>Meilleur confort au travail</div>
-          <div class="check-item text-light2"><span class="accent">✓</span>Apparence plus uniforme</div>
-          <div class="check-item text-light2"><span class="accent">✓</span>Protection UV</div>
-          <div class="check-item text-light2"><span class="accent">✓</span>Intimité adaptée</div>
-          <div class="check-item text-light2"><span class="accent">✓</span>Solutions particulières sur demande</div>
-        </div>
-        <button class="btn btn-primary" data-open-wizard data-prefill="commercial">Obtenir une soumission commerciale</button>
-      </div>
-      <div class="img-frame img-frame-dark">
-        <img src="images/commercial.jpeg" alt="Façade vitrée commerciale" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ BEFORE / AFTER ============ -->
-  <section class="wrap section comparator-section">
-    <div class="section-head-wide">
-      <div class="eyebrow">Comparateur</div>
-      <h2>Voyez l'effet avant de parler de votre projet.</h2>
-    </div>
-    <div class="ba-slider" data-ba-slider>
-      <div class="ba-layer ba-after">
-        <img src="images/avant2.jpeg" alt="Fenêtre avec pellicule installée" />
-      </div>
-      <div class="ba-layer ba-before" data-ba-before-clip>
-        <img src="images/apres2.jpeg" alt="Fenêtre sans pellicule" />
+    <div class="ba" data-ba>
+      <img src="./assets/photos/facade-apres.jpg" alt="Même façade après l’installation : les fenêtres reflètent le ciel et les arbres" loading="lazy" decoding="async" draggable="false" />
+      <div class="ba-clip" data-ba-clip>
+        <img src="./assets/photos/facade-avant.jpg" alt="Façade avant l’installation : rideaux visibles à travers les fenêtres" loading="lazy" decoding="async" draggable="false" />
       </div>
       <div class="ba-line" data-ba-line></div>
-      <div class="ba-handle" data-ba-handle>↔</div>
-      <div class="ba-tag ba-tag-left">Sans installation</div>
-      <div class="ba-tag ba-tag-right">Avec installation</div>
-      <input type="range" min="0" max="100" value="50" aria-label="Comparer avant et après" class="ba-range" data-ba-range />
-    </div>
-    <p class="caption">Réalisation DV Teinte — même fenêtre, avant et après l'installation. Le résultat varie selon le vitrage, l'éclairage, l'exposition et le matériau recommandé.</p>
-    <div class="mt-24">
-      <button class="btn btn-outline" data-open-wizard>Discuter du résultat recherché</button>
+      <div class="ba-knob" data-ba-knob>‹›</div>
+      <span class="ba-tag ba-tag-l">AVANT</span>
+      <span class="ba-tag ba-tag-r">APRÈS</span>
+      <input type="range" min="0" max="100" value="50" aria-label="Comparer avant et après l’installation" data-ba-range />
     </div>
   </section>
 
-  <!-- ============ AVANT / APRÈS — PHOTOS COMPLÈTES ============ -->
-  <section class="section-alt full-gallery-section">
-    <div class="wrap section">
-      <div class="section-head-wide">
-        <div class="eyebrow">Comparateur</div>
-        <h2>Voyez l'effet avant de parler de votre projet.</h2>
+  <!-- ============ COMMENT ÇA MARCHE ============ -->
+  <section id="processus" class="how" data-screen-label="Comment ça marche">
+    <div class="wrap-1320 pad-sec">
+      <h2 class="h2 how-title">Simple du début à la fin.</h2>
+      <ol class="steps">
+        <li><span class="step-n">01</span><h3>Demandez votre estimation</h3><p>Quelques questions rapides en ligne.</p></li>
+        <li><span class="step-n">02</span><h3>On vous appelle rapidement</h3><p>On confirme vos besoins et on fixe le rendez-vous.</p></li>
+        <li><span class="step-n">03</span><h3>Estimation à domicile</h3><p>On regarde vos fenêtres et on vous recommande la bonne pellicule.</p></li>
+        <li><span class="step-n">04</span><h3>Installation</h3><p>Pose propre par notre équipe, sans remplacer vos fenêtres.</p></li>
+      </ol>
+      <div class="how-sub">
+        <h3>Comment fonctionne une pellicule?</h3>
+        <p>Elle agit directement sur vos fenêtres pour améliorer le confort de votre maison.</p>
       </div>
-      <div class="full-gallery">
-        <div class="full-gallery-item">
-          <img src="images/apres2.jpeg" alt="Fenêtre sans pellicule — photo complète" />
-          <span class="full-gallery-tag">Sans installation</span>
-        </div>
-        <div class="full-gallery-item">
-          <img src="images/avant2.jpeg" alt="Fenêtre avec pellicule installée — photo complète" />
-          <span class="full-gallery-tag full-gallery-tag-accent">Avec installation</span>
-        </div>
-      </div>
-      <p class="caption">Réalisation DV Teinte — même fenêtre, avant et après l'installation. Le résultat varie selon le vitrage, l'éclairage, l'exposition et le matériau recommandé.</p>
-      <div class="mt-24">
-        <button class="btn btn-outline" data-open-wizard>Discuter du résultat recherché</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PROCESS ============ -->
-  <section class="section-alt">
-    <div class="wrap section">
-      <div class="section-head-wide">
-        <div class="eyebrow">Processus</div>
-        <h2>Simple du premier contact à l'installation.</h2>
-      </div>
-      <div class="grid-3">
-        <div class="process-card">
-          <div class="process-num">01</div>
-          <h3>Vous nous présentez votre projet</h3>
-          <p>Expliquez-nous les problèmes actuels et le résultat que vous souhaitez obtenir.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-num">02</div>
-          <h3>Nous analysons vos besoins</h3>
-          <p>Nous examinons les fenêtres, le vitrage, les dimensions et les conditions du projet.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-num">03</div>
-          <h3>Nous recommandons une solution</h3>
-          <p>Nous vous présentons une option adaptée au résultat recherché.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-num">04</div>
-          <h3>Nous fournissons le matériau</h3>
-          <p>Le matériau nécessaire est inclus dans le service proposé.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-num">05</div>
-          <h3>Nous réalisons l'installation</h3>
-          <p>Les fenêtres sont préparées et la pellicule est découpée et installée sur mesure.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-num">06</div>
-          <h3>Vous profitez du résultat</h3>
-          <p>L'installation terminée offre une finition propre et uniforme.</p>
-        </div>
+      <div class="cols-3 cards-gap">
+        <article class="how-card">
+          <div class="how-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#5B9AD0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="10" r="3.5"></circle><line x1="9" y1="2.5" x2="9" y2="4"></line><line x1="9" y1="16" x2="9" y2="17.5"></line><line x1="1.5" y1="10" x2="3" y2="10"></line><line x1="15" y1="10" x2="16.5" y2="10"></line><rect x="19" y="8" width="10" height="20" rx="1"></rect><line x1="24" y1="8" x2="24" y2="28"></line></svg></div>
+          <span class="step-n">01</span>
+          <h4>Le soleil frappe la vitre</h4>
+          <p>La chaleur et les rayons UV traversent naturellement les fenêtres.</p>
+        </article>
+        <article class="how-card">
+          <div class="how-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#5B9AD0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="5" width="12" height="22" rx="1"></rect><line x1="16" y1="5" x2="16" y2="27" stroke="#8DB8DE" stroke-width="2.4"></line><line x1="3" y1="10" x2="11" y2="10"></line><line x1="3" y1="16" x2="11" y2="16"></line><line x1="3" y1="22" x2="11" y2="22"></line></svg></div>
+          <span class="step-n">02</span>
+          <h4>La pellicule agit</h4>
+          <p>Elle aide à réduire la chaleur qui entre et bloque une grande partie des rayons UV.</p>
+        </article>
+        <article class="how-card">
+          <div class="how-ico"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#5B9AD0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4,15 16,5 28,15"></polyline><rect x="7" y="13" width="18" height="14" rx="1"></rect><rect x="12" y="17" width="8" height="7"></rect><line x1="14" y1="23" x2="18.5" y2="18.5"></line></svg></div>
+          <span class="step-n">03</span>
+          <h4>Vous profitez davantage de vos fenêtres</h4>
+          <p>Plus d’intimité, moins de chaleur et une meilleure protection de votre intérieur.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ============ CUSTOM PROJECT ============ -->
-  <section class="section-dark">
-    <div class="wrap section two-col custom-project">
-      <div>
-        <div class="eyebrow eyebrow-dark">Sur demande</div>
-        <h2 class="text-white">Vous recherchez un résultat différent?</h2>
-        <p class="lede-sm text-light">Film gris, effet miroir, fini givré, apparence décorative ou autre niveau de teinte : décrivez-nous votre projet. Nous pourrons vérifier les options disponibles auprès de nos fournisseurs.</p>
-        <div class="chip-row">
-          <span class="chip">Gris neutre</span>
-          <span class="chip">Miroir</span>
-          <span class="chip">Réfléchissant</span>
-          <span class="chip">Givré</span>
-          <span class="chip">Décoratif</span>
-          <span class="chip">Très pâle</span>
-          <span class="chip">Plus foncé</span>
-          <span class="chip">Autre finition</span>
-        </div>
-        <div class="custom-ctas">
-          <button class="btn btn-primary" data-open-wizard>Décrire mon projet personnalisé</button>
-          <button class="btn btn-link" data-open-wizard data-prefill="recommandation">Je souhaite une recommandation</button>
-        </div>
+  <!-- ============ AVIS GOOGLE ============ -->
+  <section id="avis" class="rev-sec" data-screen-label="Avis Google">
+    <div class="rev-head">
+      <div class="stack-18">
+        <p class="eyebrow">Avis Google</p>
+        <h2 class="h2">Ce que disent nos clients.</h2>
       </div>
-      <div class="custom-note">
-        <p>Vous n'avez pas besoin de connaître le nom du matériau. Montrez-nous une photo ou expliquez-nous simplement le résultat souhaité.</p>
-        <div class="custom-note-footer">Ces matériaux ne sont pas nécessairement gardés en inventaire. Leur disponibilité, leur prix, leur délai et leur compatibilité doivent être confirmés.</div>
+      <a href="https://share.google/kLX6jMbjvzO1BwVfc" target="_blank" rel="noopener" class="rev-badge">
+        <span class="rev-score">5,0</span>
+        <span class="rev-meta"><span class="rev-stars">★★★★★</span><span class="rev-count">3 avis sur Google →</span></span>
+      </a>
+    </div>
+    <div class="rev-track" data-rev-track role="region" aria-label="Avis Google" tabindex="0">
+      <figure class="rev-card">
+        <div class="rev-top"><span class="rev-stars">★★★★★</span><span class="rev-tag">Bon prix</span></div>
+        <blockquote>Super belle expérience du début à la fin! L’équipe était vraiment sympathique, dynamique et professionnelle. La communication a été facile et agréable tout au long du processus.
+
+Ils ont respecté l’heure d’arrivée prévue ainsi que tout ce qui avait été convenu au contrat. Le travail a été fait avec professionnalisme et le résultat est à la hauteur de nos attentes.
+
+Une entreprise fiable et agréable avec qui faire affaire. Je les recommande sans hésitation!</blockquote>
+        <figcaption><span class="rev-name">Derek Bureau</span><span class="rev-when">Google · octobre 2026</span></figcaption>
+      </figure>
+      <figure class="rev-card">
+        <div class="rev-top"><span class="rev-stars">★★★★★</span><span class="rev-tag">Bon prix</span></div>
+        <blockquote>Service absolument impeccable! Je recommande 10/10 le propriétaire Derek est super sympathique</blockquote>
+        <figcaption><span class="rev-name">gizmo bedi</span><span class="rev-when">Google · octobre 2026</span></figcaption>
+      </figure>
+      <figure class="rev-card">
+        <div class="rev-top"><span class="rev-stars">★★★★★</span></div>
+        <blockquote>Très professionnel bon service je recommande</blockquote>
+        <figcaption><span class="rev-name">Bil Bilodeau</span><span class="rev-when">Google · juillet 2026</span></figcaption>
+      </figure>
+    </div>
+    <div class="rev-ctrl">
+      <div class="rev-dots" data-rev-dots>
+        <button type="button" aria-label="Avis 1"></button>
+        <button type="button" aria-label="Avis 2"></button>
+        <button type="button" aria-label="Avis 3"></button>
+      </div>
+      <div class="rev-arrows">
+        <button type="button" aria-label="Avis précédent" data-rev-prev>←</button>
+        <button type="button" aria-label="Avis suivant" data-rev-next>→</button>
       </div>
     </div>
   </section>
 
-  <!-- ============ TRUST ============ -->
-  <section class="section-alt">
-    <div class="wrap section">
-      <div class="section-head">
-        <div class="eyebrow">Confiance</div>
-        <h2>Un service adapté à votre projet.</h2>
+  <!-- ============ ESTIMATION (FORMULAIRE) ============ -->
+  <section id="estimation" class="est-sec" data-screen-label="Formulaire" data-est-section>
+    <div class="stack-22">
+      <h2 class="h2">Demandez votre estimation.</h2>
+      <p class="lede">Cinq questions rapides. On vous rappelle ensuite pour planifier l’estimation à domicile.</p>
+      <p class="est-promo"><span class="promo-dot"></span>Jusqu’à 400 $ de réduction sur votre installation.</p>
+      <div class="why">
+        <h3>Pourquoi DV Teinte?</h3>
+        <ul>
+          <li>Spécialisé en résidentiel</li>
+          <li>Estimation directement à domicile</li>
+          <li>Recommandation selon votre problème et vos fenêtres</li>
+          <li>Installation propre et professionnelle</li>
+          <li>Accompagnement avant et après l’installation</li>
+        </ul>
       </div>
-      <div class="grid-4 trust-grid">
-        <div class="trust-card"><span class="accent-check">✓</span><span>Analyse des besoins</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Recommandation personnalisée</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Matériaux fournis</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Installation sur mesure</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Communication claire</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Résidentiel et commercial</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Recherche de matériaux particuliers</span></div>
-        <div class="trust-card"><span class="accent-check">✓</span><span>Compatibilité vérifiée avant confirmation</span></div>
-      </div>
+      <p class="est-call">Préférez parler à quelqu’un? <a href="tel:4508029892">450 802-9892</a></p>
     </div>
-  </section>
 
-  <!-- ============ GOOGLE REVIEWS ============ -->
-  <section class="reviews-cta">
-    <div class="wrap reviews-cta-inner">
-      <div class="reviews-stars">★★★★★</div>
-      <h2>Découvrez ce que nos clients disent de nous.</h2>
-      <p>Consultez nos avis vérifiés sur Google avant de faire votre demande.</p>
-      <a href="https://share.google/httSuhXPTdwcJki2T" target="_blank" rel="noopener" class="btn btn-reviews">Voir nos avis Google →</a>
+    <div class="est-card">
+      <form data-est-form action="https://formsubmit.co/contact@dvteinte.com" method="POST" novalidate>
+        <div class="est-top">
+          <div class="est-meta"><span data-est-stepnum>Étape 1 sur 5</span><span data-est-stepname>Votre besoin</span></div>
+          <div class="est-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" data-est-bar><div data-est-barfill style="width:20%"></div></div>
+        </div>
+
+        <div class="est-body">
+          <fieldset class="est-step" data-est-step="0" data-key="probleme">
+            <legend>Qu’est-ce qui vous dérange le plus avec vos fenêtres?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="On voit trop facilement chez moi"><span class="opt-dot"></span><span>On voit trop facilement chez moi</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Certaines pièces deviennent trop chaudes"><span class="opt-dot"></span><span>Certaines pièces deviennent trop chaudes</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Le soleil décolore mon intérieur"><span class="opt-dot"></span><span>Le soleil décolore mon intérieur</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Plusieurs de ces problèmes"><span class="opt-dot"></span><span>Plusieurs de ces problèmes</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="est-step" data-est-step="1" data-key="delai" hidden>
+            <legend>Quand aimeriez-vous régler ce problème?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="Dès que possible"><span class="opt-dot"></span><span>Dès que possible</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Dans les prochaines semaines"><span class="opt-dot"></span><span>Dans les prochaines semaines</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Dans les 1 à 3 prochains mois"><span class="opt-dot"></span><span>Dans les 1 à 3 prochains mois</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Plus tard"><span class="opt-dot"></span><span>Plus tard</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Je me renseigne pour l’instant"><span class="opt-dot"></span><span>Je me renseigne pour l’instant</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="est-step" data-est-step="2" data-key="batiment" hidden>
+            <legend>Quel type de bâtiment est concerné?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="Maison"><span class="opt-dot"></span><span>Maison</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Condo / appartement"><span class="opt-dot"></span><span>Condo / appartement</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Autre"><span class="opt-dot"></span><span>Autre</span></button>
+            </div>
+          </fieldset>
+
+          <div class="est-step" data-est-step="3" hidden>
+            <fieldset class="fs-reset" data-key="fenetres">
+              <legend>Combien de fenêtres voulez-vous traiter?</legend>
+              <div class="opts-grid">
+                <button type="button" class="opt opt-c" aria-pressed="false" data-value="1 à 2">1 à 2</button>
+                <button type="button" class="opt opt-c" aria-pressed="false" data-value="3 à 5">3 à 5</button>
+                <button type="button" class="opt opt-c" aria-pressed="false" data-value="6 à 10">6 à 10</button>
+                <button type="button" class="opt opt-c" aria-pressed="false" data-value="Plus de 10">Plus de 10</button>
+                <button type="button" class="opt opt-c" aria-pressed="false" data-value="Je ne sais pas">Je ne sais pas</button>
+              </div>
+            </fieldset>
+            <fieldset class="fs-reset fs-area" data-key="superficie" data-optional>
+              <legend>Superficie approximative à traiter (pi²) <span>— facultatif</span></legend>
+              <div class="opts-wrap">
+                <button type="button" class="opt opt-c opt-sm" aria-pressed="false" data-value="Moins de 50 pi²">Moins de 50 pi²</button>
+                <button type="button" class="opt opt-c opt-sm" aria-pressed="false" data-value="50 à 100 pi²">50 à 100 pi²</button>
+                <button type="button" class="opt opt-c opt-sm" aria-pressed="false" data-value="100 à 150 pi²">100 à 150 pi²</button>
+                <button type="button" class="opt opt-c opt-sm" aria-pressed="false" data-value="150 pi² et plus">150 pi² et plus</button>
+                <button type="button" class="opt opt-c opt-sm" aria-pressed="false" data-value="Je ne sais pas">Je ne sais pas</button>
+              </div>
+            </fieldset>
+            <p class="err-line" role="alert" data-win-err hidden>Choisissez un nombre de fenêtres pour continuer.</p>
+          </div>
+
+          <div class="est-step" data-est-step="4" hidden>
+            <h3 class="contact-title">Où peut-on vous joindre?</h3>
+            <p class="contact-sub">On vous appelle après réception de votre demande.</p>
+            <div class="fields">
+              <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" name="prenom" type="text" inputmode="text" autocomplete="given-name" data-field="prenom" /><span class="field-err" data-err="prenom" hidden>Entrez votre prénom.</span></div>
+              <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" name="nom" type="text" inputmode="text" autocomplete="family-name" data-field="nom" /><span class="field-err" data-err="nom" hidden>Entrez votre nom.</span></div>
+              <div class="field"><label for="dv-telephone">Téléphone</label><input id="dv-telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="514 555-0123" data-field="telephone" /><span class="field-err" data-err="telephone" hidden>Entrez un numéro à 10 chiffres.</span></div>
+              <div class="field"><label for="dv-codePostal">Code postal</label><input id="dv-codePostal" name="code_postal" type="text" inputmode="text" autocomplete="postal-code" placeholder="J4K 1A1" data-field="codePostal" /><span class="field-err" data-err="codePostal" hidden>Format : A1A 1A1</span></div>
+              <div class="field field-wide"><label for="dv-courriel">Courriel</label><input id="dv-courriel" name="email" type="email" inputmode="email" autocomplete="email" data-field="courriel" /><span class="field-err" data-err="courriel" hidden>Entrez un courriel valide.</span></div>
+            </div>
+            <input name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" data-hp />
+          </div>
+
+          <!-- Réponses des choix, envoyées avec la demande -->
+          <input type="hidden" name="probleme" data-hidden="probleme" />
+          <input type="hidden" name="delai" data-hidden="delai" />
+          <input type="hidden" name="type_de_batiment" data-hidden="batiment" />
+          <input type="hidden" name="nombre_de_fenetres" data-hidden="fenetres" />
+          <input type="hidden" name="superficie_approx" data-hidden="superficie" />
+          <!-- Configuration FormSubmit -->
+          <input type="hidden" name="_subject" value="Nouvelle demande d’estimation — DV Teinte" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+        </div>
+
+        <div class="est-foot">
+          <button type="button" class="est-back" data-est-back hidden>← Retour</button>
+          <span class="est-free" data-est-free>Gratuit et sans engagement</span>
+          <button type="button" class="est-next" data-est-next hidden>Continuer<span aria-hidden="true">→</span></button>
+          <button type="submit" class="est-submit" data-est-submit hidden>Demander mon estimation</button>
+        </div>
+        <p class="est-note" data-est-note hidden>Vos informations servent uniquement à traiter votre demande d’estimation.</p>
+        <p class="est-send-err" role="alert" data-send-err hidden>Une erreur est survenue lors de l’envoi. Veuillez réessayer ou nous appeler au 450 802-9892.</p>
+      </form>
+
+      <div class="est-thanks" role="status" data-est-thanks hidden>
+        <span class="thanks-check">✓</span>
+        <h3 data-thanks-title>Merci.</h3>
+        <p>Votre demande est bien reçue. Un membre de l’équipe DV Teinte vous appelle sous peu au <span data-thanks-phone>numéro indiqué</span>.</p>
+      </div>
     </div>
   </section>
 
   <!-- ============ FAQ ============ -->
-  <section id="faq" class="faq-wrap section">
-    <div class="text-center section-head">
-      <div class="eyebrow">FAQ</div>
-      <h2>Questions fréquentes.</h2>
-    </div>
-    <div class="faq-list" data-faq-list></div>
-  </section>
-
-  <!-- ============ FINAL CTA ============ -->
-  <section id="contact" class="final-cta">
-    <div class="final-cta-bg"></div>
-    <div class="final-cta-img"><img src="images/cta-bg.jpeg" alt="" /></div>
-    <div class="final-cta-scrim"></div>
-    <div class="final-cta-content">
-      <h2>Parlez-nous de vos fenêtres.<br />On s'occupe du reste.</h2>
-      <p>Envoyez-nous quelques informations sur votre projet et obtenez une soumission gratuite pour le matériau et l'installation.</p>
-      <div class="final-cta-btns">
-        <button class="btn btn-primary btn-lg" data-open-wizard>Obtenir ma soumission gratuite</button>
-        <button class="btn btn-ghost" data-open-wizard>Décrire un projet particulier</button>
+  <section id="faq" class="faq-sec" data-screen-label="FAQ">
+    <div class="faq-in">
+      <h2 class="h2">Questions fréquentes</h2>
+      <div class="faq-list" data-faq>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="true">Est-ce que l’effet miroir fonctionne la nuit?<span aria-hidden="true">−</span></button></h3>
+          <p>Non. L’effet miroir fonctionne quand il fait plus clair dehors qu’à l’intérieur. Le soir, avec vos lumières allumées, on peut voir à l’intérieur. Prévoyez des rideaux ou des stores pour la nuit.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Est-ce qu’on voit encore dehors?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Oui. De l’intérieur, la vue reste claire, un peu comme avec des lunettes de soleil. Plus la teinte est foncée, plus la vue est assombrie.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Est-ce que la pellicule rend la maison plus sombre?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Un peu, selon la teinte choisie. Une teinte claire conserve plus de lumière; une teinte foncée donne plus d’intimité et bloque plus de chaleur. On vous montre les options lors de l’estimation.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Est-ce que ça réduit vraiment la chaleur?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Oui, une partie de la chaleur du soleil est bloquée avant d’entrer. La différence se ressent surtout dans les pièces exposées au soleil direct. Le résultat dépend de la pellicule, du vitrage et de l’orientation.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Est-ce que ça protège contre les UV?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Oui. Les pellicules que nous installons bloquent la grande majorité des rayons UV, ce qui réduit la décoloration. La lumière visible et la chaleur peuvent aussi y contribuer.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Est-ce que la pellicule peut être retirée?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Oui. Elle peut être retirée par un professionnel. Dans la plupart des cas, le verre n’est pas endommagé.</p>
+        </div>
+        <div class="faq-item">
+          <h3><button type="button" aria-expanded="false">Combien de temps dure une pellicule?<span aria-hidden="true">+</span></button></h3>
+          <p hidden>Une pellicule intérieure bien installée dure plusieurs années. La durée dépend du produit, de l’exposition au soleil et de l’entretien. On vous précise la garantie applicable lors de l’estimation.</p>
+        </div>
       </div>
-      <p class="hero-footnote">Résidentiel • Commercial • Rive-Sud de Montréal</p>
     </div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- ============ APPEL FINAL ============ -->
+  <section class="final" data-screen-label="CTA final">
+    <img src="./assets/photos/facade-apres.jpg" alt="" aria-hidden="true" width="675" height="1200" loading="lazy" decoding="async" />
+    <div class="final-shade"></div>
+    <div class="final-in">
+      <h2 class="h2 final-title">Prêt à profiter pleinement de vos fenêtres?</h2>
+      <p class="final-p">Dites-nous ce qui vous dérange et obtenez une estimation adaptée à votre projet.</p>
+      <a href="#estimation" class="btn-blue btn-mt-sm">Demander mon estimation<span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ PIED DE PAGE (conservé tel quel) ============ -->
   <footer class="site-footer">
-    <div class="wrap footer-grid">
+    <div class="footer-wrap footer-grid">
       <div>
         <img src="./assets/logo-dvteinte.png" alt="DV Teinte" class="footer-logo" />
         <p class="footer-desc">Dancause Vaillancourt Teinte — fourniture et installation de pellicules pour fenêtres résidentielles et commerciales sur la Rive-Sud de Montréal.</p>
@@ -411,16 +432,16 @@ fbq('track', 'PageView');
       <div>
         <h4>Navigation</h4>
         <div class="footer-links">
-          <a href="#residentiel">Résidentiel</a>
-          <a href="#commercial">Commercial</a>
-          <a href="#service">Notre service</a>
+          <a href="#pellicules">Pellicules</a>
+          <a href="#avantages">Avantages</a>
+          <a href="#realisations">Avant / après</a>
           <a href="#faq">FAQ</a>
         </div>
       </div>
       <div>
         <h4>Contact</h4>
         <div class="footer-links">
-          <a href="tel:4388386640">(438) 838-6640</a>
+          <a href="tel:4508029892">(450) 802-9892</a>
           <a href="mailto:Contact@dvteinte.com">Contact@dvteinte.com</a>
           <span class="footer-muted">Rive-Sud de Montréal et environs</span>
           <div class="footer-social">
@@ -431,203 +452,16 @@ fbq('track', 'PageView');
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="wrap footer-bottom-inner">
+      <div class="footer-wrap footer-bottom-inner">
         <span>© 2026 Dancause Vaillancourt Teinte. Tous droits réservés.</span>
         <a href="politique-de-confidentialite.html">Politique de confidentialité</a>
       </div>
     </div>
   </footer>
 
-  <!-- ============ FLOATING CTA (desktop) ============ -->
-  <button class="float-cta" data-open-wizard data-float-cta>Obtenir une soumission</button>
-
-  <!-- ============ MOBILE BOTTOM BAR ============ -->
-  <div class="bottom-bar">
-    <a href="tel:4388386640" class="btn btn-outline-sm">Appeler</a>
-    <button class="btn btn-primary btn-flex" data-open-wizard>Soumission gratuite</button>
-  </div>
-
-  <!-- ============ QUOTE WIZARD ============ -->
-  <div class="wizard-overlay" data-wizard-overlay>
-    <div class="wizard-modal" data-wizard-modal>
-
-      <div class="wizard-header">
-        <img src="./assets/logo-dvteinte.png" alt="DV Teinte" class="wizard-logo" />
-        <button aria-label="Fermer" class="wizard-close" data-wizard-close>×</button>
-      </div>
-
-      <form data-wizard-form action="https://formsubmit.co/contact@dvteinte.com" method="POST" enctype="multipart/form-data">
-        <div class="wizard-progress-wrap">
-          <div class="wizard-progress-labels">
-            <span class="wizard-step-num" data-step-num></span>
-            <span class="wizard-step-title" data-step-title></span>
-          </div>
-          <div class="wizard-progress-track">
-            <div class="wizard-progress-fill" data-progress-fill></div>
-          </div>
-        </div>
-
-        <div class="wizard-body">
-
-          <!-- STEP: probleme -->
-          <div class="wizard-step" data-step="probleme">
-            <h3>Qu’est-ce qui vous dérange le plus avec vos fenêtres?</h3>
-            <p class="wizard-hint">Choisissez l’option qui ressemble le plus à votre situation.</p>
-            <div class="chip-grid-1" data-single-group="probleme">
-              <button type="button" class="chip-btn" data-value="On voit trop facilement chez moi">On voit trop facilement chez moi</button>
-              <button type="button" class="chip-btn" data-value="Certaines pièces deviennent trop chaudes">Certaines pièces deviennent trop chaudes</button>
-              <button type="button" class="chip-btn" data-value="Le soleil décolore mes meubles ou mon plancher">Le soleil décolore mes meubles ou mon plancher</button>
-              <button type="button" class="chip-btn" data-value="Je veux améliorer l’apparence de mes fenêtres">Je veux améliorer l’apparence de mes fenêtres</button>
-              <button type="button" class="chip-btn" data-value="J’ai plusieurs de ces problèmes">J’ai plusieurs de ces problèmes</button>
-            </div>
-          </div>
-
-          <!-- STEP: delai -->
-          <div class="wizard-step" data-step="delai">
-            <h3 style="margin-bottom:20px;">Quand aimeriez-vous régler ce problème?</h3>
-            <div class="chip-grid-1" data-single-group="delai">
-              <button type="button" class="chip-btn" data-value="Dès que possible">Dès que possible</button>
-              <button type="button" class="chip-btn" data-value="Dans les 2 à 4 prochaines semaines">Dans les 2 à 4 prochaines semaines</button>
-              <button type="button" class="chip-btn" data-value="Dans les 1 à 3 prochains mois">Dans les 1 à 3 prochains mois</button>
-              <button type="button" class="chip-btn" data-value="Plus tard">Plus tard</button>
-              <button type="button" class="chip-btn" data-value="Je me renseigne pour l’instant">Je me renseigne pour l’instant</button>
-            </div>
-          </div>
-
-          <!-- STEP: type -->
-          <div class="wizard-step" data-step="type">
-            <h3>Quel type de bâtiment est concerné?</h3>
-            <p class="wizard-hint">Vous n'avez pas besoin de connaître le matériau exact. Expliquez-nous simplement ce que vous souhaitez améliorer.</p>
-            <div class="chip-grid-2" data-single-group="type">
-              <button type="button" class="chip-btn" data-value="Maison">Maison</button>
-              <button type="button" class="chip-btn" data-value="Condo ou appartement">Condo ou appartement</button>
-              <button type="button" class="chip-btn" data-value="Bureau">Bureau</button>
-              <button type="button" class="chip-btn" data-value="Commerce">Commerce</button>
-              <button type="button" class="chip-btn" data-value="Immeuble">Immeuble</button>
-              <button type="button" class="chip-btn" data-value="Autre">Autre</button>
-            </div>
-          </div>
-
-          <!-- STEP: custom -->
-          <div class="wizard-step" data-step="custom">
-            <h3>Décrivez le résultat que vous recherchez</h3>
-            <p class="wizard-hint">Nous vérifierons les matériaux qui pourraient convenir auprès de nos fournisseurs. Le produit, la disponibilité, le prix, le délai et la compatibilité devront être confirmés.</p>
-            <textarea data-field="customText" name="resultat_recherche" rows="3" class="input" placeholder="Exemple : je souhaite une pellicule gris neutre sur les vitrines de mon commerce. Je veux réduire la visibilité sans rendre l'intérieur trop sombre."></textarea>
-            <div class="chip-grid-2 mt-14" data-multi-group="customTypes">
-              <button type="button" class="chip-btn" data-value="Gris">Gris</button>
-              <button type="button" class="chip-btn" data-value="Miroir">Miroir</button>
-              <button type="button" class="chip-btn" data-value="Réfléchissant">Réfléchissant</button>
-              <button type="button" class="chip-btn" data-value="Givré">Givré</button>
-              <button type="button" class="chip-btn" data-value="Décoratif">Décoratif</button>
-              <button type="button" class="chip-btn" data-value="Très pâle">Très pâle</button>
-              <button type="button" class="chip-btn" data-value="Très foncé">Très foncé</button>
-              <button type="button" class="chip-btn" data-value="Autre couleur">Autre couleur</button>
-              <button type="button" class="chip-btn" data-value="Autre finition">Autre finition</button>
-              <button type="button" class="chip-btn" data-value="Je ne connais pas le nom exact">Je ne connais pas le nom exact</button>
-            </div>
-          </div>
-
-          <!-- STEP: quantite -->
-          <div class="wizard-step" data-step="quantite">
-            <h3>Combien de fenêtres sont concernées?</h3>
-            <p class="wizard-hint">Une estimation suffit pour commencer.</p>
-            <div class="chip-grid-2 mb-18" data-single-group="quantite">
-              <button type="button" class="chip-btn" data-value="1 à 4">1 à 4</button>
-              <button type="button" class="chip-btn" data-value="5 à 9">5 à 9</button>
-              <button type="button" class="chip-btn" data-value="10 et +">10 et +</button>
-              <button type="button" class="chip-btn" data-value="Je ne sais pas">Je ne sais pas</button>
-            </div>
-            <label class="field-label">Dimensions approximatives en pieds carrés (facultatif)</label>
-            <input class="input" data-field="dimensions" name="dimensions" placeholder="Ex. 60 pi² au total" />
-          </div>
-
-          <!-- STEP: photos -->
-          <div class="wizard-step" data-step="photos">
-            <h3>Ajoutez quelques photos</h3>
-            <p class="wizard-hint">Les photos nous permettent de mieux comprendre les fenêtres et de vous orienter plus rapidement. Elles restent facultatives.</p>
-            <label class="photo-drop">
-              <span class="photo-plus">＋</span>
-              <span class="photo-label">Ajouter des photos</span>
-              <span class="photo-sub">Vue générale, intérieur, extérieur, cadre, image de référence…</span>
-              <input type="file" accept="image/*" multiple name="photos" data-photo-input style="display:none;" />
-            </label>
-            <div class="photo-grid" data-photo-grid></div>
-          </div>
-
-          <!-- STEP: coordonnees -->
-          <div class="wizard-step" data-step="coordonnees">
-            <h3>Vos coordonnées</h3>
-            <div class="coord-grid">
-              <div>
-                <label class="field-label">Prénom *</label>
-                <input class="input" data-field="prenom" name="prenom" data-required />
-              </div>
-              <div>
-                <label class="field-label">Nom</label>
-                <input class="input" data-field="nom" name="nom" />
-              </div>
-              <div>
-                <label class="field-label">Téléphone *</label>
-                <input class="input" data-field="telephone" name="telephone" data-required />
-              </div>
-              <div>
-                <label class="field-label">Courriel *</label>
-                <input class="input" data-field="courriel" name="email" data-required />
-              </div>
-              <div>
-                <label class="field-label">Ville *</label>
-                <input class="input" data-field="ville" name="ville" data-required />
-              </div>
-              <div>
-                <label class="field-label">Meilleur moment pour rappeler</label>
-                <select class="input" data-field="rappel" name="meilleur_moment_pour_rappeler">
-                  <option value="">— Choisir —</option>
-                  <option value="Matin">Matin</option>
-                  <option value="Après-midi">Après-midi</option>
-                  <option value="Soir">Soir</option>
-                  <option value="N'importe quand">N'importe quand</option>
-                </select>
-              </div>
-            </div>
-            <p class="error-msg" data-error-msg>Veuillez remplir les champs requis (prénom, téléphone, courriel, ville).</p>
-            <div class="wizard-note">Gratuit • Sans obligation • Matériau et installation évalués ensemble.<br />Vos informations seront uniquement utilisées pour traiter votre demande.</div>
-          </div>
-
-          <!-- hidden fields carrying chip-selection answers into the real POST -->
-          <input type="hidden" name="probleme_principal" data-hidden-field="probleme" />
-          <input type="hidden" name="delai_installation" data-hidden-field="delai" />
-          <input type="hidden" name="type_de_batiment" data-hidden-field="type" />
-          <input type="hidden" name="categorie" data-hidden-field="category" />
-          <input type="hidden" name="preference" data-hidden-field="preference" />
-          <input type="hidden" name="types_personnalises" data-hidden-field="customTypes" />
-          <input type="hidden" name="quantite_de_fenetres" data-hidden-field="quantite" />
-
-          <!-- FormSubmit.co configuration -->
-          <input type="hidden" name="_subject" value="Nouvelle demande de soumission — DV Teinte" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-
-          <input data-field="hp" name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" />
-        </div>
-
-        <div class="wizard-footer">
-          <button type="button" class="btn btn-link" data-wizard-prev>← Retour</button>
-          <span></span>
-          <button type="button" class="btn btn-primary btn-lg" data-wizard-next>Continuer</button>
-          <button type="button" class="btn btn-primary btn-lg" data-wizard-submit style="display:none;">Envoyer ma demande de soumission</button>
-        </div>
-        <p class="error-msg" data-submit-error>Une erreur est survenue lors de l'envoi. Veuillez réessayer ou nous joindre directement au (438) 838-6640.</p>
-      </form>
-
-      <!-- confirmation -->
-      <div class="wizard-confirm" data-wizard-confirm>
-        <div class="confirm-check">✓</div>
-        <h3 data-confirm-title></h3>
-        <p data-confirm-text></p>
-        <button class="btn btn-primary btn-lg" data-wizard-close>Fermer</button>
-      </div>
-
-    </div>
+  <!-- ============ BARRE COLLANTE (mobile) ============ -->
+  <div class="sticky-bar" data-sticky>
+    <a href="#estimation">Demander mon estimation<span aria-hidden="true">→</span></a>
   </div>
 
 </div>

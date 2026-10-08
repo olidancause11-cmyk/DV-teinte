@@ -5,11 +5,9 @@ function sha256(value) {
 }
 function normEmail(v) { return v ? String(v).trim().toLowerCase() : ''; }
 function normName(v) { return v ? String(v).trim().toLowerCase() : ''; }
-function normCity(v) {
+function normZip(v) {
   if (!v) return '';
-  var diacriticsRange = String.fromCharCode(0x0300) + '-' + String.fromCharCode(0x036f);
-  var diacritics = new RegExp('[' + diacriticsRange + ']', 'g');
-  return String(v).normalize('NFD').replace(diacritics, '').toLowerCase().replace(/[^a-z]/g, '');
+  return String(v).toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 function normPhone(v) {
   if (!v) return '';
@@ -51,8 +49,9 @@ module.exports = async function handler(req, res) {
     if (firstName) userData.fn = [sha256(firstName)];
     var lastName = normName(body.lastName);
     if (lastName) userData.ln = [sha256(lastName)];
-    var city = normCity(body.city);
-    if (city) userData.ct = [sha256(city)];
+    var zip = normZip(body.zip);
+    if (zip) userData.zp = [sha256(zip)];
+    userData.country = [sha256('ca')];
     if (clientIp) userData.client_ip_address = clientIp;
     if (userAgent) userData.client_user_agent = userAgent;
     if (body.fbp) userData.fbp = body.fbp;
@@ -64,6 +63,7 @@ module.exports = async function handler(req, res) {
       action_source: 'website',
       user_data: userData
     };
+    if (body.contentName) event.custom_data = { content_name: String(body.contentName).slice(0, 100) };
     if (body.eventId) event.event_id = body.eventId;
     if (body.eventSourceUrl) event.event_source_url = body.eventSourceUrl;
 

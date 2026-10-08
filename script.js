@@ -1,397 +1,308 @@
-(function(){
+(function () {
   'use strict';
 
-  /* ===== Meta Pixel + Conversions API (Lead) ===== */
-  function getCookie(name){
-    var match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-    return match ? decodeURIComponent(match[1]) : '';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ===== Suivi : Meta Pixel (navigateur) + dataLayer ===== */
+  function track(ev, params, opts) {
+    try {
+      if (typeof window.fbq === 'function') window.fbq('track', ev, params || {}, opts || {});
+      (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'dv_' + ev }, params || {}));
+      window.dispatchEvent(new CustomEvent('dv:track', { detail: { event: ev, params: params || {} } }));
+    } catch (e) {}
   }
-  function generateEventId(){
+  function getCookie(name) {
+    var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  function newEventId() {
     if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
     return 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2);
   }
-  function trackLead(leadAnswers){
-    var eventId = generateEventId();
-    try {
-      if (typeof fbq === 'function') fbq('track', 'Lead', {}, { eventID: eventId });
-    } catch (e) {}
+
+  /* ===== En-tête, menu mobile, barre collante ===== */
+  var header = $('[data-header]');
+  var menuBtn = $('[data-menu-toggle]');
+  var mobileNav = $('[data-mobile-nav]');
+  var sticky = $('[data-sticky]');
+  var mq = window.matchMedia('(max-width:1079px)');
+  var state = { scrolled: false, pastHero: false, menuOpen: false, formVisible: false };
+
+  function paintChrome() {
+    header.classList.toggle('is-solid', state.scrolled || state.menuOpen);
+    header.classList.toggle('is-line', state.scrolled);
+    var showSticky = mq.matches && state.pastHero && !state.formVisible;
+    sticky.classList.toggle('is-on', showSticky);
+  }
+  function setMenu(open) {
+    state.menuOpen = open && mq.matches;
+    mobileNav.hidden = !state.menuOpen;
+    menuBtn.setAttribute('aria-expanded', String(state.menuOpen));
+    paintChrome();
+  }
+  function onScroll() {
+    var y = window.scrollY || 0;
+    state.scrolled = y > 24;
+    state.pastHero = y > 560;
+    paintChrome();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  menuBtn.addEventListener('click', function () { setMenu(!state.menuOpen); });
+  $$('[data-menu-close]').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.menuOpen) setMenu(false); });
+  var onMq = function () { if (!mq.matches) setMenu(false); else paintChrome(); };
+  if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
+  onScroll();
+
+  /* ===== Curseur avant / après ===== */
+  var ba = $('[data-ba]');
+  if (ba) {
+    var baClip = $('[data-ba-clip]', ba), baLine = $('[data-ba-line]', ba), baKnob = $('[data-ba-knob]', ba), baRange = $('[data-ba-range]', ba);
+    var setBa = function (pos) {
+      baClip.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+      baLine.style.left = pos + '%';
+      baKnob.style.left = pos + '%';
+    };
+    baRange.addEventListener('input', function (e) { setBa(+e.target.value); });
+    baRange.addEventListener('change', function (e) { setBa(+e.target.value); });
+    setBa(+baRange.value);
+  }
+
+  /* ===== Carrousel d’avis ===== */
+  var track$ = $('[data-rev-track]');
+  if (track$) {
+    var dots = $$('[data-rev-dots] button');
+    var cards = Array.prototype.slice.call(track$.children);
+    var revIdx = 0;
+    var paintDots = function () { dots.forEach(function (d, i) { d.classList.toggle('is-on', i === revIdx); }); };
+    var revGo = function (i) {
+      var k = Math.max(0, Math.min(cards.length - 1, i));
+      var c = cards[k];
+      if (c) track$.scrollTo({ left: c.offsetLeft - track$.offsetLeft, behavior: 'smooth' });
+    };
+    track$.addEventListener('scroll', function () {
+      var c = cards[0];
+      if (!c) return;
+      var w = c.offsetWidth + 16;
+      var i = track$.scrollLeft + track$.clientWidth >= track$.scrollWidth - 4 ? cards.length - 1 : Math.round(track$.scrollLeft / w);
+      if (i !== revIdx) { revIdx = i; paintDots(); }
+    }, { passive: true });
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { revGo(i); }); });
+    $('[data-rev-prev]').addEventListener('click', function () { revGo(revIdx - 1); });
+    $('[data-rev-next]').addEventListener('click', function () { revGo(revIdx + 1); });
+    paintDots();
+  }
+
+  /* ===== FAQ ===== */
+  var faq = $('[data-faq]');
+  if (faq) {
+    var items = $$('.faq-item', faq);
+    var setFaq = function (item, open) {
+      var btn = $('button', item), p = $('p', item), icon = $('button span', item);
+      btn.setAttribute('aria-expanded', String(open));
+      p.hidden = !open;
+      icon.textContent = open ? '−' : '+';
+    };
+    items.forEach(function (item) {
+      $('button', item).addEventListener('click', function () {
+        var wasOpen = $('button', item).getAttribute('aria-expanded') === 'true';
+        items.forEach(function (o) { setFaq(o, false); });
+        if (!wasOpen) setFaq(item, true);
+      });
+    });
+  }
+
+  /* ===== Formulaire d’estimation ===== */
+  var form = $('[data-est-form]');
+  var section = $('[data-est-section]');
+  if (!form) return;
+
+  var KEY = 'dvteinte_estimation_v4';
+  var STEP_NAMES = ['Votre besoin', 'Délai', 'Bâtiment', 'Fenêtres', 'Coordonnées'];
+  var LAST = 4;
+  var est = {
+    step: 0, showErr: false, winErr: false, sending: false, submitted: false,
+    a: { probleme: '', delai: '', batiment: '', fenetres: '', superficie: '', prenom: '', nom: '', telephone: '', courriel: '', codePostal: '' }
+  };
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved) est.a = Object.assign(est.a, JSON.parse(saved));
+  } catch (e) {}
+
+  var steps = $$('[data-est-step]', form);
+  var hpInput = $('[data-hp]', form);
+  var submitBtn = $('[data-est-submit]', form);
+  var persist = function () { try { localStorage.setItem(KEY, JSON.stringify(est.a)); } catch (e) {} };
+  var digits = function (v) { return (v || '').replace(/\D/g, ''); };
+
+  function errors() {
+    var a = est.a, e = {};
+    if (!a.prenom.trim()) e.prenom = true;
+    if (!a.nom.trim()) e.nom = true;
+    var d = digits(a.telephone);
+    if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) e.telephone = true;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
+    if (!/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(a.codePostal.trim())) e.codePostal = true;
+    return e;
+  }
+  function formatPostal(v) { return v.toUpperCase().replace(/\s|-/g, '').replace(/^(...)/, '$1 '); }
+
+  function render() {
+    // étape visible
+    steps.forEach(function (el, i) { el.hidden = i !== est.step; });
+    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.step + 1) + ' sur 5';
+    $('[data-est-stepname]', form).textContent = STEP_NAMES[est.step];
+    var pct = Math.round((est.step + 1) / 5 * 100);
+    $('[data-est-barfill]', form).style.width = pct + '%';
+    $('[data-est-bar]', form).setAttribute('aria-valuenow', String(pct));
+    // choix
+    $$('fieldset[data-key]', form).forEach(function (fs) {
+      var key = fs.getAttribute('data-key');
+      $$('.opt', fs).forEach(function (b) { b.setAttribute('aria-pressed', String(est.a[key] === b.getAttribute('data-value'))); });
+    });
+    // champs cachés envoyés avec la demande
+    $$('[data-hidden]', form).forEach(function (h) { h.value = est.a[h.getAttribute('data-hidden')] || ''; });
+    // pied de formulaire
+    $('[data-est-back]', form).hidden = est.step === 0;
+    $('[data-est-free]', form).hidden = est.step !== 0;
+    $('[data-est-next]', form).hidden = est.step !== 3;
+    submitBtn.hidden = est.step !== LAST;
+    $('[data-est-note]', form).hidden = est.step !== LAST;
+    $('[data-win-err]', form).hidden = !est.winErr;
+    submitBtn.disabled = est.sending;
+    submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation';
+    // erreurs de champs
+    var errs = est.showErr ? errors() : {};
+    $$('[data-field]', form).forEach(function (inp) {
+      var k = inp.getAttribute('data-field');
+      inp.setAttribute('aria-invalid', String(!!errs[k]));
+      var msg = $('[data-err="' + k + '"]', form);
+      if (msg) msg.hidden = !errs[k];
+    });
+  }
+
+  // valeurs initiales des champs texte
+  $$('[data-field]', form).forEach(function (inp) {
+    inp.value = est.a[inp.getAttribute('data-field')] || '';
+    inp.addEventListener('input', function () {
+      est.a[inp.getAttribute('data-field')] = inp.value;
+      persist();
+      if (est.showErr) render();
+    });
+  });
+
+  var pickTimer;
+  $$('.opt', form).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.closest('fieldset[data-key]').getAttribute('data-key');
+      var val = btn.getAttribute('data-value');
+      if (key === 'superficie') {
+        est.a.superficie = est.a.superficie === val ? '' : val;
+        persist(); render();
+        return;
+      }
+      est.a[key] = val;
+      persist();
+      if (key === 'fenetres') { est.winErr = false; render(); return; }
+      render();
+      clearTimeout(pickTimer);
+      pickTimer = setTimeout(function () { est.step = Math.min(est.step + 1, LAST); render(); }, 220);
+    });
+  });
+  $('[data-est-back]', form).addEventListener('click', function () { est.step = Math.max(0, est.step - 1); render(); });
+  $('[data-est-next]', form).addEventListener('click', function () {
+    if (!est.a.fenetres) { est.winErr = true; render(); return; }
+    est.step = LAST; render();
+  });
+  form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
+
+  /* ----- Envoi : FormSubmit (courriel) + Meta Pixel et API Conversions (Lead) ----- */
+  function showSendError(on) { $('[data-send-err]', form).hidden = !on; }
+
+  function submit() {
+    if (est.sending) return;
+    if (hpInput.value) { finish(); return; }          // robot : on fait semblant sans rien envoyer
+    if (Object.keys(errors()).length) {
+      est.showErr = true; render();
+      var first = $('[aria-invalid="true"]', form);
+      if (first) first.focus();
+      return;
+    }
+    var a = est.a;
+    var postal = formatPostal(a.codePostal);
+    est.sending = true; showSendError(false); render();
+
+    var data = new FormData(form);
+    data.set('code_postal', postal);
+    data.set('source', 'landing-residentiel');
+    data.set('page', location.href);
+    data.set('date', new Date().toISOString());
+
+    var url = form.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+    fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data })
+      .then(function (res) {
+        return res.text().then(function (text) {
+          var json = null;
+          try { json = JSON.parse(text); } catch (e) {}
+          var ok = res.ok && json && (json.success === true || json.success === 'true');
+          if (!ok) throw new Error(json && json.message ? json.message : 'bad response');
+        });
+      })
+      .then(function () {
+        trackLead(a, postal);
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        finish();
+      })
+      .catch(function () {
+        est.sending = false; render(); showSendError(true);
+      });
+  }
+
+  function trackLead(a, postal) {
+    var eventId = newEventId();
+    track('Lead', { content_name: 'Estimation résidentielle', probleme: a.probleme, delai: a.delai }, { eventID: eventId });
     try {
       fetch('/api/capi-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
         body: JSON.stringify({
           eventId: eventId,
-          eventSourceUrl: window.location.href,
-          email: leadAnswers.courriel,
-          phone: leadAnswers.telephone,
-          firstName: leadAnswers.prenom,
-          lastName: leadAnswers.nom,
-          city: leadAnswers.ville,
+          eventSourceUrl: location.href,
+          contentName: 'Estimation résidentielle',
+          email: a.courriel,
+          phone: a.telephone,
+          firstName: a.prenom,
+          lastName: a.nom,
+          zip: postal,
           fbp: getCookie('_fbp'),
           fbc: getCookie('_fbc')
         })
-      }).catch(function(){});
+      }).catch(function () {});
     } catch (e) {}
   }
 
-  /* ===== Sticky header + floating CTA ===== */
-  var header = document.getElementById('site-header');
-  var floatCta = document.querySelector('[data-float-cta]');
-  function onScroll(){
-    var y = window.scrollY || 0;
-    header.classList.toggle('scrolled', y > 30);
-    floatCta.classList.toggle('show', y > 700);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  /* ===== Mobile menu ===== */
-  var mobileMenu = document.querySelector('[data-mobile-menu]');
-  var mobileOverlay = document.querySelector('[data-mobile-overlay]');
-  function openMobile(){ mobileMenu.classList.add('open'); mobileOverlay.classList.add('open'); }
-  function closeMobile(){ mobileMenu.classList.remove('open'); mobileOverlay.classList.remove('open'); }
-  document.querySelector('[data-mobile-toggle]').addEventListener('click', openMobile);
-  mobileOverlay.addEventListener('click', closeMobile);
-  document.querySelectorAll('[data-mobile-close]').forEach(function(el){ el.addEventListener('click', closeMobile); });
-
-  /* ===== Before / After slider ===== */
-  var baSlider = document.querySelector('[data-ba-slider]');
-  var baBefore = document.querySelector('[data-ba-before-clip]');
-  var baLine = document.querySelector('[data-ba-line]');
-  var baHandle = document.querySelector('[data-ba-handle]');
-  var baRange = document.querySelector('[data-ba-range]');
-  function setBaPos(pos){
-    pos = Math.max(0, Math.min(100, pos));
-    baBefore.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
-    baLine.style.left = pos + '%';
-    baHandle.style.left = pos + '%';
-    baRange.value = pos;
-  }
-  baRange.addEventListener('input', function(e){ setBaPos(+e.target.value); });
-
-  /* ===== Materials tech data toggles ===== */
-  document.querySelectorAll('[data-tech-toggle]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var key = btn.getAttribute('data-tech-toggle');
-      var panel = document.querySelector('[data-tech-panel="' + key + '"]');
-      var open = panel.classList.toggle('open');
-      btn.querySelector('.tech-icon').textContent = open ? '−' : '+';
-    });
-  });
-
-  /* ===== FAQ ===== */
-  var faqData = [
-    { q: "Est-ce que le matériau est inclus dans la soumission?", a: "Oui. Le projet est évalué comme un service complet qui comprend le matériau recommandé et son installation. Les détails exacts seront indiqués dans la soumission." },
-    { q: "Dois-je acheter la pellicule moi-même?", a: "Non. Nous pouvons recommander et fournir le matériau adapté au projet, puis réaliser l'installation sur mesure." },
-    { q: "Dois-je savoir quelle teinte choisir?", a: "Non. Vous pouvez simplement nous expliquer le résultat recherché. Nous pourrons ensuite vous recommander une option selon vos fenêtres et vos priorités." },
-    { q: "Peut-on voir à travers une pellicule 15 %?", a: "Oui. Une pellicule 15 % est foncée, mais elle n'est pas opaque. La visibilité varie selon l'éclairage à l'intérieur et à l'extérieur." },
-    { q: "L'intimité fonctionne-t-elle le soir?", a: "L'effet d'intimité est généralement plus important du côté où la lumière est la plus forte. Lorsque l'intérieur est éclairé et que l'extérieur est sombre, il peut être possible de voir vers l'intérieur. Des stores ou rideaux peuvent donc rester nécessaires." },
-    { q: "Pouvez-vous trouver une pellicule grise, miroir ou givrée?", a: "Vous pouvez nous envoyer une demande personnalisée. Nous vérifierons ensuite les options disponibles auprès de nos fournisseurs ainsi que leur compatibilité avec vos fenêtres." },
-    { q: "Les matériaux personnalisés sont-ils toujours disponibles?", a: "Non. La disponibilité dépend du type de matériau, du fournisseur, de la quantité requise et de la compatibilité avec le vitrage. Nous devons vérifier chaque demande avant de confirmer le produit, le prix et le délai." },
-    { q: "Faites-vous du résidentiel et du commercial?", a: "Oui. Nous réalisons des projets pour les maisons, condos, bureaux, commerces, vitrines et autres espaces professionnels." },
-    { q: "La pellicule peut-elle être installée sur toutes les fenêtres?", a: "La compatibilité doit être vérifiée selon le verre, la composition du vitrage et le matériau envisagé. Nous analysons le projet avant de confirmer la solution." },
-    { q: "Combien de temps prend une installation?", a: "La durée dépend du nombre de fenêtres, de leurs dimensions et de leur accessibilité. Une estimation plus précise pourra être fournie après l'analyse du projet." },
-    { q: "La demande de soumission est-elle gratuite?", a: "Oui. La demande est gratuite et sans obligation. Elle nous permet de comprendre le projet et de vous proposer les prochaines étapes." }
-  ];
-  var faqList = document.querySelector('[data-faq-list]');
-  faqData.forEach(function(f){
-    var item = document.createElement('div');
-    item.className = 'faq-item';
-    var qBtn = document.createElement('button');
-    qBtn.className = 'faq-q';
-    qBtn.innerHTML = '<span></span><span class="faq-icon">+</span>';
-    qBtn.querySelector('span').textContent = f.q;
-    var aP = document.createElement('p');
-    aP.className = 'faq-a';
-    aP.textContent = f.a;
-    item.appendChild(qBtn);
-    item.appendChild(aP);
-    faqList.appendChild(item);
-    qBtn.addEventListener('click', function(){
-      var isOpen = item.classList.contains('open');
-      faqList.querySelectorAll('.faq-item').forEach(function(other){
-        other.classList.remove('open');
-        other.querySelector('.faq-icon').textContent = '+';
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        qBtn.querySelector('.faq-icon').textContent = '−';
-      }
-    });
-  });
-
-  /* ===== Quote wizard ===== */
-  var STORAGE_KEY = 'dvteinte_quote_v1';
-  var CUSTOM_PREFS = ['Effet gris', 'Effet miroir ou réfléchissant', 'Effet givré', 'Effet décoratif', 'Autre résultat personnalisé'];
-  var STEP_TITLES = { probleme: 'Votre situation', delai: 'Échéancier', type: 'Type de projet', custom: 'Projet personnalisé', quantite: 'Quantité', photos: 'Photos', coordonnees: 'Coordonnées' };
-
-  var answers = {
-    probleme: '', delai: '', type: '', category: '', preference: '', customText: '', customTypes: [],
-    quantite: '', dimensions: '', prenom: '', nom: '', telephone: '', courriel: '',
-    ville: '', rappel: '', hp: ''
-  };
-  try {
-    var saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) { var parsed = JSON.parse(saved); for (var k in parsed) answers[k] = parsed[k]; }
-  } catch (e) {}
-
-  var photos = []; // {name, url}
-  var stepIdx = 0;
-  var showErr = false;
-
-  var overlay = document.querySelector('[data-wizard-overlay]');
-  var formEl = document.querySelector('[data-wizard-form]');
-  var confirmEl = document.querySelector('[data-wizard-confirm]');
-  var progressFill = document.querySelector('[data-progress-fill]');
-  var stepNumEl = document.querySelector('[data-step-num]');
-  var stepTitleEl = document.querySelector('[data-step-title]');
-  var prevBtn = document.querySelector('[data-wizard-prev]');
-  var nextBtn = document.querySelector('[data-wizard-next]');
-  var submitBtn = document.querySelector('[data-wizard-submit]');
-  var errorMsg = document.querySelector('[data-error-msg]');
-  var submitError = document.querySelector('[data-submit-error]');
-  var photoGrid = document.querySelector('[data-photo-grid]');
-  var confirmTitle = document.querySelector('[data-confirm-title]');
-  var confirmText = document.querySelector('[data-confirm-text]');
-
-  function persist(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {} }
-
-  function stepKeys(){
-    var custom = CUSTOM_PREFS.indexOf(answers.preference) !== -1;
-    var keys = ['probleme', 'delai'];
-    if (custom) keys.push('custom');
-    keys.push('type', 'quantite', 'coordonnees');
-    return keys;
+  function finish() {
+    est.sending = false; est.submitted = true;
+    form.hidden = true;
+    var thanks = $('[data-est-thanks]');
+    var prenom = est.a.prenom.trim();
+    $('[data-thanks-title]', thanks).textContent = prenom ? 'Merci, ' + prenom + '.' : 'Merci.';
+    $('[data-thanks-phone]', thanks).textContent = est.a.telephone || 'numéro indiqué';
+    thanks.hidden = false;
   }
 
-  function fillFieldsFromAnswers(){
-    formEl.querySelectorAll('[data-field]').forEach(function(el){
-      var f = el.getAttribute('data-field');
-      if (typeof answers[f] === 'string') el.value = answers[f];
-    });
-    // chip selections
-    formEl.querySelectorAll('[data-single-group]').forEach(function(group){
-      var field = group.getAttribute('data-single-group');
-      group.querySelectorAll('.chip-btn').forEach(function(btn){
-        btn.classList.toggle('selected', btn.getAttribute('data-value') === answers[field]);
-      });
-    });
-    formEl.querySelectorAll('[data-multi-group]').forEach(function(group){
-      var field = group.getAttribute('data-multi-group');
-      var arr = answers[field] || [];
-      group.querySelectorAll('.chip-btn').forEach(function(btn){
-        btn.classList.toggle('selected', arr.indexOf(btn.getAttribute('data-value')) !== -1);
-      });
-    });
-    // mirror chip-driven answers into hidden inputs so the real POST includes them
-    formEl.querySelectorAll('[data-hidden-field]').forEach(function(el){
-      var f = el.getAttribute('data-hidden-field');
-      var val = answers[f];
-      el.value = Array.isArray(val) ? val.join(', ') : (val || '');
-    });
+  /* ----- Visibilité du formulaire : ViewContent + barre collante ----- */
+  var viewSent = false;
+  if ('IntersectionObserver' in window && section) {
+    new IntersectionObserver(function (entries) {
+      var en = entries[0];
+      state.formVisible = en.isIntersecting;
+      paintChrome();
+      if (en.isIntersecting && !viewSent) { viewSent = true; track('ViewContent', { content_name: 'Formulaire estimation' }); }
+    }, { threshold: 0.15 }).observe(section);
   }
 
-  function renderPhotos(){
-    photoGrid.innerHTML = '';
-    photos.forEach(function(ph, i){
-      var thumb = document.createElement('div');
-      thumb.className = 'photo-thumb';
-      var img = document.createElement('img');
-      img.src = ph.url; img.alt = 'Aperçu';
-      var rm = document.createElement('button');
-      rm.className = 'photo-remove'; rm.setAttribute('aria-label', 'Retirer'); rm.textContent = '×';
-      rm.addEventListener('click', function(){ photos.splice(i, 1); renderPhotos(); });
-      thumb.appendChild(img); thumb.appendChild(rm);
-      photoGrid.appendChild(thumb);
-    });
-  }
-
-  function renderStep(){
-    var keys = stepKeys();
-    var idx = Math.min(stepIdx, keys.length - 1);
-    var cur = keys[idx];
-
-    formEl.querySelectorAll('.wizard-step').forEach(function(s){
-      s.classList.toggle('active', s.getAttribute('data-step') === cur);
-    });
-
-    stepNumEl.textContent = 'Étape ' + (idx + 1) + ' sur ' + keys.length;
-    stepTitleEl.textContent = STEP_TITLES[cur] || '';
-    progressFill.style.width = Math.round(((idx + 1) / keys.length) * 100) + '%';
-
-    prevBtn.style.visibility = idx > 0 ? 'visible' : 'hidden';
-    var isLast = cur === 'coordonnees';
-    nextBtn.style.display = isLast ? 'none' : 'inline-flex';
-    submitBtn.style.display = isLast ? 'inline-flex' : 'none';
-
-    fillFieldsFromAnswers();
-    errorMsg.classList.toggle('show', showErr && cur === 'coordonnees' && hasValidationError());
-  }
-
-  function hasValidationError(){
-    return !(answers.prenom.trim() && answers.telephone.trim() && answers.courriel.trim() && answers.ville.trim());
-  }
-
-  function openWizard(prefill){
-    if (prefill !== 'custom' && CUSTOM_PREFS.indexOf(answers.preference) !== -1) {
-      answers.preference = '';
-      answers.customText = '';
-      answers.customTypes = [];
-    }
-    if (prefill === 'residential') { answers.category = 'Résidentiel'; answers.type = 'Maison'; }
-    else if (prefill === 'commercial') { answers.category = 'Commercial'; answers.type = 'Commerce'; }
-    else if (prefill === 'fonce') { answers.preference = 'Résultat plus foncé et plus intime'; }
-    else if (prefill === 'leger') { answers.preference = 'Résultat léger qui conserve davantage de lumière'; }
-    else if (prefill === 'custom') { answers.preference = 'Autre résultat personnalisé'; }
-    else if (prefill === 'recommandation') { answers.preference = 'Je souhaite une recommandation'; }
-    persist();
-    stepIdx = 0; showErr = false;
-    overlay.classList.add('open');
-    formEl.style.display = '';
-    confirmEl.classList.remove('show');
-    document.body.style.overflow = 'hidden';
-    renderStep();
-  }
-  function closeWizard(){
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.querySelectorAll('[data-open-wizard]').forEach(function(btn){
-    btn.addEventListener('click', function(){ openWizard(btn.getAttribute('data-prefill')); });
-  });
-  document.querySelectorAll('[data-wizard-close]').forEach(function(btn){ btn.addEventListener('click', closeWizard); });
-  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeWizard(); });
-  document.querySelector('[data-wizard-modal]').addEventListener('click', function(e){ e.stopPropagation(); });
-
-  nextBtn.addEventListener('click', function(){
-    var keys = stepKeys();
-    stepIdx = Math.min(stepIdx + 1, keys.length - 1);
-    renderStep();
-  });
-  prevBtn.addEventListener('click', function(){
-    stepIdx = Math.max(stepIdx - 1, 0);
-    renderStep();
-  });
-
-  submitBtn.addEventListener('click', function(){
-    if (answers.hp) { showConfirm(); return; }
-    if (hasValidationError()) {
-      showErr = true;
-      var keys = stepKeys();
-      stepIdx = keys.indexOf('coordonnees');
-      renderStep();
-      return;
-    }
-    sendToFormSubmit();
-  });
-
-  function sendToFormSubmit(){
-    submitError.classList.remove('show');
-    submitBtn.disabled = true;
-    var originalLabel = submitBtn.textContent;
-    submitBtn.textContent = 'Envoi en cours…';
-
-    var data = new FormData(formEl);
-    photos.forEach(function(ph, i){
-      if (ph.file) data.append('photo_' + (i + 1), ph.file, ph.name);
-    });
-
-    var ajaxUrl = formEl.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
-    fetch(ajaxUrl, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: data
-    }).then(function(res){
-      return res.text().then(function(text){
-        var parsed = null;
-        try { parsed = JSON.parse(text); } catch (e) {}
-        window.__lastFormSubmitResponse = { status: res.status, ok: res.ok, raw: text };
-        var success = parsed && (parsed.success === true || parsed.success === 'true');
-        if (!res.ok || !success) throw new Error(parsed && parsed.message ? parsed.message : 'bad response');
-        trackLead(answers);
-        showConfirm();
-      });
-    }).catch(function(err){
-      window.__lastFormSubmitError = String(err);
-      submitError.classList.add('show');
-    }).finally(function(){
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalLabel;
-    });
-  }
-
-  function showConfirm(){
-    var isCustom = CUSTOM_PREFS.indexOf(answers.preference) !== -1;
-    confirmTitle.textContent = isCustom ? 'Votre demande personnalisée a bien été envoyée.' : 'Votre demande a bien été envoyée.';
-    confirmText.textContent = isCustom
-      ? "Nous examinerons le résultat recherché et vérifierons les matériaux qui pourraient convenir auprès de nos fournisseurs. Nous communiquerons ensuite avec vous pour confirmer les possibilités."
-      : "Nous examinerons votre projet et communiquerons avec vous pour discuter de la solution, du matériau et de l'installation.";
-    formEl.style.display = 'none';
-    confirmEl.classList.add('show');
-  }
-
-  /* field inputs */
-  formEl.querySelectorAll('[data-field]').forEach(function(el){
-    el.addEventListener('input', function(){
-      var f = el.getAttribute('data-field');
-      answers[f] = el.value;
-      persist();
-      if (f === 'prenom' || f === 'telephone' || f === 'courriel' || f === 'ville') {
-        el.classList.toggle('error', showErr && !el.value.trim());
-        errorMsg.classList.toggle('show', showErr && hasValidationError());
-      }
-    });
-  });
-
-  /* single-select chip groups */
-  formEl.querySelectorAll('[data-single-group]').forEach(function(group){
-    var field = group.getAttribute('data-single-group');
-    group.querySelectorAll('.chip-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        answers[field] = btn.getAttribute('data-value');
-        if (field === 'type') {
-          var catMap = { 'Maison': 'Résidentiel', 'Condo ou appartement': 'Résidentiel', 'Bureau': 'Commercial', 'Commerce': 'Commercial', 'Immeuble': 'À confirmer', 'Autre': 'À confirmer' };
-          answers.category = catMap[answers.type] || '';
-        }
-        persist();
-        fillFieldsFromAnswers();
-      });
-    });
-  });
-
-  /* multi-select chip groups */
-  formEl.querySelectorAll('[data-multi-group]').forEach(function(group){
-    var field = group.getAttribute('data-multi-group');
-    group.querySelectorAll('.chip-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        var val = btn.getAttribute('data-value');
-        var arr = answers[field] || [];
-        var i = arr.indexOf(val);
-        if (i === -1) arr.push(val); else arr.splice(i, 1);
-        answers[field] = arr;
-        persist();
-        fillFieldsFromAnswers();
-      });
-    });
-  });
-
-  /* photo upload */
-  var photoInput = document.querySelector('[data-photo-input]');
-  if (photoInput) {
-    photoInput.addEventListener('change', function(e){
-      var files = Array.prototype.slice.call(e.target.files || []);
-      files.filter(function(f){ return f.type.indexOf('image/') === 0; }).forEach(function(f){
-        photos.push({ name: f.name, url: URL.createObjectURL(f), file: f });
-      });
-      renderPhotos();
-      e.target.value = '';
-    });
-  }
-
-  /* keyboard: close wizard on Escape */
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeWizard();
-  });
-
+  render();
 })();
