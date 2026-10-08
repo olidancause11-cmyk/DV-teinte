@@ -17,6 +17,7 @@ input::placeholder{color:#6F747B;}
 
 #top{background:#0E1012;min-height:100vh;overflow-x:clip;}
 section[id]{scroll-margin-top:72px;}
+#formulaire{scroll-margin-top:88px;}
 
 /* ===== Briques communes ===== */
 .stack-18{display:flex;flex-direction:column;gap:18px;}
