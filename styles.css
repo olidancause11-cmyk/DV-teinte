@@ -42,7 +42,7 @@ section[id]{scroll-margin-top:72px;}
 .hdr.is-line{border-bottom-color:rgba(255,255,255,.08);}
 .hdr-in{max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,48px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
 .hdr-logo{display:flex;align-items:center;flex-shrink:0;}
-.hdr-logo img{height:28px;width:auto;filter:brightness(0) invert(1);}
+.hdr-logo img{height:30px;width:auto;}
 .hdr-nav{display:none;align-items:center;gap:32px;}
 .hdr-nav a{color:#C4C7CC;font-size:15px;font-weight:500;white-space:nowrap;}
 .hdr-nav a:hover{color:#fff;}
@@ -239,7 +239,7 @@ section[id]{scroll-margin-top:72px;}
 .site-footer{background:#0A0C10;color:#B8D4E3;border-top:1px solid rgba(184,212,227,.12);}
 .footer-wrap{max-width:1240px;margin:0 auto;}
 .footer-grid{padding:64px 24px 40px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;}
-.footer-logo{height:40px;width:auto;margin-bottom:18px;filter:brightness(0) invert(1);}
+.footer-logo{height:40px;width:auto;margin-bottom:18px;}
 .footer-desc{font-size:15px;line-height:1.6;max-width:340px;color:#8fa8b6;}
 .footer-grid h4{color:#fff;font-size:14px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;}
 .footer-links{display:flex;flex-direction:column;gap:10px;font-size:15px;}
