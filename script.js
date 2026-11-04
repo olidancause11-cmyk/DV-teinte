@@ -113,17 +113,17 @@
     });
   }
 
-  /* ===== Formulaire d’estimation ===== */
+  /* ===== Formulaire d’estimation (4 étapes) ===== */
   var form = $('[data-est-form]');
   var section = $('[data-est-section]');
   if (!form) return;
 
-  var KEY = 'dvteinte_estimation_v4';
-  var STEP_NAMES = ['Votre besoin', 'Délai', 'Bâtiment', 'Fenêtres', 'Coordonnées'];
-  var LAST = 4;
+  var KEY = 'dvteinte_estimation_v5';
+  var STEP_NAMES = ['Votre besoin', 'Délai', 'Fenêtres', 'Coordonnées'];
+  var LAST = STEP_NAMES.length - 1;
   var est = {
-    step: 0, showErr: false, winErr: false, sending: false, submitted: false,
-    a: { probleme: '', delai: '', batiment: '', fenetres: '', superficie: '', prenom: '', nom: '', telephone: '', courriel: '', codePostal: '' }
+    step: 0, showErr: false, sending: false, submitted: false,
+    a: { probleme: '', delai: '', fenetres: '', nomComplet: '', telephone: '', courriel: '', codePostal: '' }
   };
   try {
     var saved = localStorage.getItem(KEY);
@@ -133,27 +133,44 @@
   var steps = $$('[data-est-step]', form);
   var hpInput = $('[data-hp]', form);
   var submitBtn = $('[data-est-submit]', form);
+  var card = $('#formulaire');
   var persist = function () { try { localStorage.setItem(KEY, JSON.stringify(est.a)); } catch (e) {} };
   var digits = function (v) { return (v || '').replace(/\D/g, ''); };
 
   function errors() {
     var a = est.a, e = {};
-    if (!a.prenom.trim()) e.prenom = true;
-    if (!a.nom.trim()) e.nom = true;
+    if (a.nomComplet.trim().length < 2) e.nomComplet = true;
     var d = digits(a.telephone);
     if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) e.telephone = true;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     if (!/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(a.codePostal.trim())) e.codePostal = true;
+    // le courriel est facultatif : on le valide seulement s’il est rempli
+    if (a.courriel.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     return e;
   }
   function formatPostal(v) { return v.toUpperCase().replace(/\s|-/g, '').replace(/^(...)/, '$1 '); }
+  function splitName(full) {
+    var parts = full.trim().split(/\s+/);
+    return { first: parts[0] || '', last: parts.slice(1).join(' ') };
+  }
 
+  var shownStep = -1;
   function render() {
-    // étape visible
+    // étape visible, avec transition douce quand elle change
     steps.forEach(function (el, i) { el.hidden = i !== est.step; });
-    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.step + 1) + ' sur 5';
+    if (shownStep !== est.step) {
+      var cur = steps[est.step];
+      if (shownStep !== -1) {
+        cur.classList.remove('step-in', 'step-in-back');
+        void cur.offsetWidth; // relance l’animation
+        cur.classList.add(est.step < shownStep ? 'step-in-back' : 'step-in');
+        var top = card.getBoundingClientRect().top;
+        if (top < 72) card.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+      shownStep = est.step;
+    }
+    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.step + 1) + ' sur ' + STEP_NAMES.length;
     $('[data-est-stepname]', form).textContent = STEP_NAMES[est.step];
-    var pct = Math.round((est.step + 1) / 5 * 100);
+    var pct = Math.round((est.step + 1) / STEP_NAMES.length * 100);
     $('[data-est-barfill]', form).style.width = pct + '%';
     $('[data-est-bar]', form).setAttribute('aria-valuenow', String(pct));
     // choix
@@ -166,12 +183,10 @@
     // pied de formulaire
     $('[data-est-back]', form).hidden = est.step === 0;
     $('[data-est-free]', form).hidden = est.step !== 0;
-    $('[data-est-next]', form).hidden = est.step !== 3;
     submitBtn.hidden = est.step !== LAST;
     $('[data-est-note]', form).hidden = est.step !== LAST;
-    $('[data-win-err]', form).hidden = !est.winErr;
     submitBtn.disabled = est.sending;
-    submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation';
+    submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation gratuite';
     // erreurs de champs
     var errs = est.showErr ? errors() : {};
     $$('[data-field]', form).forEach(function (inp) {
@@ -192,28 +207,22 @@
     });
   });
 
+  // un choix fait passer à l’étape suivante (la dernière étape de choix mène aux coordonnées)
   var pickTimer;
   $$('.opt', form).forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.closest('fieldset[data-key]').getAttribute('data-key');
-      var val = btn.getAttribute('data-value');
-      if (key === 'superficie') {
-        est.a.superficie = est.a.superficie === val ? '' : val;
-        persist(); render();
-        return;
-      }
-      est.a[key] = val;
+      est.a[key] = btn.getAttribute('data-value');
       persist();
-      if (key === 'fenetres') { est.winErr = false; render(); return; }
       render();
       clearTimeout(pickTimer);
       pickTimer = setTimeout(function () { est.step = Math.min(est.step + 1, LAST); render(); }, 220);
     });
   });
-  $('[data-est-back]', form).addEventListener('click', function () { est.step = Math.max(0, est.step - 1); render(); });
-  $('[data-est-next]', form).addEventListener('click', function () {
-    if (!est.a.fenetres) { est.winErr = true; render(); return; }
-    est.step = LAST; render();
+  $('[data-est-back]', form).addEventListener('click', function () {
+    clearTimeout(pickTimer);
+    est.step = Math.max(0, est.step - 1);
+    render();
   });
   form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
 
@@ -221,7 +230,7 @@
   function showSendError(on) { $('[data-send-err]', form).hidden = !on; }
 
   function submit() {
-    if (est.sending) return;
+    if (est.sending || est.submitted) return;          // jamais deux envois (ni deux Lead)
     if (hpInput.value) { finish(); return; }          // robot : on fait semblant sans rien envoyer
     if (Object.keys(errors()).length) {
       est.showErr = true; render();
@@ -231,13 +240,21 @@
     }
     var a = est.a;
     var postal = formatPostal(a.codePostal);
+    var eventId = newEventId();
     est.sending = true; showSendError(false); render();
 
     var data = new FormData(form);
+    data.set('nom_complet', a.nomComplet.trim());
     data.set('code_postal', postal);
+    if (!a.courriel.trim()) data.delete('email');      // courriel facultatif
     data.set('source', 'landing-residentiel');
     data.set('page', location.href);
     data.set('date', new Date().toISOString());
+    // références Meta, utiles pour qualifier le lead plus tard
+    data.set('lead_event_id', eventId);
+    var fbp = getCookie('_fbp'), fbc = getCookie('_fbc');
+    if (fbp) data.set('fbp', fbp);
+    if (fbc) data.set('fbc', fbc);
 
     var url = form.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
     fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data })
@@ -250,7 +267,7 @@
         });
       })
       .then(function () {
-        trackLead(a, postal);
+        trackLead(a, postal, eventId, fbp, fbc);        // Lead : seulement après un envoi réussi
         try { localStorage.removeItem(KEY); } catch (e) {}
         finish();
       })
@@ -259,9 +276,11 @@
       });
   }
 
-  function trackLead(a, postal) {
-    var eventId = newEventId();
-    track('Lead', { content_name: 'Estimation résidentielle', probleme: a.probleme, delai: a.delai }, { eventID: eventId });
+  function trackLead(a, postal, eventId, fbp, fbc) {
+    var answers = { probleme: a.probleme, delai: a.delai, nombre_fenetres: a.fenetres };
+    // même eventId côté navigateur et côté serveur : Meta dédoublonne
+    track('Lead', Object.assign({ content_name: 'Estimation résidentielle', form_version: 'v5' }, answers), { eventID: eventId });
+    var name = splitName(a.nomComplet);
     try {
       fetch('/api/capi-lead', {
         method: 'POST',
@@ -271,13 +290,14 @@
           eventId: eventId,
           eventSourceUrl: location.href,
           contentName: 'Estimation résidentielle',
-          email: a.courriel,
+          answers: answers,
+          email: a.courriel.trim(),
           phone: a.telephone,
-          firstName: a.prenom,
-          lastName: a.nom,
+          firstName: name.first,
+          lastName: name.last,
           zip: postal,
-          fbp: getCookie('_fbp'),
-          fbc: getCookie('_fbc')
+          fbp: fbp,
+          fbc: fbc
         })
       }).catch(function () {});
     } catch (e) {}
@@ -287,7 +307,7 @@
     est.sending = false; est.submitted = true;
     form.hidden = true;
     var thanks = $('[data-est-thanks]');
-    var prenom = est.a.prenom.trim();
+    var prenom = splitName(est.a.nomComplet).first;
     $('[data-thanks-title]', thanks).textContent = prenom ? 'Merci, ' + prenom + '.' : 'Merci.';
     $('[data-thanks-phone]', thanks).textContent = est.a.telephone || 'numéro indiqué';
     thanks.hidden = false;

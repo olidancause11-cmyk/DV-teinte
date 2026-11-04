@@ -302,3 +302,12 @@ section[id]{scroll-margin-top:72px;}
   .hero-cta .btn-blue{justify-content:flex-start;height:58px;gap:14px;padding:0 26px;}
   .hero-tag{font-size:13px;color:#7D8288;text-align:left;}
 }
+
+/* Formulaire 4 étapes : transitions, cibles tactiles */
+.opt-label{color:#7D8288;font-weight:400;}
+.est-step.step-in{animation:stepIn .28s ease both;}
+.est-step.step-in-back{animation:stepInBack .28s ease both;}
+@keyframes stepIn{from{opacity:0;transform:translateX(14px);}to{opacity:1;transform:none;}}
+@keyframes stepInBack{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){.est-step.step-in,.est-step.step-in-back{animation:none;}}
+@media (max-width:1079px){.opt{min-height:62px;font-size:17px;}.est-body{padding-top:26px;}}

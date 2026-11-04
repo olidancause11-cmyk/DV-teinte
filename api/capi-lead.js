@@ -1,21 +1,7 @@
-const crypto = require('crypto');
+const { buildUserData, parseBody, sendEvent } = require('./_meta');
 
-function sha256(value) {
-  return crypto.createHash('sha256').update(value).digest('hex');
-}
-function normEmail(v) { return v ? String(v).trim().toLowerCase() : ''; }
-function normName(v) { return v ? String(v).trim().toLowerCase() : ''; }
-function normZip(v) {
-  if (!v) return '';
-  return String(v).toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-function normPhone(v) {
-  if (!v) return '';
-  var digits = String(v).replace(/\D/g, '');
-  if (digits.length === 10) digits = '1' + digits;
-  return digits;
-}
-
+// Événement « Lead » envoyé par le serveur, avec le même event_id que le pixel du navigateur
+// (Meta dédoublonne). Le navigateur ne l'appelle qu'après un envoi réussi du formulaire.
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ success: false, error: 'method_not_allowed' });
@@ -30,32 +16,15 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    var body = req.body;
-    if (typeof body === 'string') {
-      try { body = JSON.parse(body); } catch (e) { body = {}; }
-    }
-    body = body || {};
+    var body = parseBody(req);
 
     var forwardedFor = req.headers['x-forwarded-for'] || '';
     var clientIp = (forwardedFor.split(',')[0] || '').trim() || (req.socket && req.socket.remoteAddress) || '';
     var userAgent = req.headers['user-agent'] || '';
 
-    var userData = {};
-    var email = normEmail(body.email);
-    if (email) userData.em = [sha256(email)];
-    var phone = normPhone(body.phone);
-    if (phone) userData.ph = [sha256(phone)];
-    var firstName = normName(body.firstName);
-    if (firstName) userData.fn = [sha256(firstName)];
-    var lastName = normName(body.lastName);
-    if (lastName) userData.ln = [sha256(lastName)];
-    var zip = normZip(body.zip);
-    if (zip) userData.zp = [sha256(zip)];
-    userData.country = [sha256('ca')];
+    var userData = buildUserData(body);
     if (clientIp) userData.client_ip_address = clientIp;
     if (userAgent) userData.client_user_agent = userAgent;
-    if (body.fbp) userData.fbp = body.fbp;
-    if (body.fbc) userData.fbc = body.fbc;
 
     var event = {
       event_name: 'Lead',
@@ -63,19 +32,23 @@ module.exports = async function handler(req, res) {
       action_source: 'website',
       user_data: userData
     };
-    if (body.contentName) event.custom_data = { content_name: String(body.contentName).slice(0, 100) };
-    if (body.eventId) event.event_id = body.eventId;
+
+    // Réponses du formulaire, enregistrées avec le lead
+    var custom = {};
+    if (body.contentName) custom.content_name = String(body.contentName).slice(0, 100);
+    var answers = body.answers && typeof body.answers === 'object' ? body.answers : {};
+    ['probleme', 'delai', 'nombre_fenetres'].forEach(function (k) {
+      if (answers[k]) custom[k] = String(answers[k]).slice(0, 100);
+    });
+    custom.form_version = 'v5';
+    event.custom_data = custom;
+
+    if (body.eventId) event.event_id = String(body.eventId).slice(0, 100);
     if (body.eventSourceUrl) event.event_source_url = body.eventSourceUrl;
 
-    var metaRes = await fetch('https://graph.facebook.com/v20.0/' + pixelId + '/events', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ data: [event], access_token: token })
-    });
-    var metaJson = await metaRes.json().catch(function () { return {}; });
-
-    if (!metaRes.ok) console.error('Meta CAPI error', metaJson);
-    res.status(200).json({ success: metaRes.ok, meta: metaJson });
+    var result = await sendEvent(pixelId, token, event);
+    if (!result.ok) console.error('Meta CAPI error', result.json);
+    res.status(200).json({ success: result.ok, meta: result.json });
   } catch (err) {
     console.error('CAPI lead handler error', err);
     res.status(200).json({ success: false, error: String(err) });
