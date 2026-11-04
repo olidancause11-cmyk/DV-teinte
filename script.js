@@ -143,8 +143,7 @@
     var d = digits(a.telephone);
     if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) e.telephone = true;
     if (!/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(a.codePostal.trim())) e.codePostal = true;
-    // le courriel est facultatif : on le valide seulement s’il est rempli
-    if (a.courriel.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     return e;
   }
   function formatPostal(v) { return v.toUpperCase().replace(/\s|-/g, '').replace(/^(...)/, '$1 '); }
@@ -246,7 +245,6 @@
     var data = new FormData(form);
     data.set('nom_complet', a.nomComplet.trim());
     data.set('code_postal', postal);
-    if (!a.courriel.trim()) data.delete('email');      // courriel facultatif
     data.set('source', 'landing-residentiel');
     data.set('page', location.href);
     data.set('date', new Date().toISOString());
