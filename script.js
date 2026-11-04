@@ -254,16 +254,8 @@
     if (fbp) data.set('fbp', fbp);
     if (fbc) data.set('fbc', fbc);
 
-    var url = form.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
-    fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data })
-      .then(function (res) {
-        return res.text().then(function (text) {
-          var json = null;
-          try { json = JSON.parse(text); } catch (e) {}
-          var ok = res.ok && json && (json.success === true || json.success === 'true');
-          if (!ok) throw new Error(json && json.message ? json.message : 'bad response');
-        });
-      })
+    // Livraison du courriel : FormSubmit d'abord, puis Web3Forms en secours si FormSubmit est en panne.
+    deliver(data)
       .then(function () {
         trackLead(a, postal, eventId, fbp, fbc);        // Lead : seulement après un envoi réussi
         try { localStorage.removeItem(KEY); } catch (e) {}
@@ -272,6 +264,48 @@
       .catch(function () {
         est.sending = false; render(); showSendError(true);
       });
+  }
+
+  function withTimeout(ms, run) {
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, ms);
+    return run(ctrl ? ctrl.signal : undefined).then(
+      function (v) { clearTimeout(timer); return v; },
+      function (e) { clearTimeout(timer); throw e; }
+    );
+  }
+  function readJson(res) {
+    return res.text().then(function (text) {
+      var json = null;
+      try { json = JSON.parse(text); } catch (e) {}
+      var ok = res.ok && json && (json.success === true || json.success === 'true');
+      if (!ok) throw new Error(json && json.message ? json.message : 'bad response');
+    });
+  }
+  function viaFormSubmit(data) {
+    var url = form.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+    return withTimeout(7000, function (signal) {
+      return fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data, signal: signal }).then(readJson);
+    });
+  }
+  // Clé d'accès Web3Forms : publique par conception (elle sert côté navigateur), liée à l'adresse de réception.
+  var WEB3FORMS_KEY = '4db52b51-8dac-4cd9-9f70-117dba6fbf82';
+  function viaWeb3Forms(data) {
+    var payload = { access_key: WEB3FORMS_KEY, subject: 'Nouvelle demande d’estimation — DV Teinte', from_name: 'Site DV Teinte', botcheck: '' };
+    data.forEach(function (value, key) {
+      if (key.charAt(0) === '_') return;               // champs de configuration FormSubmit
+      payload[key] = value;
+    });
+    if (payload.nom_complet) payload.name = payload.nom_complet;
+    return withTimeout(10000, function (signal) {
+      return fetch('https://api.web3forms.com/submit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload), signal: signal
+      }).then(readJson);
+    });
+  }
+  function deliver(data) {
+    return viaFormSubmit(data).catch(function () { return viaWeb3Forms(data); });
   }
 
   function trackLead(a, postal, eventId, fbp, fbc) {
