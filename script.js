@@ -307,10 +307,8 @@
     est.sending = false; est.submitted = true;
     form.hidden = true;
     var thanks = $('[data-est-thanks]');
-    var prenom = splitName(est.a.nomComplet).first;
-    $('[data-thanks-title]', thanks).textContent = prenom ? 'Merci, ' + prenom + '.' : 'Merci.';
-    $('[data-thanks-phone]', thanks).textContent = est.a.telephone || 'numéro indiqué';
     thanks.hidden = false;
+    if (card.getBoundingClientRect().top < 72) card.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
 
   /* ----- Visibilité du formulaire : ViewContent + barre collante ----- */

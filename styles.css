@@ -311,3 +311,11 @@ section[id]{scroll-margin-top:72px;}
 @keyframes stepInBack{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:none;}}
 @media (prefers-reduced-motion:reduce){.est-step.step-in,.est-step.step-in-back{animation:none;}}
 @media (max-width:1079px){.opt{min-height:62px;font-size:17px;}.est-body{padding-top:26px;}}
+
+/* Page de confirmation */
+.est-thanks{align-items:center;text-align:center;gap:18px;}
+.est-thanks h3{font-size:clamp(26px,6vw,34px);line-height:1.15;}
+.est-thanks p{max-width:30ch;}
+.est-thanks .thanks-lead{font-size:18px;color:#E2E0DB;}
+.thanks-number{width:100%;max-width:440px;padding:clamp(22px,6vw,32px) 12px;background:#F2F0EB;color:#0E1012;border:3px solid #5B9AD0;border-radius:8px;font-size:clamp(38px,11.5vw,56px);font-weight:700;letter-spacing:-.02em;line-height:1;white-space:nowrap;text-align:center;}
+.est-thanks .thanks-tip{font-size:16px;font-weight:500;color:#8DB8DE;}
