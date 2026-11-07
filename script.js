@@ -80,6 +80,42 @@
     paintDots();
   }
 
+  /* ===== Avis : « Lire la suite » sur mobile (les mots des clients ne sont pas modifiés) ===== */
+  if (track$) {
+    var revMq = window.matchMedia('(max-width:1079px)');
+    var revItems = $$('.rev-card', track$).map(function (card) {
+      var q = $('blockquote', card);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rev-more';
+      btn.hidden = true;
+      btn.textContent = 'Lire la suite';
+      btn.setAttribute('aria-expanded', 'false');
+      q.insertAdjacentElement('afterend', btn);
+      var item = { q: q, btn: btn, open: false };
+      btn.addEventListener('click', function () {
+        item.open = !item.open;
+        q.classList.toggle('is-clamped', !item.open);
+        btn.textContent = item.open ? 'Réduire' : 'Lire la suite';
+        btn.setAttribute('aria-expanded', String(item.open));
+      });
+      return item;
+    });
+    var measureRev = function () {
+      revItems.forEach(function (it) {
+        if (!revMq.matches) { it.q.classList.remove('is-clamped'); it.btn.hidden = true; return; }
+        it.q.classList.toggle('is-clamped', !it.open);
+        // le bouton n'apparaît que si le texte dépasse réellement la zone repliée
+        var overflow = it.open || it.q.scrollHeight > it.q.clientHeight + 2;
+        it.btn.hidden = !overflow;
+      });
+    };
+    var revTimer;
+    window.addEventListener('resize', function () { clearTimeout(revTimer); revTimer = setTimeout(measureRev, 150); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureRev);
+    measureRev();
+  }
+
   /* ===== Hero : parallaxe subtile à la souris (ordinateur seulement) ===== */
   var heroEl = $('.hero');
   var canParallax = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px) and (prefers-reduced-motion:no-preference)').matches;
