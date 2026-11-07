@@ -55,20 +55,6 @@
   if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
   onScroll();
 
-  /* ===== Curseur avant / après ===== */
-  var ba = $('[data-ba]');
-  if (ba) {
-    var baClip = $('[data-ba-clip]', ba), baLine = $('[data-ba-line]', ba), baKnob = $('[data-ba-knob]', ba), baRange = $('[data-ba-range]', ba);
-    var setBa = function (pos) {
-      baClip.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
-      baLine.style.left = pos + '%';
-      baKnob.style.left = pos + '%';
-    };
-    baRange.addEventListener('input', function (e) { setBa(+e.target.value); });
-    baRange.addEventListener('change', function (e) { setBa(+e.target.value); });
-    setBa(+baRange.value);
-  }
-
   /* ===== Carrousel d’avis ===== */
   var track$ = $('[data-rev-track]');
   if (track$) {
@@ -144,26 +130,36 @@
     });
   }
 
-  /* ===== Vue intérieure / extérieure ===== */
-  var vueTabs = $('[data-vue-tabs]');
-  if (vueTabs) {
-    var vueBtns = $$('[data-vue]', vueTabs);
-    var showVue = function (btn, focus) {
-      vueBtns.forEach(function (b) {
-        var on = b === btn;
+  /* ===== Démonstration : onglets extérieur / intérieur / avec ou sans ===== */
+  var demoTabs = $('[data-demo-tabs]');
+  if (demoTabs) {
+    var demoBtns = $$('[data-demo]', demoTabs);
+    var showDemo = function (btn, focus) {
+      var key = btn.getAttribute('data-demo');
+      demoBtns.forEach(function (b) {
+        var on = b === btn, k = b.getAttribute('data-demo');
         b.setAttribute('aria-selected', String(on));
         b.tabIndex = on ? 0 : -1;
-        $('#vue-' + b.getAttribute('data-vue')).hidden = !on;
+        var view = $('#demo-view-' + k);
+        view.classList.toggle('is-on', on);
+        view.setAttribute('aria-hidden', String(!on));
+        $('[data-caption="' + k + '"]').classList.toggle('is-on', on);
       });
       if (focus) btn.focus();
+      return key;
     };
-    vueBtns.forEach(function (b, i) {
-      b.addEventListener('click', function () { showVue(b); });
+    demoBtns.forEach(function (b, i) {
+      b.addEventListener('click', function () { showDemo(b); });
       b.addEventListener('keydown', function (e) {
-        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
         e.preventDefault();
-        showVue(vueBtns[(i + 1) % vueBtns.length], true);
+        showDemo(demoBtns[(i + d + demoBtns.length) % demoBtns.length], true);
       });
+    });
+    // l'ancien lien « Avant / après » du menu ouvre directement la comparaison avec / sans
+    $$('a[href="#realisations"]').forEach(function (a) {
+      a.addEventListener('click', function () { showDemo($('[data-demo="cmp"]', demoTabs)); });
     });
   }
 

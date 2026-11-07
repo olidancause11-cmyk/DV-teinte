@@ -89,34 +89,41 @@ fbq('track', 'PageView');
     </div>
   </section>
 
-  <!-- ============ INTIMITÉ ============ -->
-  <section id="pellicules" class="sec-line" data-screen-label="Intimité">
-    <div class="intim-head">
-      <div class="stack-18">
-        <p class="eyebrow">Est-ce que je vois encore dehors?</p>
-        <h2 class="h2">La lumière entre.<br />Les regards restent dehors.</h2>
+  <!-- ============ DÉMONSTRATION : EXTÉRIEUR / INTÉRIEUR / AVEC OU SANS ============ -->
+  <section id="pellicules" class="demo" data-screen-label="Démonstration">
+    <span id="realisations" class="demo-anchor" aria-hidden="true"></span>
+    <div class="demo-in">
+      <div class="demo-head">
+        <h2 class="demo-title">Plus d’intimité, sans vivre les rideaux fermés.</h2>
+        <p class="demo-sub">Voyez par vous-même ce que ça donne de l’intérieur et de l’extérieur.</p>
       </div>
-      <p class="intim-note">L’effet miroir dépend de la différence de luminosité entre l’intérieur et l’extérieur et fonctionne principalement pendant la journée.</p>
-    </div>
-    <div class="vue-tabs" role="tablist" aria-label="Choisir la vue" data-vue-tabs>
-      <button type="button" role="tab" id="tab-int" aria-controls="vue-int" aria-selected="true" data-vue="int">Vue intérieure</button>
-      <button type="button" role="tab" id="tab-ext" aria-controls="vue-ext" aria-selected="false" tabindex="-1" data-vue="ext">Vue extérieure</button>
-    </div>
-    <div class="intim-grid">
-      <figure class="intim-fig" id="vue-int" role="tabpanel" aria-labelledby="tab-int">
-        <img src="./assets/photos/vue-interieur.jpg" alt="Vue de l’intérieur à travers une fenêtre traitée : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" />
-        <figcaption>
-          <span class="fig-eyebrow">De l’intérieur</span>
-          <span class="fig-title" style="max-width:22ch">Vous gardez votre vue vers l’extérieur.</span>
-        </figcaption>
-      </figure>
-      <figure class="intim-fig" id="vue-ext" role="tabpanel" aria-labelledby="tab-ext" hidden>
-        <img src="./assets/photos/brique-exterieur.jpg" alt="Fenêtre traitée vue de l’extérieur : le verre reflète le ciel et les arbres" style="object-position:50% 38%" width="1600" height="2133" loading="lazy" decoding="async" />
-        <figcaption>
-          <span class="fig-eyebrow">De l’extérieur</span>
-          <span class="fig-title" style="max-width:26ch">L’effet miroir augmente fortement votre intimité pendant la journée.</span>
-        </figcaption>
-      </figure>
+
+      <div class="demo-tabs" role="tablist" aria-label="Choisir la démonstration" data-demo-tabs>
+        <button type="button" role="tab" id="demo-tab-ext" aria-controls="demo-view-ext" aria-selected="true" data-demo="ext">Vue extérieure</button>
+        <button type="button" role="tab" id="demo-tab-int" aria-controls="demo-view-int" aria-selected="false" tabindex="-1" data-demo="int">Vue intérieure</button>
+        <button type="button" role="tab" id="demo-tab-cmp" aria-controls="demo-view-cmp" aria-selected="false" tabindex="-1" data-demo="cmp">Avec ou sans pellicule</button>
+      </div>
+
+      <div class="demo-frame">
+        <figure class="demo-view is-on" id="demo-view-ext" role="tabpanel" aria-labelledby="demo-tab-ext">
+          <img src="./assets/photos/exterieur-miroir.jpg" alt="Fenêtres avec pellicule miroir vues de l’extérieur, en plein jour : le vitrage reflète le ciel" width="1091" height="1527" loading="eager" decoding="async" style="object-position:50% 32%" />
+        </figure>
+        <figure class="demo-view" id="demo-view-int" role="tabpanel" aria-labelledby="demo-tab-int" aria-hidden="true">
+          <img src="./assets/photos/vue-interieur.jpg" alt="Vue de l’intérieur à travers une fenêtre avec pellicule : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" style="object-position:50% 50%" />
+        </figure>
+        <figure class="demo-view" id="demo-view-cmp" role="tabpanel" aria-labelledby="demo-tab-cmp" aria-hidden="true">
+          <img src="./assets/photos/avec-sans-pellicule.jpg" alt="Deux fenêtres côte à côte vues de l’intérieur : à gauche avec pellicule, à droite sans pellicule" width="1080" height="1920" loading="lazy" decoding="async" style="object-position:50% 45%" />
+        </figure>
+        <span class="demo-badge">Photos de vraies installations DV Teinte</span>
+      </div>
+
+      <div class="demo-captions" aria-live="polite">
+        <p class="demo-caption is-on" data-caption="ext">Plus difficile de voir chez vous quand il fait clair dehors.</p>
+        <p class="demo-caption" data-caption="int">Vous continuez de profiter de votre vue sur dehors.</p>
+        <p class="demo-caption" data-caption="cmp">Voyez la différence de luminosité par vous-même.</p>
+      </div>
+
+      <a href="#formulaire" class="demo-cta">Trouver la bonne pellicule pour mes fenêtres</a>
     </div>
   </section>
 
@@ -172,27 +179,6 @@ fbq('track', 'PageView');
     <div class="solu-cta">
       <a href="#formulaire" class="btn-cream">Demander mon estimation<span aria-hidden="true">→</span></a>
       <p>On recommande la bonne pellicule pour vous lors de l’estimation. Gratuit et sans engagement.</p>
-    </div>
-  </section>
-
-  <!-- ============ AVANT / APRÈS ============ -->
-  <section id="realisations" class="ba-sec" data-screen-label="Avant / après">
-    <div class="stack-22">
-      <p class="eyebrow">Avant / après</p>
-      <h2 class="h2">Voyez la différence.</h2>
-      <p class="lede">Des installations chez de vrais propriétaires. La même fenêtre, photographiée de l’extérieur avant et après. Glissez pour comparer.</p>
-      <a href="#formulaire" class="btn-blue btn-mt">Demander mon estimation<span aria-hidden="true">→</span></a>
-    </div>
-    <div class="ba" data-ba>
-      <img src="./assets/photos/facade-apres.jpg" alt="Même façade après l’installation : les fenêtres reflètent le ciel et les arbres" loading="lazy" decoding="async" draggable="false" />
-      <div class="ba-clip" data-ba-clip>
-        <img src="./assets/photos/facade-avant.jpg" alt="Façade avant l’installation : rideaux visibles à travers les fenêtres" loading="lazy" decoding="async" draggable="false" />
-      </div>
-      <div class="ba-line" data-ba-line></div>
-      <div class="ba-knob" data-ba-knob>‹›</div>
-      <span class="ba-tag ba-tag-l">AVANT</span>
-      <span class="ba-tag ba-tag-r">APRÈS</span>
-      <input type="range" min="0" max="100" value="50" aria-label="Comparer avant et après l’installation" data-ba-range />
     </div>
   </section>
 

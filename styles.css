@@ -72,30 +72,10 @@ section[id]{scroll-margin-top:72px;}
 .hero-tag{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9A9FA5;font-weight:500;text-align:center;}
 
 /* ===== Intimité ===== */
-.sec-line{border-top:1px solid rgba(255,255,255,.08);}
-.intim-head{max-width:1320px;margin:0 auto;padding:clamp(72px,10vw,140px) clamp(18px,4vw,48px) clamp(36px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px 64px;align-items:end;}
-.intim-note{font-size:15px;line-height:1.6;color:#8B9096;max-width:44ch;}
-.intim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:2px;}
-.intim-fig{position:relative;aspect-ratio:1/1;max-height:88vh;width:100%;overflow:hidden;background:#16191C;}
-.intim-fig img{width:100%;height:100%;object-fit:cover;}
-.intim-fig figcaption{position:absolute;left:0;right:0;bottom:0;padding:clamp(20px,3vw,36px);background:linear-gradient(0deg,rgba(14,16,18,.88) 0%,rgba(14,16,18,0) 100%);display:flex;flex-direction:column;gap:8px;}
-.fig-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#8DB8DE;}
-.fig-title{font-size:clamp(20px,2vw,28px);font-weight:500;line-height:1.2;letter-spacing:-.015em;color:#fff;}
 
 /* ===== Problèmes réglés ===== */
 .cols-3{display:grid;grid-template-columns:minmax(0,1fr);gap:0 48px;}
 
-/* ===== Avant / après ===== */
-.ba-sec{max-width:1320px;margin:0 auto;padding:clamp(72px,10vw,140px) clamp(18px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(36px,6vw,96px);align-items:center;}
-.ba{position:relative;width:100%;max-width:min(560px,calc(84vh * 0.8));justify-self:center;aspect-ratio:4/5;overflow:hidden;border-radius:4px;user-select:none;-webkit-user-select:none;background:#16191C;touch-action:pan-y;}
-.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;}
-.ba-clip{position:absolute;inset:0;clip-path:inset(0 50% 0 0);}
-.ba-line{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#fff;pointer-events:none;}
-.ba-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:#fff;color:#0E1012;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;letter-spacing:2px;pointer-events:none;}
-.ba-tag{position:absolute;top:14px;color:#fff;font-size:12px;font-weight:600;letter-spacing:.14em;padding:7px 11px;border-radius:3px;pointer-events:none;}
-.ba-tag-l{left:14px;background:rgba(14,16,18,.8);}
-.ba-tag-r{right:14px;background:#2E6CA0;}
-.ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;}
 
 /* ===== Comment ça marche ===== */
 .how{background:#15181B;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);}
@@ -318,24 +298,7 @@ section[id]{scroll-margin-top:72px;}
 .hero-rating .rev-stars{font-size:16px;}
 .hero-rating:hover span:last-child{text-decoration:underline;text-underline-offset:3px;}
 
-/* Section « Est-ce que je vois encore dehors? » : version compacte */
-#pellicules .intim-head{padding:clamp(48px,6vw,80px) clamp(18px,4vw,48px) clamp(24px,3vw,36px);gap:16px 48px;}
-#pellicules .h2{font-size:clamp(30px,3.6vw,46px);}
-#pellicules .intim-fig{aspect-ratio:4/3;max-height:none;}
-#pellicules .intim-fig figcaption{padding:clamp(14px,2vw,22px);gap:6px;}
-#pellicules .fig-title{font-size:clamp(17px,1.6vw,22px);}
-@media (min-width:1080px){#pellicules .intim-fig{aspect-ratio:16/10;}}
 
-/* Vue intérieure / extérieure : un seul visuel à la fois */
-.vue-tabs{max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,48px) 16px;display:flex;gap:8px;}
-.vue-tabs button{flex:1 1 0;min-height:48px;padding:0 18px;border-radius:4px;background:#0E1012;border:1px solid rgba(255,255,255,.18);color:#C4C7CC;font:inherit;font-size:16px;font-weight:500;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
-.vue-tabs button:hover{border-color:rgba(255,255,255,.45);color:#fff;}
-.vue-tabs button[aria-selected="true"]{background:#F2F0EB;border-color:#F2F0EB;color:#0E1012;font-weight:600;}
-#pellicules .intim-grid{max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,48px) clamp(48px,6vw,80px);display:block;}
-#pellicules .intim-fig{aspect-ratio:4/3;border-radius:4px;}
-#pellicules .intim-fig[hidden]{display:none;}
-@media (min-width:700px){.vue-tabs button{flex:0 0 auto;min-width:200px;}#pellicules .intim-fig{aspect-ratio:16/9;}}
-@media (min-width:1080px){#pellicules .intim-fig{aspect-ratio:21/9;}}
 
 
 /* ===== Hero « Glass Reveal » : façade vitrée, caméra lente, reflets et ligne cyan ===== */
@@ -443,4 +406,34 @@ section[id]{scroll-margin-top:72px;}
   .solu-tabs button{min-height:112px;padding:20px 22px;border-left-width:1px;border-top:3px solid rgba(255,255,255,.14);justify-content:space-between;}
   .solu-tabs button[aria-selected="true"]{border-top-color:#5B9AD0;}
   .solu-panel{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;}
+}
+/* ===== Démonstration : extérieur / intérieur / avec ou sans (section claire) ===== */
+.demo{--demo-blue:#295F8D;background:#F4F2EE;color:#0E1012;}
+.demo-anchor{display:block;height:0;scroll-margin-top:72px;}
+.demo-in{max-width:760px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;}
+.demo-head{display:flex;flex-direction:column;gap:12px;align-items:center;}
+.demo-title{font-size:clamp(30px,4.6vw,52px);line-height:1.02;font-weight:500;letter-spacing:-.035em;color:#0E1012;text-wrap:balance;}
+.demo-sub{font-size:clamp(16px,1.6vw,18px);line-height:1.5;color:#4A4F55;max-width:44ch;}
+.demo-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin-top:4px;}
+.demo-tabs button{min-height:52px;padding:8px 6px;border-radius:4px;background:transparent;border:1px solid rgba(14,16,18,.22);color:#0E1012;font:inherit;font-size:14px;font-weight:500;line-height:1.2;cursor:pointer;transition:background .25s ease,border-color .25s ease,color .25s ease;}
+.demo-tabs button:hover{border-color:var(--demo-blue);}
+.demo-tabs button[aria-selected="true"]{background:var(--demo-blue);border-color:var(--demo-blue);color:#fff;font-weight:600;}
+.demo-tabs button:focus-visible,.demo-cta:focus-visible{outline:2px solid var(--demo-blue);outline-offset:3px;}
+.demo-frame{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:4px;background:#E4E1DA;}
+.demo-view{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s;}
+.demo-view.is-on{opacity:1;visibility:visible;transition:opacity .25s ease;}
+.demo-view img{width:100%;height:100%;object-fit:cover;display:block;}
+.demo-badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.94);color:#0E1012;font-size:11px;font-weight:600;letter-spacing:.04em;padding:6px 10px;border-radius:3px;pointer-events:none;}
+.demo-captions{display:grid;width:100%;min-height:3em;}
+.demo-caption{grid-area:1/1;margin:0;font-size:clamp(16px,1.6vw,19px);line-height:1.45;font-weight:500;color:#0E1012;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s;}
+.demo-caption.is-on{opacity:1;visibility:visible;transition:opacity .25s ease;}
+.demo-cta{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;padding:0 24px;border-radius:4px;background:var(--demo-blue);color:#fff;font-weight:600;font-size:17px;text-align:center;transition:background .2s ease;}
+.demo-cta:hover{background:#1F4A6E;color:#fff;}
+@media (prefers-reduced-motion:reduce){.demo-view,.demo-caption,.demo-tabs button{transition:none;}}
+@media (min-width:700px){
+  .demo-in{gap:24px;}
+  .demo-tabs{gap:8px;}
+  .demo-tabs button{font-size:16px;min-height:56px;}
+  .demo-frame{max-width:520px;}
+  .demo-cta{width:auto;min-width:420px;}
 }
