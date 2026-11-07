@@ -222,6 +222,70 @@
     }
   }
 
+  /* ===== Défilement cinématographique : la progression du scroll pilote révélations et profondeur ===== */
+  (function () {
+    if (!window.matchMedia('(prefers-reduced-motion:no-preference)').matches) return;
+    var items = [];
+    var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+    // kind : rise (montée douce), wipe (rideau gauche → droite), photo (masque en fenêtre), parallax (profondeur)
+    var add = function (sel, kind, start, end) {
+      $$(sel).forEach(function (el) {
+        if (el.getAttribute('data-sc')) return;
+        el.setAttribute('data-sc', kind);
+        items.push({ el: el, kind: kind, s: start, e: end, top: 0, h: 0, v: -1 });
+      });
+    };
+    // titres : rideau
+    add('.demo-title, .solu-title, .rev-head .h2, .trust-title, .proc-title, .est-sec .h2, .faq-in .h2, .final-title', 'wipe', 0.98, 0.7);
+    // photographies : masque en forme de fenêtre qui s'ouvre
+    add('.demo-frame', 'photo', 0.98, 0.42);
+    // profondeur sur l'arrière-plan du CTA final
+    add('.final', 'parallax');
+    // le reste : montée douce, chaque élément a sa propre progression (l'effet d'enchaînement vient du défilement)
+    add('.demo-head, .demo-tabs, .demo-captions, .demo-cta', 'rise', 0.98, 0.7);
+    add('.solu-head, .solu-tabs, .solu-panels, .solu-cta', 'rise', 0.98, 0.7);
+    add('.rev-head, .rev-track, .rev-ctrl', 'rise', 0.98, 0.7);
+    add('.trust-sub, .trust-item, .trust-cta', 'rise', 0.98, 0.72);
+    add('.proc-sub, .proc-step, .proc-cta', 'rise', 0.98, 0.72);
+    add('.est-sec .stack-22 > *, .est-card', 'rise', 0.98, 0.7);
+    add('.faq-in > div:first-child > *:not(h2), .faq-item', 'rise', 0.98, 0.78);
+    add('.final-p, .final .btn-blue', 'rise', 0.98, 0.75);
+    add('.footer-grid > div', 'rise', 1, 0.8);
+    if (!items.length) return;
+
+    var pageTop = function (el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; };
+    var docH = 0;
+    var measure = function () {
+      items.forEach(function (it) { it.top = pageTop(it.el); it.h = it.el.offsetHeight; });
+      docH = document.documentElement.scrollHeight;
+    };
+    var raf = 0;
+    var update = function () {
+      raf = 0;
+      var vh = window.innerHeight, sy = window.scrollY || window.pageYOffset || 0, maxS = Math.max(0, docH - vh);
+      items.forEach(function (it) {
+        var y = it.top - sy, p, q;
+        if (it.kind === 'parallax') { p = clamp((vh - y) / (vh + it.h)); q = p; }
+        else {
+          // un élément trop près du bas de page pour monter jusqu'au repère final se termine quand même en fin de défilement
+          var endY = Math.max(vh * it.e, it.top - maxS);
+          p = clamp((vh * it.s - y) / Math.max(1, vh * it.s - endY)); q = p * p * (3 - 2 * p);
+        }
+        if (Math.abs(q - it.v) > 0.002) { it.v = q; it.el.style.setProperty('--p', q.toFixed(3)); }
+      });
+    };
+    var kick = function () { if (!raf) raf = requestAnimationFrame(update); };
+
+    document.documentElement.classList.add('sc-on');
+    measure(); update();
+    window.addEventListener('scroll', kick, { passive: true });
+    var remeasure = function () { measure(); kick(); };
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', remeasure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
+  })();
+
   /* ===== FAQ ===== */
   var faq = $('[data-faq]');
   if (faq) {

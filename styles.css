@@ -643,3 +643,34 @@ section[id]{scroll-margin-top:72px;}
 
 /* avis : un peu d'air sous le carrousel avant le formulaire */
 .rev-sec{padding-bottom:clamp(44px,6vw,80px);}
+
+/* ===== Défilement cinématographique : mouvement piloté par le scroll (activé seulement si le mouvement est permis) ===== */
+html.sc-on{--sc-d:36px;}
+@media (max-width:1079px){html.sc-on{--sc-d:22px;}}
+
+/* montée douce : chaque élément avance avec sa propre progression */
+html.sc-on [data-sc="rise"]{transform:translateY(calc((1 - var(--p,1)) * var(--sc-d)));opacity:calc(var(--p,1) * 1.5);}
+
+/* titres : un rideau les découvre de gauche à droite, comme le voile d'ouverture du hero */
+html.sc-on [data-sc="wipe"]{clip-path:inset(-14% calc((1 - var(--p,1)) * 100%) -14% -2%);transform:translateX(calc((1 - var(--p,1)) * -22px));}
+
+/* photographies : masque en forme de fenêtre qui s'ouvre, image qui se stabilise, reflet qui glisse une fois */
+html.sc-on [data-sc="photo"]{clip-path:inset(calc((1 - var(--p,1)) * 22%) calc((1 - var(--p,1)) * 11%) round 4px);}
+html.sc-on [data-sc="photo"] .demo-view img{transform:scale(calc(1 + (1 - var(--p,1)) * .16));}
+html.sc-on [data-sc="photo"]::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.3) 50%,transparent 62%);
+  transform:translateX(calc(-110% + var(--p,1) * 220%));opacity:calc(var(--p,1) * (1 - var(--p,1)) * 3.2);}
+
+/* parcours : la ligne se trace et les numéros s'allument pendant qu'on avance */
+html.sc-on .proc-step[data-sc] .proc-num{opacity:calc(.3 + var(--p,1) * .7);}
+@media (min-width:1080px){
+  html.sc-on .proc-step[data-sc]:not(:last-child) .proc-num::after{transform-origin:left center;transform:scaleX(var(--p,1));}
+}
+/* garantie : le grand « 10 » se pose */
+html.sc-on .trust-item[data-sc] .trust-num{display:inline-block;transform-origin:left bottom;transform:scale(calc(1 + (1 - var(--p,1)) * .22));}
+
+/* CTA final : l'arrière-plan avance moins vite que la page */
+html.sc-on .final[data-sc="parallax"] > img{transform:translateY(calc((var(--p,.5) - .5) * -12%)) scale(1.14);}
+
+/* hero : en défilant, la façade s'assombrit et laisse place à la scène suivante */
+.hero-shade::after{content:"";position:absolute;inset:0;background:#0E1012;opacity:calc(var(--sp,0) * .75);pointer-events:none;}
