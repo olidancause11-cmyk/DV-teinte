@@ -91,15 +91,19 @@ fbq('track', 'PageView');
       </div>
       <p class="intim-note">L’effet miroir dépend de la différence de luminosité entre l’intérieur et l’extérieur et fonctionne principalement pendant la journée.</p>
     </div>
+    <div class="vue-tabs" role="tablist" aria-label="Choisir la vue" data-vue-tabs>
+      <button type="button" role="tab" id="tab-int" aria-controls="vue-int" aria-selected="true" data-vue="int">Vue intérieure</button>
+      <button type="button" role="tab" id="tab-ext" aria-controls="vue-ext" aria-selected="false" tabindex="-1" data-vue="ext">Vue extérieure</button>
+    </div>
     <div class="intim-grid">
-      <figure class="intim-fig">
+      <figure class="intim-fig" id="vue-int" role="tabpanel" aria-labelledby="tab-int">
         <img src="./assets/photos/vue-interieur.jpg" alt="Vue de l’intérieur à travers une fenêtre traitée : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" />
         <figcaption>
           <span class="fig-eyebrow">De l’intérieur</span>
           <span class="fig-title" style="max-width:22ch">Vous gardez votre vue vers l’extérieur.</span>
         </figcaption>
       </figure>
-      <figure class="intim-fig">
+      <figure class="intim-fig" id="vue-ext" role="tabpanel" aria-labelledby="tab-ext" hidden>
         <img src="./assets/photos/brique-exterieur.jpg" alt="Fenêtre traitée vue de l’extérieur : le verre reflète le ciel et les arbres" style="object-position:50% 38%" width="1600" height="2133" loading="lazy" decoding="async" />
         <figcaption>
           <span class="fig-eyebrow">De l’extérieur</span>

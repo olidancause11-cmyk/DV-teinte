@@ -94,6 +94,29 @@
     paintDots();
   }
 
+  /* ===== Vue intérieure / extérieure ===== */
+  var vueTabs = $('[data-vue-tabs]');
+  if (vueTabs) {
+    var vueBtns = $$('[data-vue]', vueTabs);
+    var showVue = function (btn, focus) {
+      vueBtns.forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+        $('#vue-' + b.getAttribute('data-vue')).hidden = !on;
+      });
+      if (focus) btn.focus();
+    };
+    vueBtns.forEach(function (b, i) {
+      b.addEventListener('click', function () { showVue(b); });
+      b.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        showVue(vueBtns[(i + 1) % vueBtns.length], true);
+      });
+    });
+  }
+
   /* ===== FAQ ===== */
   var faq = $('[data-faq]');
   if (faq) {

@@ -341,3 +341,14 @@ section[id]{scroll-margin-top:72px;}
 #pellicules .intim-fig figcaption{padding:clamp(14px,2vw,22px);gap:6px;}
 #pellicules .fig-title{font-size:clamp(17px,1.6vw,22px);}
 @media (min-width:1080px){#pellicules .intim-fig{aspect-ratio:16/10;}}
+
+/* Vue intérieure / extérieure : un seul visuel à la fois */
+.vue-tabs{max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,48px) 16px;display:flex;gap:8px;}
+.vue-tabs button{flex:1 1 0;min-height:48px;padding:0 18px;border-radius:4px;background:#0E1012;border:1px solid rgba(255,255,255,.18);color:#C4C7CC;font:inherit;font-size:16px;font-weight:500;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.vue-tabs button:hover{border-color:rgba(255,255,255,.45);color:#fff;}
+.vue-tabs button[aria-selected="true"]{background:#F2F0EB;border-color:#F2F0EB;color:#0E1012;font-weight:600;}
+#pellicules .intim-grid{max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,48px) clamp(48px,6vw,80px);display:block;}
+#pellicules .intim-fig{aspect-ratio:4/3;border-radius:4px;}
+#pellicules .intim-fig[hidden]{display:none;}
+@media (min-width:700px){.vue-tabs button{flex:0 0 auto;min-width:200px;}#pellicules .intim-fig{aspect-ratio:16/9;}}
+@media (min-width:1080px){#pellicules .intim-fig{aspect-ratio:21/9;}}
