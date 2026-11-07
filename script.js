@@ -154,38 +154,27 @@
     measureRev();
   }
 
-  /* ===== Hero : profondeur (souris sur ordinateur) et défilement (partout) ===== */
+  /* ===== Hero : léger effet de profondeur à la souris (ordinateur seulement, aucun lien avec le défilement) ===== */
   var heroEl = $('.hero');
   var motionOk = window.matchMedia('(prefers-reduced-motion:no-preference)').matches;
-  if (heroEl && motionOk) {
+  var canMouse = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px)').matches;
+  if (heroEl && motionOk && canMouse) {
     var pImg = $('.hero-media img', heroEl);
-    var canMouse = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px)').matches;
-    var tx = 0, ty = 0, cx = 0, cy = 0, sp = 0, pRaf = 0;
+    var tx = 0, ty = 0, cx = 0, cy = 0, pRaf = 0;
     var pFrame = function () {
       pRaf = 0;
-      cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
-      // l'image bouge moins vite que la page (profondeur) et suit légèrement la souris
-      pImg.style.translate = (-cx * 10) + 'px ' + (-cy * 6 + sp * 70) + 'px';
-      heroEl.style.setProperty('--sp', sp.toFixed(3));
+      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+      pImg.style.translate = (-cx * 6) + 'px ' + (-cy * 4) + 'px';
       if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) pRaf = requestAnimationFrame(pFrame);
     };
     var pKick = function () { if (!pRaf) pRaf = requestAnimationFrame(pFrame); };
-    var onHeroScroll = function () {
-      var h = heroEl.offsetHeight || 1;
-      sp = Math.max(0, Math.min(1, (window.scrollY || 0) / h));
+    heroEl.addEventListener('mousemove', function (e) {
+      var r = heroEl.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
       pKick();
-    };
-    window.addEventListener('scroll', onHeroScroll, { passive: true });
-    onHeroScroll();
-    if (canMouse) {
-      heroEl.addEventListener('mousemove', function (e) {
-        var r = heroEl.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
-        pKick();
-      }, { passive: true });
-      heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
-    }
+    }, { passive: true });
+    heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
   }
 
   /* ===== Trouvez la bonne solution : choix du problème ===== */
@@ -276,68 +265,41 @@
     }
   }
 
-  /* ===== Défilement cinématographique : la progression du scroll pilote révélations et profondeur ===== */
+  /* ===== Apparitions douces : une seule fois, courtes, sans mouvement lié au défilement ===== */
   (function () {
-    if (!window.matchMedia('(prefers-reduced-motion:no-preference)').matches) return;
-    var items = [];
-    var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
-    // kind : rise (montée douce), wipe (rideau gauche → droite), photo (masque en fenêtre), parallax (profondeur)
-    var add = function (sel, kind, start, end) {
+    if (!window.matchMedia('(prefers-reduced-motion:no-preference)').matches || !('IntersectionObserver' in window)) return;
+    var groups = new Map();
+    var add = function (sel, photo) {
       $$(sel).forEach(function (el) {
-        if (el.getAttribute('data-sc')) return;
-        el.setAttribute('data-sc', kind);
-        items.push({ el: el, kind: kind, s: start, e: end, top: 0, h: 0, v: -1 });
+        if (el.hasAttribute('data-sc')) return;
+        el.setAttribute('data-sc', photo ? 'photo' : 'rise');
+        // léger échelonnement entre éléments voisins (max. 4 pas de 60 ms)
+        var list = groups.get(el.parentNode) || [];
+        el.style.setProperty('--d', Math.min(list.length, 4));
+        list.push(el); groups.set(el.parentNode, list);
       });
     };
-    // titres : rideau
-    add('.demo-title, .solu-title, .rev-head .h2, .trust-title, .proc-title, .est-sec .h2, .faq-in .h2, .final-title', 'wipe', 0.98, 0.7);
-    // photographies : masque en forme de fenêtre qui s'ouvre
-    add('.demo-frame', 'photo', 0.98, 0.42);
-    // profondeur sur l'arrière-plan du CTA final
-    add('.final', 'parallax');
-    // le reste : montée douce, chaque élément a sa propre progression (l'effet d'enchaînement vient du défilement)
-    add('.demo-head, .demo-tabs, .demo-captions, .demo-cta', 'rise', 0.98, 0.7);
-    add('.solu-head, .solu-tabs, .solu-panels, .solu-cta', 'rise', 0.98, 0.7);
-    add('.rev-head, .rev-track, .rev-ctrl', 'rise', 0.98, 0.7);
-    add('.trust-sub, .trust-item, .trust-cta', 'rise', 0.98, 0.72);
-    add('.proc-sub, .proc-step, .proc-cta', 'rise', 0.98, 0.72);
-    add('.est-sec .stack-22 > *, .est-card', 'rise', 0.98, 0.7);
-    add('.faq-in > div:first-child > *:not(h2), .faq-item', 'rise', 0.98, 0.78);
-    add('.final-p, .final .btn-blue', 'rise', 0.98, 0.75);
-    add('.footer-grid > div', 'rise', 1, 0.8);
-    if (!items.length) return;
-
-    var pageTop = function (el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; };
-    var docH = 0;
-    var measure = function () {
-      items.forEach(function (it) { it.top = pageTop(it.el); it.h = it.el.offsetHeight; });
-      docH = document.documentElement.scrollHeight;
-    };
-    var raf = 0;
-    var update = function () {
-      raf = 0;
-      var vh = window.innerHeight, sy = window.scrollY || window.pageYOffset || 0, maxS = Math.max(0, docH - vh);
-      items.forEach(function (it) {
-        var y = it.top - sy, p, q;
-        if (it.kind === 'parallax') { p = clamp((vh - y) / (vh + it.h)); q = p; }
-        else {
-          // un élément trop près du bas de page pour monter jusqu'au repère final se termine quand même en fin de défilement
-          var endY = Math.max(vh * it.e, it.top - maxS);
-          p = clamp((vh * it.s - y) / Math.max(1, vh * it.s - endY)); q = p * p * (3 - 2 * p);
-        }
-        if (Math.abs(q - it.v) > 0.002) { it.v = q; it.el.style.setProperty('--p', q.toFixed(3)); }
-      });
-    };
-    var kick = function () { if (!raf) raf = requestAnimationFrame(update); };
-
+    add('.demo-title, .solu-title, .rev-head .h2, .trust-title, .proc-title, .est-sec .h2, .faq-in .h2, .final-title');
+    add('.demo-head, .demo-tabs, .demo-captions, .demo-cta');
+    add('.demo-frame', true);
+    add('.solu-head, .solu-tabs, .solu-panels, .solu-cta');
+    add('.rev-head, .rev-track, .rev-ctrl');
+    add('.trust-sub, .trust-item, .trust-cta');
+    add('.proc-sub, .proc-step, .proc-cta');
+    add('.est-sec .stack-22 > *, .est-card');
+    add('.faq-item');
+    add('.final-p, .final .btn-blue');
+    var els = $$('[data-sc]');
+    if (!els.length) return;
     document.documentElement.classList.add('sc-on');
-    measure(); update();
-    window.addEventListener('scroll', kick, { passive: true });
-    var remeasure = function () { measure(); kick(); };
-    window.addEventListener('resize', remeasure);
-    window.addEventListener('load', remeasure);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
-    if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('sc-in');
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    els.forEach(function (el) { io.observe(el); });
   })();
 
   /* ===== FAQ ===== */
