@@ -120,22 +120,58 @@ fbq('track', 'PageView');
     </div>
   </section>
 
-  <!-- ============ PROBLÈMES RÉGLÉS ============ -->
-  <section id="avantages" class="wrap-1320 pad-sec" data-screen-label="Problèmes réglés">
-    <h2 class="h2 problems-title">Une pellicule. Plusieurs problèmes réglés.</h2>
-    <div class="cols-3">
-      <article class="prob">
-        <div class="prob-head"><h3>Intimité</h3><span>01</span></div>
-        <p>Laissez vos rideaux ouverts sans exposer directement votre intérieur.</p>
-      </article>
-      <article class="prob">
-        <div class="prob-head"><h3>Chaleur</h3><span>02</span></div>
-        <p>Réduisez la chaleur qui entre par les fenêtres fortement exposées au soleil.</p>
-      </article>
-      <article class="prob">
-        <div class="prob-head"><h3>UV</h3><span>03</span></div>
-        <p>Aidez à protéger vos meubles, planchers et tissus contre la décoloration liée aux UV.</p>
-      </article>
+  <!-- ============ TROUVEZ LA BONNE SOLUTION ============ -->
+  <section id="avantages" class="solu wrap-1320 pad-sec" data-screen-label="Trouvez la bonne solution">
+    <div class="solu-head">
+      <h2 class="h2 solu-title">Qu’est-ce qui vous dérange avec vos fenêtres&nbsp;?</h2>
+      <p class="lede">Chaque maison est différente. On vous aide à trouver la pellicule qui répond à vos besoins.</p>
+    </div>
+
+    <div class="solu-tabs" role="tablist" aria-label="Votre problème" data-solu-tabs>
+      <button type="button" role="tab" id="solu-tab-intimite" aria-controls="solu-panel-intimite" aria-selected="true" data-solu="intimite">
+        <span class="solu-label">Intimité</span>
+        <span class="solu-q">Les voisins voient trop chez vous&nbsp;?</span>
+      </button>
+      <button type="button" role="tab" id="solu-tab-chaleur" aria-controls="solu-panel-chaleur" aria-selected="false" tabindex="-1" data-solu="chaleur">
+        <span class="solu-label">Chaleur</span>
+        <span class="solu-q">Le soleil chauffe trop votre maison&nbsp;?</span>
+      </button>
+      <button type="button" role="tab" id="solu-tab-uv" aria-controls="solu-panel-uv" aria-selected="false" tabindex="-1" data-solu="uv">
+        <span class="solu-label">Protection UV</span>
+        <span class="solu-q">Vous voulez protéger vos meubles et vos planchers&nbsp;?</span>
+      </button>
+    </div>
+
+    <div class="solu-panels">
+      <div class="solu-panel" role="tabpanel" id="solu-panel-intimite" aria-labelledby="solu-tab-intimite">
+        <p class="solu-statement">Le jour, vos voisins ne voient plus chez vous.</p>
+        <ul class="solu-points">
+          <li>Rideaux ouverts, intimité gardée</li>
+          <li>Lumière naturelle conservée</li>
+          <li>Vue vers l’extérieur préservée</li>
+        </ul>
+      </div>
+      <div class="solu-panel" role="tabpanel" id="solu-panel-chaleur" aria-labelledby="solu-tab-chaleur" hidden>
+        <p class="solu-statement">Moins de chaleur dans les pièces au soleil.</p>
+        <ul class="solu-points">
+          <li>Chaleur réduite aux fenêtres très exposées</li>
+          <li>Moins d’éblouissement</li>
+          <li>Des pièces plus confortables</li>
+        </ul>
+      </div>
+      <div class="solu-panel" role="tabpanel" id="solu-panel-uv" aria-labelledby="solu-tab-uv" hidden>
+        <p class="solu-statement">Vos meubles et vos planchers mieux protégés.</p>
+        <ul class="solu-points">
+          <li>Aide à limiter la décoloration liée aux UV</li>
+          <li>Meubles, planchers et tissus</li>
+          <li>Lumière naturelle conservée</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="solu-cta">
+      <a href="#formulaire" class="btn-cream">Demander mon estimation<span aria-hidden="true">→</span></a>
+      <p>On recommande la bonne pellicule pour vous lors de l’estimation. Gratuit et sans engagement.</p>
     </div>
   </section>
 

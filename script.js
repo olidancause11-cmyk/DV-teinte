@@ -117,6 +117,33 @@
     heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
   }
 
+  /* ===== Trouvez la bonne solution : choix du problème ===== */
+  var soluTabs = $('[data-solu-tabs]');
+  if (soluTabs) {
+    var soluBtns = $$('[data-solu]', soluTabs);
+    var showSolu = function (btn, focus) {
+      soluBtns.forEach(function (b) {
+        var on = b === btn;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+        var panel = $('#solu-panel-' + b.getAttribute('data-solu'));
+        panel.hidden = !on;
+        panel.classList.remove('solu-in');
+        if (on) { void panel.offsetWidth; panel.classList.add('solu-in'); }
+      });
+      if (focus) btn.focus();
+    };
+    soluBtns.forEach(function (b, i) {
+      b.addEventListener('click', function () { if (b.getAttribute('aria-selected') !== 'true') showSolu(b); });
+      b.addEventListener('keydown', function (e) {
+        var d = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        showSolu(soluBtns[(i + d + soluBtns.length) % soluBtns.length], true);
+      });
+    });
+  }
+
   /* ===== Vue intérieure / extérieure ===== */
   var vueTabs = $('[data-vue-tabs]');
   if (vueTabs) {
