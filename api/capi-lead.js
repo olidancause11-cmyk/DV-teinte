@@ -37,10 +37,10 @@ module.exports = async function handler(req, res) {
     var custom = {};
     if (body.contentName) custom.content_name = String(body.contentName).slice(0, 100);
     var answers = body.answers && typeof body.answers === 'object' ? body.answers : {};
-    ['probleme', 'delai', 'nombre_fenetres'].forEach(function (k) {
+    ['type_projet', 'type_lieu', 'probleme', 'delai', 'nombre_fenetres'].forEach(function (k) {
       if (answers[k]) custom[k] = String(answers[k]).slice(0, 100);
     });
-    custom.form_version = 'v5';
+    custom.form_version = 'v6';
     event.custom_data = custom;
 
     if (body.eventId) event.event_id = String(body.eventId).slice(0, 100);

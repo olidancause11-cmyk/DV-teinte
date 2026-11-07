@@ -159,29 +159,38 @@
     });
   }
 
-  /* ===== Formulaire d’estimation (4 étapes) ===== */
+  /* ===== Formulaire d’estimation (résidentiel 5 étapes, commercial 6 étapes) ===== */
   var form = $('[data-est-form]');
   var section = $('[data-est-section]');
   if (!form) return;
 
-  var KEY = 'dvteinte_estimation_v5';
-  var STEP_NAMES = ['Votre besoin', 'Délai', 'Fenêtres', 'Coordonnées'];
-  var LAST = STEP_NAMES.length - 1;
+  var KEY = 'dvteinte_estimation_v6';
+  var STEP_LABELS = {
+    projet: 'Votre projet', lieu: 'Lieu', besoin: 'Votre besoin', 'besoin-c': 'Votre besoin',
+    delai: 'Délai', fenetres: 'Fenêtres', 'fenetres-c': 'Fenêtres', contact: 'Coordonnées'
+  };
+  var FLOWS = {
+    'Résidentiel': ['projet', 'besoin', 'delai', 'fenetres', 'contact'],
+    'Commercial': ['projet', 'lieu', 'besoin-c', 'delai', 'fenetres-c', 'contact']
+  };
   var est = {
-    step: 0, showErr: false, sending: false, submitted: false,
-    a: { probleme: '', delai: '', fenetres: '', nomComplet: '', telephone: '', courriel: '', codePostal: '' }
+    idx: 0, showErr: false, sending: false, submitted: false,
+    a: { projet: '', lieu: '', probleme: '', delai: '', fenetres: '', nomComplet: '', telephone: '', courriel: '', codePostal: '' }
   };
   try {
     var saved = localStorage.getItem(KEY);
     if (saved) est.a = Object.assign(est.a, JSON.parse(saved));
   } catch (e) {}
 
-  var steps = $$('[data-est-step]', form);
+  var stepEls = {};
+  $$('[data-est-step]', form).forEach(function (el) { stepEls[el.getAttribute('data-est-step')] = el; });
   var hpInput = $('[data-hp]', form);
   var submitBtn = $('[data-est-submit]', form);
   var card = $('#formulaire');
   var persist = function () { try { localStorage.setItem(KEY, JSON.stringify(est.a)); } catch (e) {} };
   var digits = function (v) { return (v || '').replace(/\D/g, ''); };
+  var flow = function () { return FLOWS[est.a.projet] || FLOWS['Résidentiel']; };
+  var isCommercial = function () { return est.a.projet === 'Commercial'; };
 
   function errors() {
     var a = est.a, e = {};
@@ -198,24 +207,24 @@
     return { first: parts[0] || '', last: parts.slice(1).join(' ') };
   }
 
-  var shownStep = -1;
+  var shownIdx = -1;
   function render() {
+    var f = flow(), cur = f[est.idx];
     // étape visible, avec transition douce quand elle change
-    steps.forEach(function (el, i) { el.hidden = i !== est.step; });
-    if (shownStep !== est.step) {
-      var cur = steps[est.step];
-      if (shownStep !== -1) {
-        cur.classList.remove('step-in', 'step-in-back');
-        void cur.offsetWidth; // relance l’animation
-        cur.classList.add(est.step < shownStep ? 'step-in-back' : 'step-in');
-        var top = card.getBoundingClientRect().top;
-        if (top < 72) card.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    Object.keys(stepEls).forEach(function (n) { stepEls[n].hidden = n !== cur; });
+    if (shownIdx !== est.idx) {
+      if (shownIdx !== -1) {
+        var el = stepEls[cur];
+        el.classList.remove('step-in', 'step-in-back');
+        void el.offsetWidth; // relance l’animation
+        el.classList.add(est.idx < shownIdx ? 'step-in-back' : 'step-in');
+        if (card.getBoundingClientRect().top < 72) card.scrollIntoView({ block: 'start', behavior: 'smooth' });
       }
-      shownStep = est.step;
+      shownIdx = est.idx;
     }
-    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.step + 1) + ' sur ' + STEP_NAMES.length;
-    $('[data-est-stepname]', form).textContent = STEP_NAMES[est.step];
-    var pct = Math.round((est.step + 1) / STEP_NAMES.length * 100);
+    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.idx + 1) + ' sur ' + f.length;
+    $('[data-est-stepname]', form).textContent = STEP_LABELS[cur];
+    var pct = Math.round((est.idx + 1) / f.length * 100);
     $('[data-est-barfill]', form).style.width = pct + '%';
     $('[data-est-bar]', form).setAttribute('aria-valuenow', String(pct));
     // choix
@@ -224,12 +233,16 @@
       $$('.opt', fs).forEach(function (b) { b.setAttribute('aria-pressed', String(est.a[key] === b.getAttribute('data-value'))); });
     });
     // champs cachés envoyés avec la demande
-    $$('[data-hidden]', form).forEach(function (h) { h.value = est.a[h.getAttribute('data-hidden')] || ''; });
+    $$('[data-hidden]', form).forEach(function (h) {
+      var k = h.getAttribute('data-hidden');
+      h.value = (k === 'lieu' && !isCommercial()) ? '' : (est.a[k] || '');
+    });
     // pied de formulaire
-    $('[data-est-back]', form).hidden = est.step === 0;
-    $('[data-est-free]', form).hidden = est.step !== 0;
-    submitBtn.hidden = est.step !== LAST;
-    $('[data-est-note]', form).hidden = est.step !== LAST;
+    var last = cur === 'contact';
+    $('[data-est-back]', form).hidden = est.idx === 0;
+    $('[data-est-free]', form).hidden = est.idx !== 0;
+    submitBtn.hidden = !last;
+    $('[data-est-note]', form).hidden = !last;
     submitBtn.disabled = est.sending;
     submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation gratuite';
     // erreurs de champs
@@ -252,22 +265,39 @@
     });
   });
 
-  // un choix fait passer à l’étape suivante (la dernière étape de choix mène aux coordonnées)
+  // changer de type de projet efface les réponses qui dépendent du type (leurs choix diffèrent)
+  function setProjet(val) {
+    if (est.a.projet && est.a.projet !== val) { est.a.lieu = ''; est.a.probleme = ''; est.a.fenetres = ''; }
+    est.a.projet = val;
+  }
+
+  // un choix fait passer à l’étape suivante
   var pickTimer;
   $$('.opt', form).forEach(function (btn) {
     btn.addEventListener('click', function () {
       var key = btn.closest('fieldset[data-key]').getAttribute('data-key');
-      est.a[key] = btn.getAttribute('data-value');
+      var val = btn.getAttribute('data-value');
+      if (key === 'projet') setProjet(val); else est.a[key] = val;
       persist();
       render();
       clearTimeout(pickTimer);
-      pickTimer = setTimeout(function () { est.step = Math.min(est.step + 1, LAST); render(); }, 220);
+      pickTimer = setTimeout(function () { est.idx = Math.min(est.idx + 1, flow().length - 1); render(); }, 220);
     });
   });
   $('[data-est-back]', form).addEventListener('click', function () {
     clearTimeout(pickTimer);
-    est.step = Math.max(0, est.step - 1);
+    est.idx = Math.max(0, est.idx - 1);
     render();
+  });
+  // boutons du site qui pré-sélectionnent le type (ex. « Demander une soumission commerciale »)
+  $$('[data-pick-projet]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      clearTimeout(pickTimer);
+      setProjet(a.getAttribute('data-pick-projet'));
+      persist();
+      est.idx = Math.min(1, flow().length - 1);
+      render();
+    });
   });
   form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
 
@@ -291,7 +321,8 @@
     var data = new FormData(form);
     data.set('nom_complet', a.nomComplet.trim());
     data.set('code_postal', postal);
-    data.set('source', 'landing-residentiel');
+    data.set('source', isCommercial() ? 'landing-commercial' : 'landing-residentiel');
+    if (isCommercial()) data.set('_subject', 'Nouvelle demande d’estimation COMMERCIALE — DV Teinte');
     data.set('page', location.href);
     data.set('date', new Date().toISOString());
     // références Meta, utiles pour qualifier le lead plus tard
@@ -337,7 +368,7 @@
   // Clé d'accès Web3Forms : publique par conception (elle sert côté navigateur), liée à l'adresse de réception.
   var WEB3FORMS_KEY = '4db52b51-8dac-4cd9-9f70-117dba6fbf82';
   function viaWeb3Forms(data) {
-    var payload = { access_key: WEB3FORMS_KEY, subject: 'Nouvelle demande d’estimation — DV Teinte', from_name: 'Site DV Teinte', botcheck: '' };
+    var payload = { access_key: WEB3FORMS_KEY, subject: data.get('_subject') || 'Nouvelle demande d’estimation — DV Teinte', from_name: 'Site DV Teinte', botcheck: '' };
     data.forEach(function (value, key) {
       if (key.charAt(0) === '_') return;               // champs de configuration FormSubmit
       payload[key] = value;
@@ -355,9 +386,12 @@
   }
 
   function trackLead(a, postal, eventId, fbp, fbc) {
-    var answers = { probleme: a.probleme, delai: a.delai, nombre_fenetres: a.fenetres };
+    var commercial = a.projet === 'Commercial';
+    var contentName = commercial ? 'Estimation commerciale' : 'Estimation résidentielle';
+    var answers = { type_projet: a.projet, probleme: a.probleme, delai: a.delai, nombre_fenetres: a.fenetres };
+    if (commercial) answers.type_lieu = a.lieu;
     // même eventId côté navigateur et côté serveur : Meta dédoublonne
-    track('Lead', Object.assign({ content_name: 'Estimation résidentielle', form_version: 'v5' }, answers), { eventID: eventId });
+    track('Lead', Object.assign({ content_name: contentName, form_version: 'v6' }, answers), { eventID: eventId });
     var name = splitName(a.nomComplet);
     try {
       fetch('/api/capi-lead', {
@@ -367,7 +401,7 @@
         body: JSON.stringify({
           eventId: eventId,
           eventSourceUrl: location.href,
-          contentName: 'Estimation résidentielle',
+          contentName: contentName,
           answers: answers,
           email: a.courriel.trim(),
           phone: a.telephone,
