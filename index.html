@@ -52,6 +52,7 @@ fbq('track', 'PageView');
         <a href="#pellicules">Pellicules</a>
         <a href="#avantages">Avantages</a>
         <a href="#realisations">Avant / après</a>
+        <a href="#commercial">Commercial</a>
         <a href="#processus">Comment ça marche</a>
         <a href="#faq">FAQ</a>
       </nav>
@@ -64,6 +65,7 @@ fbq('track', 'PageView');
       <a href="#pellicules" data-menu-close>Pellicules</a>
       <a href="#avantages" data-menu-close>Avantages</a>
       <a href="#realisations" data-menu-close>Avant / après</a>
+      <a href="#commercial" data-menu-close>Commercial</a>
       <a href="#processus" data-menu-close>Comment ça marche</a>
       <a href="#faq" data-menu-close>FAQ</a>
     </nav>
@@ -177,6 +179,35 @@ fbq('track', 'PageView');
     </div>
   </section>
 
+  <!-- ============ COMMERCIAL ============ -->
+  <section id="commercial" class="comm" data-screen-label="Commercial">
+    <div class="comm-in">
+      <div class="comm-head">
+        <p class="eyebrow">Commercial</p>
+        <h2 class="h2">Pour vos bureaux, vitrines et locaux professionnels.</h2>
+        <p class="lede">Un vitrage plus confortable pour vos employés et vos clients, et une apparence extérieure plus uniforme. Estimation sur place, installation propre et planifiée selon vos heures d’ouverture.</p>
+        <a href="#formulaire" class="btn-cream" data-pick-projet="Commercial">Demander une soumission commerciale<span aria-hidden="true">→</span></a>
+      </div>
+      <div class="comm-grid">
+        <ul class="comm-places" aria-label="Types de lieux">
+          <li><span>01</span>Bureaux</li>
+          <li><span>02</span>Vitrines et commerces</li>
+          <li><span>03</span>Salles de conférence</li>
+          <li><span>04</span>Façades vitrées</li>
+          <li><span>05</span>Locaux professionnels</li>
+        </ul>
+        <ul class="comm-perks">
+          <li>Réduction de l’éblouissement</li>
+          <li>Meilleur confort au travail</li>
+          <li>Apparence plus uniforme</li>
+          <li>Protection contre les UV</li>
+          <li>Intimité adaptée à chaque espace</li>
+          <li>Solutions particulières sur demande</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ COMMENT ÇA MARCHE ============ -->
   <section id="processus" class="how" data-screen-label="Comment ça marche">
     <div class="wrap-1320 pad-sec">
@@ -264,12 +295,12 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
   <section id="estimation" class="est-sec" data-screen-label="Formulaire" data-est-section>
     <div class="stack-22">
       <h2 class="h2">Demandez votre estimation.</h2>
-      <p class="lede">Quatre questions rapides. On vous rappelle ensuite pour planifier l’estimation à domicile.</p>
+      <p class="lede">Quelques questions rapides. On vous rappelle ensuite pour planifier l’estimation à domicile.</p>
       <p class="est-promo"><span class="promo-dot"></span>Jusqu’à 400 $ de réduction sur votre installation.</p>
       <div class="why">
         <h3>Pourquoi DV Teinte?</h3>
         <ul>
-          <li>Spécialisé en résidentiel</li>
+          <li>Résidentiel et commercial</li>
           <li>Estimation directement à domicile</li>
           <li>Recommandation selon votre problème et vos fenêtres</li>
           <li>Installation propre et professionnelle</li>
@@ -282,12 +313,32 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
     <div class="est-card" id="formulaire">
       <form data-est-form action="https://formsubmit.co/contact@dvteinte.com" method="POST" novalidate>
         <div class="est-top">
-          <div class="est-meta"><span data-est-stepnum>Étape 1 sur 4</span><span data-est-stepname>Votre besoin</span></div>
-          <div class="est-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" data-est-bar><div data-est-barfill style="width:25%"></div></div>
+          <div class="est-meta"><span data-est-stepnum>Étape 1 sur 5</span><span data-est-stepname>Votre besoin</span></div>
+          <div class="est-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" data-est-bar><div data-est-barfill style="width:20%"></div></div>
         </div>
 
         <div class="est-body">
-          <fieldset class="est-step" data-est-step="0" data-key="probleme">
+          <fieldset class="est-step" data-est-step="projet" data-key="projet">
+            <legend>Quel type de projet avez-vous?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="Résidentiel"><span class="opt-dot"></span><span>Résidentiel <small>maison, condo</small></span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Commercial"><span class="opt-dot"></span><span>Commercial <small>bureau, commerce, local</small></span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="est-step" data-est-step="lieu" data-key="lieu" hidden>
+            <legend>Quel type de lieu est concerné?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="Bureau"><span class="opt-dot"></span><span>Bureau</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Vitrine ou commerce"><span class="opt-dot"></span><span>Vitrine ou commerce</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Salle de conférence"><span class="opt-dot"></span><span>Salle de conférence</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Façade vitrée"><span class="opt-dot"></span><span>Façade vitrée</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Local professionnel"><span class="opt-dot"></span><span>Local professionnel</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Autre"><span class="opt-dot"></span><span>Autre</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="est-step" data-est-step="besoin" data-key="probleme" hidden>
             <legend>Qu’est-ce qui vous dérange le plus avec vos fenêtres?</legend>
             <div class="opts">
               <button type="button" class="opt" aria-pressed="false" data-value="Il fait trop chaud chez moi"><span class="opt-dot"></span><span>Il fait trop chaud chez moi</span></button>
@@ -298,7 +349,19 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
             </div>
           </fieldset>
 
-          <fieldset class="est-step" data-est-step="1" data-key="delai" hidden>
+          <fieldset class="est-step" data-est-step="besoin-c" data-key="probleme" hidden>
+            <legend>Qu’est-ce que vous souhaitez améliorer?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="Réduire l’éblouissement"><span class="opt-dot"></span><span>Réduire l’éblouissement</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Réduire la chaleur"><span class="opt-dot"></span><span>Réduire la chaleur</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Plus d’intimité"><span class="opt-dot"></span><span>Plus d’intimité</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Protéger contre les UV"><span class="opt-dot"></span><span>Protéger contre les UV</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Uniformiser l’apparence"><span class="opt-dot"></span><span>Uniformiser l’apparence</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Plusieurs de ces besoins"><span class="opt-dot"></span><span>Plusieurs de ces besoins</span></button>
+            </div>
+          </fieldset>
+
+          <fieldset class="est-step" data-est-step="delai" data-key="delai" hidden>
             <legend>Quand aimeriez-vous faire installer vos pellicules?</legend>
             <div class="opts">
               <button type="button" class="opt" aria-pressed="false" data-value="Dès que possible"><span class="opt-dot"></span><span>Dès que possible</span></button>
@@ -308,7 +371,7 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
             </div>
           </fieldset>
 
-          <fieldset class="est-step" data-est-step="2" data-key="fenetres" hidden>
+          <fieldset class="est-step" data-est-step="fenetres" data-key="fenetres" hidden>
             <legend>Combien de fenêtres aimeriez-vous faire traiter?</legend>
             <div class="opts">
               <button type="button" class="opt" aria-pressed="false" data-value="1 à 2"><span class="opt-dot"></span><span>1 à 2</span></button>
@@ -319,7 +382,18 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
             </div>
           </fieldset>
 
-          <div class="est-step" data-est-step="3" hidden>
+          <fieldset class="est-step" data-est-step="fenetres-c" data-key="fenetres" hidden>
+            <legend>Combien de fenêtres ou de vitrines sont concernées?</legend>
+            <div class="opts">
+              <button type="button" class="opt" aria-pressed="false" data-value="1 à 5"><span class="opt-dot"></span><span>1 à 5</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="6 à 15"><span class="opt-dot"></span><span>6 à 15</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="16 à 30"><span class="opt-dot"></span><span>16 à 30</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Plus de 30"><span class="opt-dot"></span><span>Plus de 30</span></button>
+              <button type="button" class="opt" aria-pressed="false" data-value="Je ne sais pas encore"><span class="opt-dot"></span><span>Je ne sais pas encore</span></button>
+            </div>
+          </fieldset>
+
+          <div class="est-step" data-est-step="contact" hidden>
             <h3 class="contact-title">Où peut-on vous joindre?</h3>
             <p class="contact-sub">On vous appelle pour discuter de votre projet et préparer votre estimation gratuite, sans engagement.</p>
             <div class="fields">
@@ -332,6 +406,8 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
           </div>
 
           <!-- Réponses des choix, envoyées avec la demande -->
+          <input type="hidden" name="type_de_projet" data-hidden="projet" />
+          <input type="hidden" name="type_de_lieu" data-hidden="lieu" />
           <input type="hidden" name="probleme" data-hidden="probleme" />
           <input type="hidden" name="delai" data-hidden="delai" />
           <input type="hidden" name="nombre_de_fenetres" data-hidden="fenetres" />
@@ -421,6 +497,7 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
           <a href="#pellicules">Pellicules</a>
           <a href="#avantages">Avantages</a>
           <a href="#realisations">Avant / après</a>
+          <a href="#commercial">Commercial</a>
           <a href="#faq">FAQ</a>
         </div>
       </div>
