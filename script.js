@@ -55,6 +55,44 @@
   if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
   onScroll();
 
+  /* ===== Défilement fluide et rapide vers les ancres (tous les boutons « estimation » compris) ===== */
+  (function () {
+    var root = document.documentElement;
+    var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var raf = 0;
+    var pageTop = function (el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; };
+    var stop = function () { if (raf) { cancelAnimationFrame(raf); raf = 0; root.style.scrollBehavior = ''; } };
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) { window.addEventListener(t, stop, { passive: true }); });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      var id = a.getAttribute('href');
+      if (id.length < 2) return;
+      var target = document.getElementById(id.slice(1));
+      if (!target) return;
+      e.preventDefault();
+      var margin = parseFloat(window.getComputedStyle(target).scrollMarginTop) || 0;
+      var max = Math.max(0, root.scrollHeight - window.innerHeight);
+      var to = Math.max(0, Math.min(pageTop(target) - margin, max));
+      try { history.pushState(null, '', id); } catch (err) {}
+      stop();
+      var from = window.scrollY || window.pageYOffset || 0, d = to - from;
+      if (reduce) { window.scrollTo(0, to); return; }
+      if (Math.abs(d) < 2) return;
+      var dur = Math.min(900, Math.max(550, Math.abs(d) * 0.16));   // rapide, même sur une longue distance
+      var t0 = null;
+      root.style.scrollBehavior = 'auto';
+      var step = function (ts) {
+        if (t0 === null) t0 = ts;
+        var k = Math.min(1, (ts - t0) / dur);
+        var ease = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;   // accélère puis ralentit en douceur
+        window.scrollTo(0, from + d * ease);
+        if (k < 1) raf = requestAnimationFrame(step); else { raf = 0; root.style.scrollBehavior = ''; }
+      };
+      raf = requestAnimationFrame(step);
+    });
+  })();
+
   /* ===== Carrousel d’avis ===== */
   var track$ = $('[data-rev-track]');
   if (track$) {
