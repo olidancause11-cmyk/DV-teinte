@@ -120,7 +120,7 @@
   var heroEl = $('.hero');
   var motionOk = window.matchMedia('(prefers-reduced-motion:no-preference)').matches;
   if (heroEl && motionOk) {
-    var pImg = $('.hero-media img', heroEl), pPanes = $$('.fx-pane', heroEl);
+    var pImg = $('.hero-media img', heroEl);
     var canMouse = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px)').matches;
     var tx = 0, ty = 0, cx = 0, cy = 0, sp = 0, pRaf = 0;
     var pFrame = function () {
@@ -128,8 +128,6 @@
       cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
       // l'image bouge moins vite que la page (profondeur) et suit légèrement la souris
       pImg.style.translate = (-cx * 10) + 'px ' + (-cy * 6 + sp * 70) + 'px';
-      if (pPanes[0]) pPanes[0].style.translate = (cx * 22) + 'px ' + (cy * 10) + 'px';
-      if (pPanes[1]) pPanes[1].style.translate = (cx * 38) + 'px ' + (cy * 16) + 'px';
       heroEl.style.setProperty('--sp', sp.toFixed(3));
       if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) pRaf = requestAnimationFrame(pFrame);
     };
