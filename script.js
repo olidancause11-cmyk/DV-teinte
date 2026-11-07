@@ -181,17 +181,33 @@
   var demoTabs = $('[data-demo-tabs]');
   if (demoTabs) {
     var demoBtns = $$('[data-demo]', demoTabs);
+    var demoCur = 'ext', demoTimer;
+    var demoOrder = demoBtns.map(function (b) { return b.getAttribute('data-demo'); });
     var showDemo = function (btn, focus) {
       var key = btn.getAttribute('data-demo');
-      demoBtns.forEach(function (b) {
-        var on = b === btn, k = b.getAttribute('data-demo');
-        b.setAttribute('aria-selected', String(on));
-        b.tabIndex = on ? 0 : -1;
-        var view = $('#demo-view-' + k);
-        view.classList.toggle('is-on', on);
-        view.setAttribute('aria-hidden', String(!on));
-        $('[data-caption="' + k + '"]').classList.toggle('is-on', on);
-      });
+      if (key !== demoCur) {
+        var prev = $('#demo-view-' + demoCur), next = $('#demo-view-' + key);
+        var back = demoOrder.indexOf(key) < demoOrder.indexOf(demoCur);
+        demoBtns.forEach(function (b) {
+          var on = b === btn, k = b.getAttribute('data-demo');
+          b.setAttribute('aria-selected', String(on));
+          b.tabIndex = on ? 0 : -1;
+          var view = $('#demo-view-' + k);
+          view.classList.remove('is-prev', 'is-reveal', 'is-back');
+          if (!on) view.classList.remove('is-on');
+          view.setAttribute('aria-hidden', String(!on));
+          $('[data-caption="' + k + '"]').classList.toggle('is-on', on);
+        });
+        // la nouvelle photo se révèle par-dessus l'ancienne (rideau + image qui se stabilise)
+        prev.classList.add('is-prev');
+        next.classList.add('is-on');
+        if (back) next.classList.add('is-back');
+        void next.offsetWidth;
+        next.classList.add('is-reveal');
+        clearTimeout(demoTimer);
+        demoTimer = setTimeout(function () { prev.classList.remove('is-prev'); next.classList.remove('is-reveal', 'is-back'); }, 950);
+        demoCur = key;
+      }
       if (focus) btn.focus();
       return key;
     };

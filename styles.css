@@ -674,3 +674,20 @@ html.sc-on .final[data-sc="parallax"] > img{transform:translateY(calc((var(--p,.
 
 /* hero : en défilant, la façade s'assombrit et laisse place à la scène suivante */
 .hero-shade::after{content:"";position:absolute;inset:0;background:#0E1012;opacity:calc(var(--sp,0) * .75);pointer-events:none;}
+
+/* ===== Démonstration : animation au changement de photo (rideau + image qui se stabilise) ===== */
+.demo-view{opacity:1;transition:none;visibility:hidden;}
+.demo-view.is-on{opacity:1;transition:none;visibility:visible;z-index:2;}
+.demo-view.is-prev{visibility:visible;z-index:1;}
+.demo-badge{z-index:5;}
+.demo-caption.is-on{animation:demoCap .5s cubic-bezier(.16,.8,.2,1) .12s both;}
+@media (prefers-reduced-motion:no-preference){
+  .demo-view.is-reveal{animation:demoWipe .6s cubic-bezier(.77,0,.18,1) both;}
+  .demo-view.is-reveal.is-back{animation-name:demoWipeBack;}
+  .demo-view.is-reveal img{animation:demoZoom .95s cubic-bezier(.16,.8,.2,1) both;}
+}
+@media (prefers-reduced-motion:reduce){.demo-caption.is-on{animation:none;}}
+@keyframes demoWipe{from{clip-path:inset(0 100% 0 0);}to{clip-path:inset(0 0 0 0);}}
+@keyframes demoWipeBack{from{clip-path:inset(0 0 0 100%);}to{clip-path:inset(0 0 0 0);}}
+@keyframes demoZoom{from{transform:scale(1.14);}to{transform:none;}}
+@keyframes demoCap{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
