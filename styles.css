@@ -640,3 +640,6 @@ section[id]{scroll-margin-top:72px;}
 /* avis : anthracite pleine largeur, distinct du formulaire (noir) qui suit */
 .rev-sec{background:#15181B;box-shadow:0 0 0 100vmax #15181B;clip-path:inset(0 -100vmax);}
 .rev-card{background:#1D2126;border-color:rgba(255,255,255,.1);}
+
+/* avis : un peu d'air sous le carrousel avant le formulaire */
+.rev-sec{padding-bottom:clamp(44px,6vw,80px);}
