@@ -116,27 +116,40 @@
     measureRev();
   }
 
-  /* ===== Hero : parallaxe subtile à la souris (ordinateur seulement) ===== */
+  /* ===== Hero : profondeur (souris sur ordinateur) et défilement (partout) ===== */
   var heroEl = $('.hero');
-  var canParallax = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px) and (prefers-reduced-motion:no-preference)').matches;
-  if (heroEl && canParallax) {
-    var pImg = $('.hero-media img'), pPanes = $$('.fx-pane');
-    var tx = 0, ty = 0, cx = 0, cy = 0, pRunning = false;
+  var motionOk = window.matchMedia('(prefers-reduced-motion:no-preference)').matches;
+  if (heroEl && motionOk) {
+    var pImg = $('.hero-media img', heroEl), pPanes = $$('.fx-pane', heroEl);
+    var canMouse = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px)').matches;
+    var tx = 0, ty = 0, cx = 0, cy = 0, sp = 0, pRaf = 0;
     var pFrame = function () {
+      pRaf = 0;
       cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
-      pImg.style.translate = (-cx * 10) + 'px ' + (-cy * 6) + 'px';
+      // l'image bouge moins vite que la page (profondeur) et suit légèrement la souris
+      pImg.style.translate = (-cx * 10) + 'px ' + (-cy * 6 + sp * 70) + 'px';
       if (pPanes[0]) pPanes[0].style.translate = (cx * 22) + 'px ' + (cy * 10) + 'px';
       if (pPanes[1]) pPanes[1].style.translate = (cx * 38) + 'px ' + (cy * 16) + 'px';
-      if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) requestAnimationFrame(pFrame); else pRunning = false;
+      heroEl.style.setProperty('--sp', sp.toFixed(3));
+      if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) pRaf = requestAnimationFrame(pFrame);
     };
-    var pKick = function () { if (!pRunning) { pRunning = true; requestAnimationFrame(pFrame); } };
-    heroEl.addEventListener('mousemove', function (e) {
-      var r = heroEl.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    var pKick = function () { if (!pRaf) pRaf = requestAnimationFrame(pFrame); };
+    var onHeroScroll = function () {
+      var h = heroEl.offsetHeight || 1;
+      sp = Math.max(0, Math.min(1, (window.scrollY || 0) / h));
       pKick();
-    }, { passive: true });
-    heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
+    };
+    window.addEventListener('scroll', onHeroScroll, { passive: true });
+    onHeroScroll();
+    if (canMouse) {
+      heroEl.addEventListener('mousemove', function (e) {
+        var r = heroEl.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        pKick();
+      }, { passive: true });
+      heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
+    }
   }
 
   /* ===== Trouvez la bonne solution : choix du problème ===== */
