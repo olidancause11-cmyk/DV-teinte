@@ -94,6 +94,29 @@
     paintDots();
   }
 
+  /* ===== Hero : parallaxe subtile à la souris (ordinateur seulement) ===== */
+  var heroEl = $('.hero');
+  var canParallax = window.matchMedia('(hover:hover) and (pointer:fine) and (min-width:1080px) and (prefers-reduced-motion:no-preference)').matches;
+  if (heroEl && canParallax) {
+    var pImg = $('.hero-media img'), pPanes = $$('.fx-pane');
+    var tx = 0, ty = 0, cx = 0, cy = 0, pRunning = false;
+    var pFrame = function () {
+      cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
+      pImg.style.translate = (-cx * 10) + 'px ' + (-cy * 6) + 'px';
+      if (pPanes[0]) pPanes[0].style.translate = (cx * 22) + 'px ' + (cy * 10) + 'px';
+      if (pPanes[1]) pPanes[1].style.translate = (cx * 38) + 'px ' + (cy * 16) + 'px';
+      if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) requestAnimationFrame(pFrame); else pRunning = false;
+    };
+    var pKick = function () { if (!pRunning) { pRunning = true; requestAnimationFrame(pFrame); } };
+    heroEl.addEventListener('mousemove', function (e) {
+      var r = heroEl.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      pKick();
+    }, { passive: true });
+    heroEl.addEventListener('mouseleave', function () { tx = 0; ty = 0; pKick(); });
+  }
+
   /* ===== Vue intérieure / extérieure ===== */
   var vueTabs = $('[data-vue-tabs]');
   if (vueTabs) {
