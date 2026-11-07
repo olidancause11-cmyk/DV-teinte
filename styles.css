@@ -22,7 +22,6 @@ section[id]{scroll-margin-top:72px;}
 /* ===== Briques communes ===== */
 .stack-18{display:flex;flex-direction:column;gap:18px;}
 .stack-22{display:flex;flex-direction:column;gap:22px;}
-.stack-28{display:flex;flex-direction:column;gap:28px;}
 .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8DB8DE;font-weight:600;}
 .h2{font-size:clamp(36px,4.6vw,64px);line-height:1;font-weight:500;letter-spacing:-.035em;}
 .lede{font-size:17px;line-height:1.6;color:#B4B8BE;max-width:40ch;}
@@ -91,15 +90,6 @@ section[id]{scroll-margin-top:72px;}
 .prob-head h3{font-size:24px;font-weight:500;letter-spacing:-.015em;}
 .prob-head span{font-size:13px;color:#6F747B;font-weight:500;}
 .prob p{font-size:17px;line-height:1.55;color:#B4B8BE;max-width:32ch;}
-
-/* ===== Profitez davantage ===== */
-.life{position:relative;min-height:min(92vh,820px);display:flex;align-items:flex-end;overflow:hidden;background:#16191C;}
-.life > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;}
-.life-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,16,18,.94) 0%,rgba(14,16,18,.55) 45%,rgba(14,16,18,.1) 100%);}
-.life-in{position:relative;width:100%;max-width:1320px;margin:0 auto;padding:clamp(120px,16vw,220px) clamp(18px,4vw,48px) clamp(48px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:36px 64px;align-items:end;}
-.life-title{color:#fff;max-width:14ch;}
-.life-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
-.life-list li{padding:14px 0;border-top:1px solid rgba(255,255,255,.18);font-size:clamp(17px,1.5vw,20px);font-weight:500;color:#fff;letter-spacing:-.01em;}
 
 /* ===== Avant / après ===== */
 .ba-sec{max-width:1320px;margin:0 auto;padding:clamp(72px,10vw,140px) clamp(18px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(36px,6vw,96px);align-items:center;}
