@@ -210,6 +210,18 @@
     });
   }
 
+  /* ===== Section commerciale : apparition élégante au défilement (sans bloquer) ===== */
+  var proSec = $('.pro');
+  if (proSec) {
+    if (window.matchMedia('(prefers-reduced-motion:no-preference)').matches && 'IntersectionObserver' in window) {
+      proSec.setAttribute('data-pro', '');
+      var proIO = new IntersectionObserver(function (en) {
+        if (en[0].isIntersecting) { proSec.classList.add('is-in'); proIO.disconnect(); }
+      }, { threshold: 0.25 });
+      proIO.observe(proSec);
+    }
+  }
+
   /* ===== FAQ ===== */
   var faq = $('[data-faq]');
   if (faq) {
@@ -250,6 +262,8 @@
   try {
     var saved = localStorage.getItem(KEY);
     if (saved) est.a = Object.assign(est.a, JSON.parse(saved));
+    // le formulaire reste résidentiel par défaut : un parcours commercial ancien n’est pas repris
+    if (est.a.projet === "Commercial") { est.a.projet = ""; est.a.lieu = ""; est.a.probleme = ""; est.a.fenetres = ""; }
   } catch (e) {}
 
   var stepEls = {};
