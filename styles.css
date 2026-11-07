@@ -319,3 +319,11 @@ section[id]{scroll-margin-top:72px;}
 .est-thanks .thanks-lead{font-size:18px;color:#E2E0DB;}
 .thanks-number{width:100%;max-width:440px;padding:clamp(22px,6vw,32px) 12px;background:#F2F0EB;color:#0E1012;border:3px solid #5B9AD0;border-radius:8px;font-size:clamp(38px,11.5vw,56px);font-weight:700;letter-spacing:-.02em;line-height:1;white-space:nowrap;text-align:center;}
 .est-thanks .thanks-tip{font-size:16px;font-weight:500;color:#8DB8DE;}
+
+/* Hero : bouton téléphone sous le bouton d'estimation */
+.hero-cta .btn-tel{display:flex;align-items:center;justify-content:center;gap:10px;height:56px;border:1.5px solid rgba(242,240,235,.55);border-radius:4px;color:#F2F0EB;font-weight:600;font-size:17px;background:rgba(14,16,18,.35);transition:background .2s,border-color .2s;}
+.hero-cta .btn-tel:hover{background:rgba(242,240,235,.1);border-color:#F2F0EB;color:#fff;}
+@media (min-width:1080px){
+  .hero-cta{display:inline-flex;flex-direction:column;align-items:stretch;align-self:flex-start;gap:12px;min-width:300px;}
+  .hero-cta .btn-tel{height:58px;}
+}
