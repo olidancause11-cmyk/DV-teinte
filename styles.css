@@ -632,3 +632,11 @@ section[id]{scroll-margin-top:72px;}
   .pro-frame i:nth-child(odd){background:linear-gradient(160deg,#4A7FAA 0%,#2E6592 55%,#22527A 100%);}
   .pro-glint{position:absolute;top:-10%;bottom:-10%;left:0;width:34%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22) 50%,transparent);opacity:0;pointer-events:none;}
 }
+
+/* ===== Rythme des fonds : alternance sombre / clair, sans deux sections identiques côte à côte ===== */
+.trust{background:#FFFFFF;}
+.proc{background:#F4F2EE;border-top:1px solid rgba(14,16,18,.08);}
+.pro{background:#E9EFF4;border-top:1px solid rgba(41,95,141,.14);}
+/* avis : anthracite pleine largeur, distinct du formulaire (noir) qui suit */
+.rev-sec{background:#15181B;box-shadow:0 0 0 100vmax #15181B;clip-path:inset(0 -100vmax);}
+.rev-card{background:#1D2126;border-color:rgba(255,255,255,.1);}
