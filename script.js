@@ -321,95 +321,46 @@
     });
   }
 
-  /* ===== Formulaire d’estimation (résidentiel 5 étapes, commercial 6 étapes) ===== */
+  /* ===== Formulaire d’estimation : une seule étape (prénom, nom, téléphone, courriel, message) ===== */
   var form = $('[data-est-form]');
   var section = $('[data-est-section]');
   if (!form) return;
 
-  var KEY = 'dvteinte_estimation_v6';
-  var STEP_LABELS = {
-    projet: 'Votre projet', lieu: 'Lieu', besoin: 'Votre besoin', 'besoin-c': 'Votre besoin',
-    delai: 'Délai', fenetres: 'Fenêtres', 'fenetres-c': 'Fenêtres', contact: 'Coordonnées'
-  };
-  var FLOWS = {
-    'Résidentiel': ['projet', 'besoin', 'delai', 'fenetres', 'contact'],
-    'Commercial': ['projet', 'lieu', 'besoin-c', 'delai', 'fenetres-c', 'contact']
-  };
+  var KEY = 'dvteinte_estimation_v7';
   var est = {
-    idx: 0, showErr: false, sending: false, submitted: false,
-    a: { projet: '', lieu: '', probleme: '', delai: '', fenetres: '', nomComplet: '', telephone: '', courriel: '', codePostal: '' }
+    showErr: false, sending: false, submitted: false,
+    projet: 'Résidentiel',   // devient « Commercial » seulement via le bouton de la section commerciale
+    a: { prenom: '', nom: '', telephone: '', courriel: '', message: '' }
   };
   try {
     var saved = localStorage.getItem(KEY);
     if (saved) est.a = Object.assign(est.a, JSON.parse(saved));
-    // le formulaire reste résidentiel par défaut : un parcours commercial ancien n’est pas repris
-    if (est.a.projet === "Commercial") { est.a.projet = ""; est.a.lieu = ""; est.a.probleme = ""; est.a.fenetres = ""; }
   } catch (e) {}
 
-  var stepEls = {};
-  $$('[data-est-step]', form).forEach(function (el) { stepEls[el.getAttribute('data-est-step')] = el; });
   var hpInput = $('[data-hp]', form);
   var submitBtn = $('[data-est-submit]', form);
   var card = $('#formulaire');
   var persist = function () { try { localStorage.setItem(KEY, JSON.stringify(est.a)); } catch (e) {} };
   var digits = function (v) { return (v || '').replace(/\D/g, ''); };
-  var flow = function () { return FLOWS[est.a.projet] || FLOWS['Résidentiel']; };
-  var isCommercial = function () { return est.a.projet === 'Commercial'; };
+  var isCommercial = function () { return est.projet === 'Commercial'; };
 
   function errors() {
     var a = est.a, e = {};
-    if (a.nomComplet.trim().length < 2) e.nomComplet = true;
+    if (!a.prenom.trim()) e.prenom = true;
+    if (!a.nom.trim()) e.nom = true;
     var d = digits(a.telephone);
     if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) e.telephone = true;
-    if (!/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(a.codePostal.trim())) e.codePostal = true;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     return e;
   }
-  function formatPostal(v) { return v.toUpperCase().replace(/\s|-/g, '').replace(/^(...)/, '$1 '); }
-  function splitName(full) {
-    var parts = full.trim().split(/\s+/);
-    return { first: parts[0] || '', last: parts.slice(1).join(' ') };
-  }
 
-  var shownIdx = -1;
   function render() {
-    var f = flow(), cur = f[est.idx];
-    // étape visible, avec transition douce quand elle change
-    Object.keys(stepEls).forEach(function (n) { stepEls[n].hidden = n !== cur; });
-    if (shownIdx !== est.idx) {
-      if (shownIdx !== -1) {
-        var el = stepEls[cur];
-        el.classList.remove('step-in', 'step-in-back');
-        void el.offsetWidth; // relance l’animation
-        el.classList.add(est.idx < shownIdx ? 'step-in-back' : 'step-in');
-        if (card.getBoundingClientRect().top < 72) card.scrollIntoView({ block: 'start', behavior: 'smooth' });
-      }
-      shownIdx = est.idx;
-    }
-    $('[data-est-stepnum]', form).textContent = 'Étape ' + (est.idx + 1) + ' sur ' + f.length;
-    $('[data-est-stepname]', form).textContent = STEP_LABELS[cur];
-    var pct = Math.round((est.idx + 1) / f.length * 100);
-    $('[data-est-barfill]', form).style.width = pct + '%';
-    $('[data-est-bar]', form).setAttribute('aria-valuenow', String(pct));
-    // choix
-    $$('fieldset[data-key]', form).forEach(function (fs) {
-      var key = fs.getAttribute('data-key');
-      $$('.opt', fs).forEach(function (b) { b.setAttribute('aria-pressed', String(est.a[key] === b.getAttribute('data-value'))); });
-    });
-    // champs cachés envoyés avec la demande
-    $$('[data-hidden]', form).forEach(function (h) {
-      var k = h.getAttribute('data-hidden');
-      h.value = (k === 'lieu' && !isCommercial()) ? '' : (est.a[k] || '');
-    });
-    // pied de formulaire
-    var last = cur === 'contact';
-    $('[data-est-back]', form).hidden = est.idx === 0;
-    $('[data-est-free]', form).hidden = est.idx !== 0;
-    submitBtn.hidden = !last;
-    $('[data-est-note]', form).hidden = !last;
+    var label = $('[data-est-label]', form);
+    if (label) label.textContent = isCommercial() ? 'Soumission commerciale' : 'Demande d’estimation gratuite';
+    var hid = $('[data-hidden="projet"]', form);
+    if (hid) hid.value = est.projet;
     submitBtn.disabled = est.sending;
     submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation gratuite';
-    // erreurs de champs
     var errs = est.showErr ? errors() : {};
     $$('[data-field]', form).forEach(function (inp) {
       var k = inp.getAttribute('data-field');
@@ -419,7 +370,6 @@
     });
   }
 
-  // valeurs initiales des champs texte
   $$('[data-field]', form).forEach(function (inp) {
     inp.value = est.a[inp.getAttribute('data-field')] || '';
     inp.addEventListener('input', function () {
@@ -429,37 +379,10 @@
     });
   });
 
-  // changer de type de projet efface les réponses qui dépendent du type (leurs choix diffèrent)
-  function setProjet(val) {
-    if (est.a.projet && est.a.projet !== val) { est.a.lieu = ''; est.a.probleme = ''; est.a.fenetres = ''; }
-    est.a.projet = val;
-  }
-
-  // un choix fait passer à l’étape suivante
-  var pickTimer;
-  $$('.opt', form).forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var key = btn.closest('fieldset[data-key]').getAttribute('data-key');
-      var val = btn.getAttribute('data-value');
-      if (key === 'projet') setProjet(val); else est.a[key] = val;
-      persist();
-      render();
-      clearTimeout(pickTimer);
-      pickTimer = setTimeout(function () { est.idx = Math.min(est.idx + 1, flow().length - 1); render(); }, 220);
-    });
-  });
-  $('[data-est-back]', form).addEventListener('click', function () {
-    clearTimeout(pickTimer);
-    est.idx = Math.max(0, est.idx - 1);
-    render();
-  });
-  // boutons du site qui pré-sélectionnent le type (ex. « Demander une soumission commerciale »)
-  $$('[data-pick-projet]').forEach(function (a) {
+  // les boutons du site vers le formulaire choisissent le type de demande : commercial seulement via le bouton commercial
+  $$('a[href="#formulaire"]').forEach(function (a) {
     a.addEventListener('click', function () {
-      clearTimeout(pickTimer);
-      setProjet(a.getAttribute('data-pick-projet'));
-      persist();
-      est.idx = Math.min(1, flow().length - 1);
+      est.projet = a.getAttribute('data-pick-projet') === 'Commercial' ? 'Commercial' : 'Résidentiel';
       render();
     });
   });
@@ -478,13 +401,15 @@
       return;
     }
     var a = est.a;
-    var postal = formatPostal(a.codePostal);
     var eventId = newEventId();
     est.sending = true; showSendError(false); render();
 
     var data = new FormData(form);
-    data.set('nom_complet', a.nomComplet.trim());
-    data.set('code_postal', postal);
+    data.set('prenom', a.prenom.trim());
+    data.set('nom', a.nom.trim());
+    data.set('message', a.message.trim().slice(0, 1500));
+    if (!a.message.trim()) data.delete('message');
+    data.set('type_de_projet', est.projet);
     data.set('source', isCommercial() ? 'landing-commercial' : 'landing-residentiel');
     if (isCommercial()) data.set('_subject', 'Nouvelle demande d’estimation COMMERCIALE — DV Teinte');
     data.set('page', location.href);
@@ -498,7 +423,7 @@
     // Livraison du courriel : FormSubmit d'abord, puis Web3Forms en secours si FormSubmit est en panne.
     deliver(data)
       .then(function () {
-        trackLead(a, postal, eventId, fbp, fbc);        // Lead : seulement après un envoi réussi
+        trackLead(a, eventId, fbp, fbc);                // Lead : seulement après un envoi réussi
         try { localStorage.removeItem(KEY); } catch (e) {}
         finish();
       })
@@ -537,7 +462,7 @@
       if (key.charAt(0) === '_') return;               // champs de configuration FormSubmit
       payload[key] = value;
     });
-    if (payload.nom_complet) payload.name = payload.nom_complet;
+    payload.name = ((payload.prenom || '') + ' ' + (payload.nom || '')).trim();
     return withTimeout(10000, function (signal) {
       return fetch('https://api.web3forms.com/submit', {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -549,14 +474,12 @@
     return viaFormSubmit(data).catch(function () { return viaWeb3Forms(data); });
   }
 
-  function trackLead(a, postal, eventId, fbp, fbc) {
-    var commercial = a.projet === 'Commercial';
+  function trackLead(a, eventId, fbp, fbc) {
+    var commercial = isCommercial();
     var contentName = commercial ? 'Estimation commerciale' : 'Estimation résidentielle';
-    var answers = { type_projet: a.projet, probleme: a.probleme, delai: a.delai, nombre_fenetres: a.fenetres };
-    if (commercial) answers.type_lieu = a.lieu;
-    // même eventId côté navigateur et côté serveur : Meta dédoublonne
-    track('Lead', Object.assign({ content_name: contentName, form_version: 'v6' }, answers), { eventID: eventId });
-    var name = splitName(a.nomComplet);
+    var answers = { type_projet: est.projet };
+    // même eventId côté navigateur et côté serveur : Meta dédoublonne (le message du client n'est jamais envoyé à Meta)
+    track('Lead', Object.assign({ content_name: contentName, form_version: 'v7' }, answers), { eventID: eventId });
     try {
       fetch('/api/capi-lead', {
         method: 'POST',
@@ -569,9 +492,8 @@
           answers: answers,
           email: a.courriel.trim(),
           phone: a.telephone,
-          firstName: name.first,
-          lastName: name.last,
-          zip: postal,
+          firstName: a.prenom.trim(),
+          lastName: a.nom.trim(),
           fbp: fbp,
           fbc: fbc
         })
