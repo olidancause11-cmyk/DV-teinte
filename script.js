@@ -449,12 +449,18 @@
       if (!ok) throw new Error(json && json.message ? json.message : 'bad response');
     });
   }
+  function viaFormSubmit(data) {
+    var url = form.getAttribute('action').replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+    return withTimeout(7000, function (signal) {
+      return fetch(url, { method: 'POST', headers: { 'Accept': 'application/json' }, body: data, signal: signal }).then(readJson);
+    });
+  }
   // Clé d'accès Web3Forms : publique par conception (elle sert côté navigateur), liée à l'adresse de réception.
   var WEB3FORMS_KEY = '4db52b51-8dac-4cd9-9f70-117dba6fbf82';
   function viaWeb3Forms(data) {
     var payload = { access_key: WEB3FORMS_KEY, subject: data.get('_subject') || 'Nouvelle demande d’estimation — DV Teinte', from_name: 'Site DV Teinte', botcheck: '' };
     data.forEach(function (value, key) {
-      if (key.charAt(0) === '_') return;               // champs de configuration (objet, anti-robot…), non envoyés tels quels
+      if (key.charAt(0) === '_') return;               // champs de configuration FormSubmit
       payload[key] = value;
     });
     payload.name = ((payload.prenom || '') + ' ' + (payload.nom || '')).trim();
@@ -466,8 +472,8 @@
     });
   }
   function deliver(data) {
-    // Web3Forms seulement (FormSubmit abandonné : pannes et courriels vides). Un seul nouvel essai en cas d'échec réseau.
-    return viaWeb3Forms(data).catch(function () { return viaWeb3Forms(data); });
+    // Web3Forms d'abord (FormSubmit a déjà livré des courriels vides), FormSubmit en secours
+    return viaWeb3Forms(data).catch(function () { return viaFormSubmit(data); });
   }
 
   function trackLead(a, eventId, fbp, fbc) {
