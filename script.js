@@ -349,7 +349,8 @@
     if (!a.prenom.trim()) e.prenom = true;
     if (!a.nom.trim()) e.nom = true;
     var d = digits(a.telephone);
-    if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) e.telephone = true;
+    // numéro nord-américain : 10 chiffres, ou 11 chiffres s’il commence par l’indicatif 1 (jamais 10 chiffres avec un 1 au début)
+    if (!((d.length === 10 && d[0] !== '1') || (d.length === 11 && d[0] === '1'))) e.telephone = true;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     return e;
   }
