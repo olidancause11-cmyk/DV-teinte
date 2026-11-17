@@ -472,7 +472,8 @@
     });
   }
   function deliver(data) {
-    return viaFormSubmit(data).catch(function () { return viaWeb3Forms(data); });
+    // Web3Forms d'abord (FormSubmit a déjà livré des courriels vides), FormSubmit en secours
+    return viaWeb3Forms(data).catch(function () { return viaFormSubmit(data); });
   }
 
   function trackLead(a, eventId, fbp, fbc) {
