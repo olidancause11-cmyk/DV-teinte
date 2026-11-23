@@ -389,7 +389,56 @@
   });
   form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
 
-  /* ----- Envoi : FormSubmit (courriel) + Meta Pixel et API Conversions (Lead) ----- */
+  /* ----- Attribution publicitaire : campagne / ad set / pub, lus dans l’adresse de la pub Meta ----- */
+  // Exemple d’adresse de pub : https://dvteinte.com/?SQF_CAMPAIGN=intimite&SQF_ADSET=winners&SQF_AD=rideaux_v1
+  var ATTR_KEY = 'dvteinte_attr_v1';
+  var ATTR_PARAMS = { campaign: 'SQF_CAMPAIGN', adset: 'SQF_ADSET', ad: 'SQF_AD' };
+  var ATTR_TTL = 30 * 24 * 3600 * 1000;                // on garde la dernière pub cliquée pendant 30 jours
+  var attrMem = null;
+  (function captureAttr() {
+    var found = {}, any = false, q;
+    try { q = new URLSearchParams(location.search); } catch (e) { return; }
+    Object.keys(ATTR_PARAMS).forEach(function (k) {
+      var v = '';
+      q.forEach(function (val, name) { if (name.toUpperCase() === ATTR_PARAMS[k]) v = val; });
+      v = v.trim().slice(0, 100);
+      if (v) { found[k] = v; any = true; }
+    });
+    if (!any) return;
+    found.t = Date.now();
+    attrMem = found;
+    try { localStorage.setItem(ATTR_KEY, JSON.stringify(found)); } catch (e) {}
+  })();
+  function currentAttr() {
+    var o = attrMem;
+    if (!o) { try { o = JSON.parse(localStorage.getItem(ATTR_KEY) || 'null'); } catch (e) { o = null; } }
+    if (!o || !o.t || Date.now() - o.t > ATTR_TTL) return { campaign: '', adset: '', ad: '' };
+    return { campaign: o.campaign || '', adset: o.adset || '', ad: o.ad || '' };
+  }
+  function fillAttr() {
+    var at = currentAttr();
+    $$('[data-attr]', form).forEach(function (inp) { inp.value = at[inp.getAttribute('data-attr')] || ''; });
+    return at;
+  }
+  fillAttr();
+
+  /* ----- Google Sheets : une ligne par lead (Google Apps Script, voir le guide) ----- */
+  var SHEET_URL = ''; // adresse du déploiement Google Apps Script (vide = désactivé)
+  var SHEET_TOKEN = '';   // mot de passe partagé avec le script, pour écarter les envois étrangers
+  function sendToSheet(a, eventId, at) {
+    if (!SHEET_URL) return;
+    var row = {
+      token: SHEET_TOKEN, date: new Date().toISOString(),
+      prenom: a.prenom.trim(), nom: a.nom.trim(), telephone: a.telephone.trim(), courriel: a.courriel.trim(),
+      campaign: at.campaign, adset: at.adset, ad: at.ad,
+      projet: est.projet, message: a.message.trim().slice(0, 1500), page: location.href, event_id: eventId
+    };
+    try {
+      fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(row), keepalive: true }).catch(function () {});
+    } catch (e) {}
+  }
+
+  /* ----- Envoi : Web3Forms (courriel) + Meta Pixel et API Conversions (Lead) ----- */
   function showSendError(on) { $('[data-send-err]', form).hidden = !on; }
 
   function submit() {
@@ -417,6 +466,8 @@
     data.set('date', new Date().toISOString());
     // références Meta, utiles pour qualifier le lead plus tard
     data.set('lead_event_id', eventId);
+    var at = fillAttr();                                // campagne / ad set / pub (vides si le visiteur ne vient pas d’une pub)
+    data.set('CAMPAIGN', at.campaign); data.set('ADSET', at.adset); data.set('AD', at.ad);
     var fbp = getCookie('_fbp'), fbc = getCookie('_fbc');
     if (fbp) data.set('fbp', fbp);
     if (fbc) data.set('fbc', fbc);
@@ -425,6 +476,7 @@
     deliver(data)
       .then(function () {
         trackLead(a, eventId, fbp, fbc);                // Lead : seulement après un envoi réussi
+        sendToSheet(a, eventId, at);                    // ligne dans Google Sheets (si activé)
         try { localStorage.removeItem(KEY); } catch (e) {}
         finish();
       })
