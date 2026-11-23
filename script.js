@@ -408,6 +408,13 @@
     found.t = Date.now();
     attrMem = found;
     try { localStorage.setItem(ATTR_KEY, JSON.stringify(found)); } catch (e) {}
+    // adresse propre : on retire les paramètres SQF_* de la barre d’adresse (déjà mémorisés ci-dessus), le reste (#ancre, fbclid…) est conservé
+    try {
+      var clean = new URLSearchParams(location.search);
+      Array.from(clean.keys()).forEach(function (name) { if (/^SQF_(CAMPAIGN|ADSET|AD)$/i.test(name)) clean.delete(name); });
+      var qs = clean.toString();
+      history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    } catch (e) {}
   })();
   function currentAttr() {
     var o = attrMem;
