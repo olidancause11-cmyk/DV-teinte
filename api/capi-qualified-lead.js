@@ -28,12 +28,13 @@ module.exports = async function handler(req, res) {
   var token = process.env.META_CONVERSIONS_API_TOKEN;
   var secret = process.env.QUALIFIED_LEAD_SECRET;
   if (!pixelId || !token || !secret) {
-    res.status(503).json({ success: false, error: 'not_configured' });
+    res.status(503).json({ success: false });
     return;
   }
 
   var body = parseBody(req);
-  var provided = req.headers['x-api-key'] || body.secret || '';
+  // Sécurité : le secret ne passe que par l'en-tête (jamais dans le corps, qui peut se retrouver dans des journaux)
+  var provided = req.headers['x-api-key'] || '';
   if (!provided || !safeEqual(provided, secret)) {
     res.status(401).json({ success: false, error: 'unauthorized' });
     return;
@@ -67,9 +68,9 @@ module.exports = async function handler(req, res) {
     });
     var metaJson = await metaRes.json().catch(function () { return {}; });
     if (!metaRes.ok) console.error('Meta CAPI QualifiedLead error', metaJson);
-    res.status(metaRes.ok ? 200 : 502).json({ success: metaRes.ok, meta: metaJson });
+    res.status(metaRes.ok ? 200 : 502).json({ success: metaRes.ok });
   } catch (err) {
     console.error('CAPI qualified lead handler error', err);
-    res.status(500).json({ success: false, error: String(err) });
+    res.status(500).json({ success: false });
   }
 };

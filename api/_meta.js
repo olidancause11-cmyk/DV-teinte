@@ -54,4 +54,32 @@ async function sendEvent(pixelId, token, event) {
   return { ok: metaRes.ok, json: metaJson };
 }
 
-module.exports = { sha256, normPhone, buildUserData, parseBody, sendEvent };
+// ── Sécurité : seules les pages de dvteinte.com (et les aperçus Vercel de ce projet) peuvent appeler l'API depuis un navigateur ──
+function hostAllowed(url) {
+  try {
+    var h = new URL(url).hostname.toLowerCase();
+    return h === 'dvteinte.com' || h === 'www.dvteinte.com' || h === 'localhost' ||
+      /^dv-teinte[a-z0-9-]*\.vercel\.app$/.test(h);
+  } catch (e) { return false; }
+}
+// Un navigateur envoie toujours Origin ou Referer : s'il y en a un et qu'il n'est pas le nôtre, on refuse.
+// (Un appel sans navigateur n'a pas d'en-tête : il n'est pas bloqué ici, la limite de fréquence s'applique.)
+function originAllowed(req) {
+  var src = req.headers.origin || req.headers.referer || '';
+  return !src || hostAllowed(src);
+}
+
+// Limite de fréquence simple par adresse IP (mémoire de l'instance : un frein, pas une garantie).
+var hits = {};
+function rateLimited(req, max, windowMs) {
+  var ip = ((req.headers['x-forwarded-for'] || '').split(',')[0] || '').trim() || 'inconnu';
+  var now = Date.now();
+  var list = (hits[ip] || []).filter(function (t) { return now - t < windowMs; });
+  list.push(now);
+  hits[ip] = list;
+  var keys = Object.keys(hits);
+  if (keys.length > 500) keys.forEach(function (k) { if (!hits[k].some(function (t) { return now - t < windowMs; })) delete hits[k]; });
+  return list.length > max;
+}
+
+module.exports = { sha256, normPhone, buildUserData, parseBody, sendEvent, hostAllowed, originAllowed, rateLimited };

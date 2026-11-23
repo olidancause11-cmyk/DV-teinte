@@ -1,4 +1,4 @@
-const { buildUserData, parseBody, sendEvent } = require('./_meta');
+const { buildUserData, parseBody, sendEvent, hostAllowed, originAllowed, rateLimited } = require('./_meta');
 
 // Événement « Lead » envoyé par le serveur, avec le même event_id que le pixel du navigateur
 // (Meta dédoublonne). Le navigateur ne l'appelle qu'après un envoi réussi du formulaire.
@@ -8,10 +8,20 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // Sécurité : origine du navigateur + limite de fréquence (15 appels / 10 min / adresse IP)
+  if (!originAllowed(req)) {
+    res.status(403).json({ success: false });
+    return;
+  }
+  if (rateLimited(req, 15, 10 * 60 * 1000)) {
+    res.status(429).json({ success: false });
+    return;
+  }
+
   var pixelId = process.env.META_PIXEL_ID;
   var token = process.env.META_CONVERSIONS_API_TOKEN;
   if (!pixelId || !token) {
-    res.status(200).json({ success: false, error: 'not_configured' });
+    res.status(200).json({ success: false });
     return;
   }
 
@@ -23,6 +33,11 @@ module.exports = async function handler(req, res) {
     var userAgent = req.headers['user-agent'] || '';
 
     var userData = buildUserData(body);
+    // Sécurité : un vrai lead a toujours un téléphone ou un courriel
+    if (!userData.em && !userData.ph) {
+      res.status(400).json({ success: false });
+      return;
+    }
     if (clientIp) userData.client_ip_address = clientIp;
     if (userAgent) userData.client_user_agent = userAgent;
 
@@ -43,14 +58,15 @@ module.exports = async function handler(req, res) {
     custom.form_version = 'v6';
     event.custom_data = custom;
 
-    if (body.eventId) event.event_id = String(body.eventId).slice(0, 100);
-    if (body.eventSourceUrl) event.event_source_url = body.eventSourceUrl;
+    if (body.eventId && /^[A-Za-z0-9_-]{8,100}$/.test(String(body.eventId))) event.event_id = String(body.eventId);
+    if (body.eventSourceUrl && hostAllowed(String(body.eventSourceUrl))) event.event_source_url = String(body.eventSourceUrl).slice(0, 500);
 
     var result = await sendEvent(pixelId, token, event);
     if (!result.ok) console.error('Meta CAPI error', result.json);
-    res.status(200).json({ success: result.ok, meta: result.json });
+    // Sécurité : aucun détail interne dans la réponse (le détail reste dans les journaux Vercel)
+    res.status(200).json({ success: result.ok });
   } catch (err) {
     console.error('CAPI lead handler error', err);
-    res.status(200).json({ success: false, error: String(err) });
+    res.status(200).json({ success: false });
   }
 };
