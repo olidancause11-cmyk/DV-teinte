@@ -444,8 +444,8 @@
   fillAttr();
 
   /* ----- Canal direct vers la feuille (Google Apps Script) : la demande est enregistrée même si les services de courriel sont en panne ----- */
-  var SHEET_URL = '';     // adresse de l'application web Apps Script (vide = canal désactivé)
-  var SHEET_TOKEN = '';   // jeton partagé : il filtre le bruit, la vraie validation se fait côté Apps Script
+  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxeuyRaBoC6KFYjYLYAl8fIDSJIW1YC8jB4fOK5TwLjGXSh2c7fEyqS7rPKbztZ1aGh/exec';     // adresse de l'application web Apps Script (vide = canal désactivé)
+  var SHEET_TOKEN = '061af63686ab8a97f58449939a631ce2f149c872f39f5b41';   // jeton partagé : il filtre le bruit, la vraie validation se fait côté Apps Script
   var OUTBOX_KEY = 'dvteinte_outbox_v1';
   function sheetPayload(a, eventId, at) {
     return {
