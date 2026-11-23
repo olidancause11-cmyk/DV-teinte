@@ -397,13 +397,19 @@
   var ATTR_NAMES = [].concat(ATTR_PARAMS.campaign, ATTR_PARAMS.adset, ATTR_PARAMS.ad);
   var ATTR_TTL = 30 * 24 * 3600 * 1000;                // on garde la dernière pub cliquée pendant 30 jours
   var attrMem = null;
+  // Sécurité : une valeur venue de l’adresse est du texte, jamais une formule ni du HTML (lettres, chiffres, espaces et signes courants seulement)
+  function cleanAttr(v) {
+    v = String(v || '');
+    try { v = v.replace(/[^\p{L}\p{N} _\-\/.$%:,()&#]/gu, ''); } catch (e) { v = v.replace(/[^A-Za-z0-9 _\-\/.$%:,()&#]/g, ''); }
+    return v.replace(/^[\s=+\-@]+/, '').replace(/\s+$/, '').slice(0, 100);
+  }
   (function captureAttr() {
     var found = {}, any = false, q;
     try { q = new URLSearchParams(location.search); } catch (e) { return; }
     Object.keys(ATTR_PARAMS).forEach(function (k) {
       var v = '';
       q.forEach(function (val, name) { if (ATTR_PARAMS[k].indexOf(name.toUpperCase()) > -1 && val.trim()) v = val; });
-      v = v.trim().slice(0, 100);
+      v = cleanAttr(v);
       if (v) { found[k] = v; any = true; }
     });
     if (!any) return;
@@ -422,7 +428,7 @@
     var o = attrMem;
     if (!o) { try { o = JSON.parse(localStorage.getItem(ATTR_KEY) || 'null'); } catch (e) { o = null; } }
     if (!o || !o.t || Date.now() - o.t > ATTR_TTL) return { campaign: '', adset: '', ad: '' };
-    return { campaign: o.campaign || '', adset: o.adset || '', ad: o.ad || '' };
+    return { campaign: cleanAttr(o.campaign), adset: cleanAttr(o.adset), ad: cleanAttr(o.ad) };
   }
   function fillAttr() {
     var at = currentAttr();
