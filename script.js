@@ -332,15 +332,21 @@
     projet: 'Résidentiel',   // devient « Commercial » seulement via le bouton de la section commerciale
     a: { prenom: '', nom: '', telephone: '', courriel: '', message: '' }
   };
+  // Données personnelles : le brouillon (nom, téléphone, courriel, message) n'est gardé que 24 h sur l'appareil, puis effacé
+  var DRAFT_TTL = 24 * 3600 * 1000;
   try {
     var saved = localStorage.getItem(KEY);
-    if (saved) est.a = Object.assign(est.a, JSON.parse(saved));
+    if (saved) {
+      var d = JSON.parse(saved);
+      if (d && d.t && d.a && Date.now() - d.t < DRAFT_TTL) est.a = Object.assign(est.a, d.a);
+      else localStorage.removeItem(KEY);
+    }
   } catch (e) {}
 
   var hpInput = $('[data-hp]', form);
   var submitBtn = $('[data-est-submit]', form);
   var card = $('#formulaire');
-  var persist = function () { try { localStorage.setItem(KEY, JSON.stringify(est.a)); } catch (e) {} };
+  var persist = function () { try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), a: est.a })); } catch (e) {} };
   var digits = function (v) { return (v || '').replace(/\D/g, ''); };
   var isCommercial = function () { return est.projet === 'Commercial'; };
 

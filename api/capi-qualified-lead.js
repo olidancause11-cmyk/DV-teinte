@@ -67,10 +67,10 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify(payload)
     });
     var metaJson = await metaRes.json().catch(function () { return {}; });
-    if (!metaRes.ok) console.error('Meta CAPI QualifiedLead error', metaJson);
+    if (!metaRes.ok) console.error('Meta CAPI QualifiedLead error', metaJson && metaJson.error ? { code: metaJson.error.code, message: metaJson.error.message, trace: metaJson.error.fbtrace_id } : 'sans détail');
     res.status(metaRes.ok ? 200 : 502).json({ success: metaRes.ok });
   } catch (err) {
-    console.error('CAPI qualified lead handler error', err);
+    console.error('CAPI qualified lead handler error', err && err.message ? err.message : 'erreur');
     res.status(500).json({ success: false });
   }
 };

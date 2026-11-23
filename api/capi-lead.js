@@ -62,11 +62,11 @@ module.exports = async function handler(req, res) {
     if (body.eventSourceUrl && hostAllowed(String(body.eventSourceUrl))) event.event_source_url = String(body.eventSourceUrl).slice(0, 500);
 
     var result = await sendEvent(pixelId, token, event);
-    if (!result.ok) console.error('Meta CAPI error', result.json);
+    if (!result.ok) console.error('Meta CAPI error', result.json && result.json.error ? { code: result.json.error.code, message: result.json.error.message, trace: result.json.error.fbtrace_id } : 'sans détail');
     // Sécurité : aucun détail interne dans la réponse (le détail reste dans les journaux Vercel)
     res.status(200).json({ success: result.ok });
   } catch (err) {
-    console.error('CAPI lead handler error', err);
+    console.error('CAPI lead handler error', err && err.message ? err.message : 'erreur');
     res.status(200).json({ success: false });
   }
 };
