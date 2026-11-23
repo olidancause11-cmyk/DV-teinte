@@ -390,9 +390,11 @@
   form.addEventListener('submit', function (e) { e.preventDefault(); submit(); });
 
   /* ----- Attribution publicitaire : campagne / ad set / pub, lus dans l’adresse de la pub Meta ----- */
-  // Exemple d’adresse de pub : https://dvteinte.com/?SQF_CAMPAIGN=intimite&SQF_ADSET=winners&SQF_AD=rideaux_v1
+  // Adresse de pub courte : https://dvteinte.com/?c=intimite&s=winners&a=rideaux_v1  (c = campagne, s = ad set, a = pub)
+  // Les anciens noms longs SQF_CAMPAIGN / SQF_ADSET / SQF_AD restent acceptés.
   var ATTR_KEY = 'dvteinte_attr_v1';
-  var ATTR_PARAMS = { campaign: 'SQF_CAMPAIGN', adset: 'SQF_ADSET', ad: 'SQF_AD' };
+  var ATTR_PARAMS = { campaign: ['C', 'SQF_CAMPAIGN'], adset: ['S', 'SQF_ADSET'], ad: ['A', 'SQF_AD'] };
+  var ATTR_NAMES = [].concat(ATTR_PARAMS.campaign, ATTR_PARAMS.adset, ATTR_PARAMS.ad);
   var ATTR_TTL = 30 * 24 * 3600 * 1000;                // on garde la dernière pub cliquée pendant 30 jours
   var attrMem = null;
   (function captureAttr() {
@@ -400,7 +402,7 @@
     try { q = new URLSearchParams(location.search); } catch (e) { return; }
     Object.keys(ATTR_PARAMS).forEach(function (k) {
       var v = '';
-      q.forEach(function (val, name) { if (name.toUpperCase() === ATTR_PARAMS[k]) v = val; });
+      q.forEach(function (val, name) { if (ATTR_PARAMS[k].indexOf(name.toUpperCase()) > -1 && val.trim()) v = val; });
       v = v.trim().slice(0, 100);
       if (v) { found[k] = v; any = true; }
     });
@@ -408,10 +410,10 @@
     found.t = Date.now();
     attrMem = found;
     try { localStorage.setItem(ATTR_KEY, JSON.stringify(found)); } catch (e) {}
-    // adresse propre : on retire les paramètres SQF_* de la barre d’adresse (déjà mémorisés ci-dessus), le reste (#ancre, fbclid…) est conservé
+    // adresse propre : on retire les paramètres c / s / a de la barre d’adresse (déjà mémorisés ci-dessus), le reste (#ancre, fbclid…) est conservé
     try {
       var clean = new URLSearchParams(location.search);
-      Array.from(clean.keys()).forEach(function (name) { if (/^SQF_(CAMPAIGN|ADSET|AD)$/i.test(name)) clean.delete(name); });
+      Array.from(clean.keys()).forEach(function (name) { if (ATTR_NAMES.indexOf(name.toUpperCase()) > -1) clean.delete(name); });
       var qs = clean.toString();
       history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     } catch (e) {}
