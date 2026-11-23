@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/test/(.*)",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.dvteinte.com" }],
       "destination": "https://dvteinte.com/$1",
