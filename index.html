@@ -17,7 +17,7 @@
 <meta name="theme-color" content="#0E1012" />
 <link rel="canonical" href="https://dvteinte.com/" />
 <link rel="icon" href="./assets/symbol-dv.png" />
-<link rel="preload" as="image" href="./assets/photos/hero-facade.jpg" />
+<link rel="preload" as="image" href="./assets/photos/hero-facade.jpg" imagesrcset="./assets/photos/hero-facade-640.jpg 640w, ./assets/photos/hero-facade-900.jpg 900w, ./assets/photos/hero-facade.jpg 1206w" imagesizes="(min-width:1080px) 64vw, 75vw" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -72,13 +72,14 @@ fbq('track', 'PageView');
       <a href="#commercial" data-menu-close>Commercial</a>
       <a href="#processus" data-menu-close>Comment ça marche</a>
       <a href="#faq" data-menu-close>FAQ</a>
+      <a href="tel:4508029892" data-menu-close>Appeler le 450 802-9892</a>
     </nav>
   </header>
 
   <!-- ============ HERO ============ -->
   <section class="hero" data-screen-label="Hero">
     <div class="hero-media">
-      <img src="./assets/photos/hero-facade.jpg" alt="Installation de pellicule réfléchissante sur de grandes fenêtres d’une façade résidentielle, par DV Teinte" width="1206" height="2144" loading="eager" fetchpriority="high" />
+      <img src="./assets/photos/hero-facade.jpg" srcset="./assets/photos/hero-facade-640.jpg 640w, ./assets/photos/hero-facade-900.jpg 900w, ./assets/photos/hero-facade.jpg 1206w" sizes="(min-width:1080px) 64vw, 75vw" alt="Installation de pellicule réfléchissante sur de grandes fenêtres d’une façade résidentielle, par DV Teinte" width="1206" height="2144" loading="eager" fetchpriority="high" />
       <span class="hero-label">Installation DV Teinte</span>
       <div class="hero-fx" aria-hidden="true"><i class="fx-glare fx-glare-a"></i><i class="fx-glare fx-glare-b"></i><i class="fx-vignette"></i></div>
     </div>
@@ -111,13 +112,13 @@ fbq('track', 'PageView');
 
       <div class="demo-frame">
         <figure class="demo-view is-on" id="demo-view-ext" role="tabpanel" aria-labelledby="demo-tab-ext">
-          <img src="./assets/photos/exterieur-brique.jpg" alt="Maison en brique rouge vue de l’extérieur : la fenêtre équipée d’une pellicule solaire réfléchissante reflète les arbres" width="1100" height="1466" loading="eager" decoding="async" style="object-position:50% 42%" />
+          <img src="./assets/photos/exterieur-brique.jpg" srcset="./assets/photos/exterieur-brique-640.jpg 640w, ./assets/photos/exterieur-brique-800.jpg 800w, ./assets/photos/exterieur-brique.jpg 1100w" sizes="(min-width:700px) 520px, 92vw" alt="Maison en brique rouge vue de l’extérieur : la fenêtre équipée d’une pellicule solaire réfléchissante reflète les arbres" width="1100" height="1466" loading="eager" decoding="async" style="object-position:50% 42%" />
         </figure>
         <figure class="demo-view" id="demo-view-int" role="tabpanel" aria-labelledby="demo-tab-int" aria-hidden="true">
-          <img src="./assets/photos/vue-interieur.jpg" alt="Vue de l’intérieur à travers une fenêtre avec pellicule d’intimité : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" style="object-position:50% 50%" />
+          <img src="./assets/photos/vue-interieur.jpg" srcset="./assets/photos/vue-interieur-640.jpg 640w, ./assets/photos/vue-interieur-900.jpg 900w, ./assets/photos/vue-interieur.jpg 1600w" sizes="(min-width:700px) 520px, 92vw" alt="Vue de l’intérieur à travers une fenêtre avec pellicule d’intimité : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" style="object-position:50% 50%" />
         </figure>
         <figure class="demo-view" id="demo-view-cmp" role="tabpanel" aria-labelledby="demo-tab-cmp" aria-hidden="true">
-          <img src="./assets/photos/avec-sans-pellicule.jpg" alt="Teinture de vitres résidentielles : deux fenêtres côte à côte vues de l’intérieur, à gauche avec pellicule solaire, à droite sans pellicule" width="1080" height="1920" loading="lazy" decoding="async" style="object-position:50% 45%" />
+          <img src="./assets/photos/avec-sans-pellicule.jpg" srcset="./assets/photos/avec-sans-pellicule-640.jpg 640w, ./assets/photos/avec-sans-pellicule-800.jpg 800w, ./assets/photos/avec-sans-pellicule.jpg 1080w" sizes="(min-width:700px) 520px, 92vw" alt="Teinture de vitres résidentielles : deux fenêtres côte à côte vues de l’intérieur, à gauche avec pellicule solaire, à droite sans pellicule" width="1080" height="1920" loading="lazy" decoding="async" style="object-position:50% 45%" />
         </figure>
         <span class="demo-badge">Photos de vraies installations DV Teinte</span>
       </div>
@@ -353,10 +354,10 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
           <h3 class="contact-title">Où peut-on vous joindre?</h3>
           <p class="contact-sub">On vous rappelle en moins de 30 minutes, entre 8 h et 20 h, pour discuter de votre projet et préparer votre estimation gratuite, sans engagement.</p>
           <div class="fields">
-            <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" name="prenom" type="text" inputmode="text" autocomplete="given-name" data-field="prenom" /><span class="field-err" data-err="prenom" hidden>Entrez votre prénom.</span></div>
-            <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" name="nom" type="text" inputmode="text" autocomplete="family-name" data-field="nom" /><span class="field-err" data-err="nom" hidden>Entrez votre nom.</span></div>
-            <div class="field field-wide"><label for="dv-telephone">Téléphone</label><input id="dv-telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="450 555-0123" data-field="telephone" /><span class="field-err" data-err="telephone" hidden>Entrez un numéro de téléphone valide (10 chiffres).</span></div>
-            <div class="field field-wide"><label for="dv-courriel">Courriel</label><input id="dv-courriel" name="email" type="email" inputmode="email" autocomplete="email" data-field="courriel" /><span class="field-err" data-err="courriel" hidden>Entrez un courriel valide.</span></div>
+            <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" name="prenom" enterkeyhint="next" type="text" inputmode="text" autocomplete="given-name" data-field="prenom" /><span class="field-err" data-err="prenom" hidden>Entrez votre prénom.</span></div>
+            <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" name="nom" enterkeyhint="next" type="text" inputmode="text" autocomplete="family-name" data-field="nom" /><span class="field-err" data-err="nom" hidden>Entrez votre nom.</span></div>
+            <div class="field field-wide"><label for="dv-telephone">Téléphone</label><input id="dv-telephone" name="telephone" enterkeyhint="next" type="tel" inputmode="tel" autocomplete="tel" placeholder="450 555-0123" data-field="telephone" /><span class="field-err" data-err="telephone" hidden>Entrez un numéro de téléphone valide (10 chiffres).</span></div>
+            <div class="field field-wide"><label for="dv-courriel">Courriel</label><input id="dv-courriel" name="email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" data-field="courriel" /><span class="field-err" data-err="courriel" hidden>Entrez un courriel valide.</span></div>
             <div class="field field-wide"><label for="dv-message">Message ou précisions <span class="opt-label">(facultatif)</span></label><textarea id="dv-message" name="message" rows="3" maxlength="1500" placeholder="Ex. : nombre de fenêtres, délai souhaité, questions…" data-field="message"></textarea></div>
           </div>
           <input name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" data-hp />
@@ -470,7 +471,7 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
   <footer class="site-footer">
     <div class="footer-wrap footer-grid">
       <div>
-        <img src="./assets/logo-dv-teinte.png" alt="DV Teinte" class="footer-logo" />
+        <img src="./assets/logo-dv-teinte.png" alt="DV Teinte" class="footer-logo" width="165" height="40" />
         <p class="footer-desc">Dancause Vaillancourt Teinte — fourniture et installation de pellicules pour fenêtres résidentielles et commerciales sur la Rive-Sud de Montréal.</p>
       </div>
       <div>

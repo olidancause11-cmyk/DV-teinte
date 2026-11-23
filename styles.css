@@ -735,3 +735,16 @@ section[id]{scroll-margin-top:72px;}
   .svc-card .svc-list{flex:1;}
   .svc-btn{width:auto;min-width:300px;}
 }
+
+/* ===== Audit mobile : zones tactiles de 44 px et textes lisibles (rien ne change sur ordinateur) ===== */
+.hdr-logo{min-height:44px;}
+.rev-dots button{position:relative;}
+.rev-dots button::after{content:"";position:absolute;inset:-18px -9px;}
+.demo-badge,.rev-tag{font-size:13px;}
+.policy-back{display:inline-flex;align-items:center;min-height:44px;}
+@media (max-width:1079px){
+  .footer-links{gap:0;}
+  .footer-links a,.footer-social a{display:flex;align-items:center;min-height:44px;}
+  .footer-social{gap:8px;}
+  .footer-bottom-inner a{display:inline-flex;align-items:center;min-height:44px;}
+}
