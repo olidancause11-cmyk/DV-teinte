@@ -279,7 +279,7 @@
         list.push(el); groups.set(el.parentNode, list);
       });
     };
-    add('.demo-title, .solu-title, .rev-head .h2, .trust-title, .proc-title, .est-sec .h2, .faq-in .h2, .final-title');
+    add('.demo-title, .svc-title, .solu-title, .rev-head .h2, .trust-title, .proc-title, .est-sec .h2, .faq-in .h2, .final-title');
     add('.demo-head, .demo-tabs, .demo-captions, .demo-cta');
     add('.demo-frame', true);
     add('.solu-head, .solu-tabs, .solu-panels, .solu-cta');
@@ -287,6 +287,7 @@
     add('.trust-sub, .trust-item, .trust-cta');
     add('.proc-sub, .proc-step, .proc-cta');
     add('.est-sec .stack-22 > *, .est-card');
+    add('.svc-sub, .svc-card');
     add('.faq-item');
     add('.final-p, .final .btn-blue');
     var els = $$('[data-sc]');
@@ -367,7 +368,7 @@
     var hid = $('[data-hidden="projet"]', form);
     if (hid) hid.value = est.projet;
     submitBtn.disabled = est.sending;
-    submitBtn.textContent = est.sending ? 'Envoi…' : 'Demander mon estimation gratuite';
+    submitBtn.textContent = est.sending ? 'Envoi…' : 'Obtenir mon estimation gratuite';
     var errs = est.showErr ? errors() : {};
     $$('[data-field]', form).forEach(function (inp) {
       var k = inp.getAttribute('data-field');
