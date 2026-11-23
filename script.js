@@ -443,20 +443,47 @@
   }
   fillAttr();
 
-  /* ----- Google Sheets : une ligne par lead (Google Apps Script, voir le guide) ----- */
-  var SHEET_URL = ''; // adresse du déploiement Google Apps Script (vide = désactivé)
-  var SHEET_TOKEN = '';   // mot de passe partagé avec le script, pour écarter les envois étrangers
-  function sendToSheet(a, eventId, at) {
-    if (!SHEET_URL) return;
-    var row = {
-      token: SHEET_TOKEN, date: new Date().toISOString(),
+  /* ----- Canal direct vers la feuille (Google Apps Script) : la demande est enregistrée même si les services de courriel sont en panne ----- */
+  var SHEET_URL = '';     // adresse de l'application web Apps Script (vide = canal désactivé)
+  var SHEET_TOKEN = '';   // jeton partagé : il filtre le bruit, la vraie validation se fait côté Apps Script
+  var OUTBOX_KEY = 'dvteinte_outbox_v1';
+  function sheetPayload(a, eventId, at) {
+    return {
+      token: SHEET_TOKEN, hp: '', eventId: eventId,
       prenom: a.prenom.trim(), nom: a.nom.trim(), telephone: a.telephone.trim(), courriel: a.courriel.trim(),
-      campaign: at.campaign, adset: at.adset, ad: at.ad,
-      projet: est.projet, message: a.message.trim().slice(0, 1500), page: location.href, event_id: eventId
+      message: a.message.trim().slice(0, 1500), projet: est.projet,
+      campaign: at.campaign, adset: at.adset, ad: at.ad
     };
+  }
+  // Succès seulement si Apps Script répond {"ok":true} (demande validée ET enregistrée).
+  function saveToSheet(payload) {
+    if (!SHEET_URL) return Promise.reject(new Error('inactif'));
+    return withTimeout(12000, function (signal) {
+      return fetch(SHEET_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), signal: signal })
+        .then(function (res) { return res.json(); })
+        .then(function (j) { if (!j || j.ok !== true) throw new Error('refusé'); });
+    });
+  }
+  // Reprise : si tous les envois échouent, la demande est gardée 24 h sur l'appareil et renvoyée au prochain chargement de la page.
+  function outboxSave(p) { try { localStorage.setItem(OUTBOX_KEY, JSON.stringify({ t: Date.now(), p: p })); } catch (e) {} }
+  function outboxRetry() {
     try {
-      fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(row), keepalive: true }).catch(function () {});
+      var o = JSON.parse(localStorage.getItem(OUTBOX_KEY) || 'null');
+      if (!o || !o.p) return;
+      if (Date.now() - o.t > 24 * 3600 * 1000) { localStorage.removeItem(OUTBOX_KEY); return; }
+      saveToSheet(o.p).then(function () { localStorage.removeItem(OUTBOX_KEY); }).catch(function () {});
     } catch (e) {}
+  }
+  outboxRetry();
+  window.addEventListener('online', outboxRetry);
+  // Résout dès qu'un des envois réussit ; rejette seulement si tous échouent.
+  function firstSuccess(list) {
+    return new Promise(function (resolve, reject) {
+      var failed = 0;
+      list.forEach(function (p) {
+        p.then(resolve, function () { failed++; if (failed === list.length) reject(new Error('échec')); });
+      });
+    });
   }
 
   /* ----- Envoi : Web3Forms (courriel) + Meta Pixel et API Conversions (Lead) ----- */
@@ -472,7 +499,7 @@
       return;
     }
     var a = est.a;
-    var eventId = newEventId();
+    var eventId = est.eventId || (est.eventId = newEventId());   // même identifiant si le visiteur réessaie : jamais de doublon
     est.sending = true; showSendError(false); render();
 
     var data = new FormData(form);
@@ -493,15 +520,17 @@
     if (fbp) data.set('fbp', fbp);
     if (fbc) data.set('fbc', fbc);
 
-    // Livraison du courriel : FormSubmit d'abord, puis Web3Forms en secours si FormSubmit est en panne.
-    deliver(data)
+    // Deux chemins indépendants en parallèle : le courriel (Web3Forms, puis FormSubmit en secours) et le canal direct vers la feuille.
+    // La demande est réussie dès qu'un des deux répond ; elle n'est « perdue » que si les deux échouent (elle est alors gardée pour reprise).
+    var payload = sheetPayload(a, eventId, at);
+    firstSuccess([deliver(data), saveToSheet(payload)])
       .then(function () {
         trackLead(a, eventId, fbp, fbc);                // Lead : seulement après un envoi réussi
-        sendToSheet(a, eventId, at);                    // ligne dans Google Sheets (si activé)
-        try { localStorage.removeItem(KEY); } catch (e) {}
+        try { localStorage.removeItem(KEY); localStorage.removeItem(OUTBOX_KEY); } catch (e) {}
         finish();
       })
       .catch(function () {
+        if (SHEET_URL) outboxSave(payload);
         est.sending = false; render(); showSendError(true);
       });
   }
