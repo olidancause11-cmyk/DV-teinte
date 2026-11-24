@@ -12,6 +12,16 @@
       window.dispatchEvent(new CustomEvent('dv:track', { detail: { event: ev, params: params || {} } }));
     } catch (e) {}
   }
+  /* ===== Suivi des clics sur les boutons d'action : seulement l'emplacement du bouton, aucune donnée personnelle ===== */
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[data-cta]') : null;
+    if (!a) return;
+    var loc = a.getAttribute('data-cta');
+    try {
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', 'CTAClick', { cta_location: loc });
+      (window.dataLayer = window.dataLayer || []).push({ event: 'dv_cta_click', cta_location: loc });
+    } catch (err) {}
+  });
   function getCookie(name) {
     var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
     return m ? decodeURIComponent(m[1]) : '';
@@ -191,6 +201,10 @@
         panel.classList.remove('solu-in');
         if (on) { void panel.offsetWidth; panel.classList.add('solu-in'); }
       });
+      // le bouton sous les onglets suit le besoin choisi (même destination : le formulaire)
+      var soluCta = $('[data-solu-cta]');
+      var ctaText = btn.getAttribute('data-cta-text');
+      if (soluCta && ctaText && soluCta.firstChild) soluCta.firstChild.textContent = ctaText;
       if (focus) btn.focus();
     };
     soluBtns.forEach(function (b, i) {

@@ -748,3 +748,21 @@ section[id]{scroll-margin-top:72px;}
   .footer-social{gap:8px;}
   .footer-bottom-inner a{display:inline-flex;align-items:center;min-height:44px;}
 }
+
+/* ===== Boutons d'action : hiérarchie, états et barre mobile ===== */
+.svc-note{margin:0;font-size:14px;line-height:1.4;color:#4A4F55;}
+.rev-cta{margin-top:32px;display:flex;}
+.rev-cta .btn-blue{display:inline-flex;justify-content:center;}
+.btn-blue,.demo-cta,.svc-btn,.proc-cta,.est-submit,.hdr-cta,.hero-cta .btn-tel,.sticky-bar a{transition:background .2s,border-color .2s,color .2s,transform .12s;}
+@media (prefers-reduced-motion:no-preference){
+  .btn-blue:active,.demo-cta:active,.svc-btn:active,.proc-cta:active,.est-submit:active,.hdr-cta:active,.hero-cta .btn-tel:active,.sticky-bar a:active{transform:scale(.98);}
+}
+@media (max-width:1079px){
+  .sticky-bar.is-on{display:flex;gap:8px;}
+  .sticky-bar .sticky-main{flex:1;min-width:0;}
+  .sticky-bar .sticky-tel{flex:0 0 52px;width:52px;background:transparent;border:1.5px solid rgba(242,240,235,.55);color:#F2F0EB;}
+  .sticky-bar .sticky-tel:hover{background:rgba(242,240,235,.1);color:#fff;}
+}
+@media (max-width:699px){
+  .rev-cta .btn-blue{width:100%;}
+}
