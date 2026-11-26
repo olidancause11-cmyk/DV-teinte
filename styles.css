@@ -769,21 +769,22 @@ section[id]{scroll-margin-top:72px;}
 
 
 /* ===== Vidéo explicative (VSL) : carte dans « Comment ça fonctionne » + lecteur en fenêtre modale ===== */
-.vsl{width:100%;max-width:620px;margin-top:28px;}
-.vsl-open{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;align-items:center;width:100%;min-height:44px;padding:12px;text-align:left;background:#fff;border:1px solid rgba(14,16,18,.14);border-radius:6px;color:#0E1012;font:inherit;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
+.vsl{width:100%;max-width:760px;margin-top:28px;}
+.vsl-open{display:grid;grid-template-columns:128px minmax(0,1fr);gap:18px;align-items:center;width:100%;min-height:44px;padding:16px;text-align:left;background:#fff;border:1px solid rgba(14,16,18,.14);border-radius:6px;color:#0E1012;font:inherit;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
 .vsl-open:hover{border-color:var(--proc-blue);box-shadow:0 2px 14px rgba(14,16,18,.08);}
 .vsl-open:focus-visible{outline:2px solid var(--proc-blue);outline-offset:3px;}
-.vsl-thumb{position:relative;display:block;width:84px;aspect-ratio:9/16;border-radius:4px;overflow:hidden;background:#16191C;}
+.vsl-thumb{position:relative;display:block;width:128px;aspect-ratio:9/16;border-radius:4px;overflow:hidden;background:#16191C;}
 .vsl-thumb img{width:100%;height:100%;object-fit:cover;}
 .vsl-play{position:absolute;inset:0;display:grid;place-items:center;}
-.vsl-play::before{content:"";position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(14,16,18,.74);border:1px solid rgba(255,255,255,.55);}
-.vsl-play svg{position:relative;color:#fff;margin-left:3px;}
+.vsl-play::before{content:"";position:absolute;width:52px;height:52px;border-radius:50%;background:rgba(14,16,18,.74);border:1px solid rgba(255,255,255,.55);}
+.vsl-play svg{position:relative;color:#fff;margin-left:4px;width:20px;height:22px;}
 .vsl-copy{display:flex;flex-direction:column;gap:6px;min-width:0;}
-.vsl-kicker{font-size:13px;font-weight:600;color:var(--proc-blue);line-height:1.3;}
-.vsl-title{font-size:clamp(17px,2vw,20px);line-height:1.22;font-weight:500;letter-spacing:-.01em;color:#0E1012;text-wrap:balance;}
-.vsl-sub{font-size:14px;line-height:1.45;color:#4A4F55;}
-.vsl-meta{font-size:14px;font-weight:600;color:var(--proc-blue);margin-top:2px;}
+.vsl-kicker{font-size:14px;font-weight:600;color:var(--proc-blue);line-height:1.3;}
+.vsl-title{font-size:clamp(20px,5.4vw,26px);line-height:1.22;font-weight:500;letter-spacing:-.01em;color:#0E1012;text-wrap:balance;}
+.vsl-sub{font-size:15px;line-height:1.45;color:#4A4F55;}
+.vsl-meta{font-size:15px;font-weight:600;color:var(--proc-blue);margin-top:2px;}
 @media (max-width:1079px){.vsl{margin-top:20px;}.vsl-sub{display:none;}}
+@media (min-width:700px){.vsl-open{grid-template-columns:168px minmax(0,1fr);gap:28px;padding:20px;}.vsl-thumb{width:168px;}.vsl-title{font-size:clamp(24px,2.2vw,30px);}.vsl-sub{font-size:16px;}.vsl-meta{font-size:16px;}}
 @media (min-width:1080px){.vsl{margin-top:36px;}}
 
 .vsl-dlg{padding:0;border:0;background:#0E1012;color:#F2F0EB;max-width:none;max-height:none;width:100vw;height:100vh;height:100dvh;margin:0;overflow:hidden;}
