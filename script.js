@@ -34,11 +34,12 @@
   /* ===== Vidéo explicative : test A/B (avec / sans vidéo) =====
      VSL_SHARE = part des visiteurs qui voient la vidéo (0.5 = 50 %, 1 = tout le monde, 0 = personne).
      Le choix est gardé dans le navigateur du visiteur. ?vsl=on / ?vsl=off force la variante (pour tester). */
-  var VSL_SHARE = 0.5;
+  var VSL_SHARE = 1;
   function pickVslVariant() {
     var forced = '';
     try { forced = (new URLSearchParams(location.search).get('vsl') || '').toLowerCase(); } catch (e) {}
     if (forced === 'on' || forced === 'off') return forced;
+    if (VSL_SHARE >= 1) return 'on'; // tout le monde voit la vidéo (ignore un ancien choix « off » gardé dans le navigateur)
     try { var saved = localStorage.getItem('dv_vsl'); if (saved === 'on' || saved === 'off') return saved; } catch (e) {}
     var v = Math.random() < VSL_SHARE ? 'on' : 'off';
     try { localStorage.setItem('dv_vsl', v); } catch (e) {}
