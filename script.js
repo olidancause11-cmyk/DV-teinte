@@ -726,5 +726,24 @@
     $('[data-vsl-cta]', dlg).addEventListener('click', function () { unlock(); closeDlg(); });
   })();
 
+  /* ===== FAQ : 5 questions visibles, le reste sur demande (le contenu reste dans la page) ===== */
+  (function initFaqMore() {
+    var list = $('[data-faq]');
+    if (!list) return;
+    var items = $$('.faq-item', list);
+    var VISIBLE = 5;
+    if (items.length <= VISIBLE + 1) return;
+    items.slice(VISIBLE).forEach(function (it) { it.classList.add('is-extra'); });
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'faq-more';
+    btn.textContent = 'Voir toutes les questions';
+    btn.addEventListener('click', function () {
+      items.forEach(function (it) { it.classList.remove('is-extra'); });
+      btn.remove();
+    });
+    list.parentNode.insertBefore(btn, list.nextSibling);
+  })();
+
   render();
 })();

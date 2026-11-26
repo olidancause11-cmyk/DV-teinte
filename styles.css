@@ -811,3 +811,67 @@ section[id]{scroll-margin-top:72px;}
   .vsl-dlg{width:min(420px,92vw);height:min(92dvh,880px);margin:auto;border:1px solid rgba(255,255,255,.14);border-radius:8px;}
 }
 html.vsl-lock{overflow:hidden;}
+
+
+/* ===================================================================
+   PASSE PREMIUM — un seul univers sombre, un seul accent, photos plus grandes
+   (bloc ajouté à la fin : supprimer ce bloc ramène l'ancien rendu)
+   =================================================================== */
+
+/* 1. Un seul univers : fond anthracite partout, cartes un cran plus clair */
+.demo,.svc,.trust,.proc{background:#0E1012;color:#F2F0EB;border-top:1px solid rgba(255,255,255,.08);}
+.rev-sec{background:#0E1012;box-shadow:0 0 0 100vmax #0E1012;}
+.rev-card{background:#15181B;border-color:rgba(255,255,255,.1);}
+.demo-title,.svc-title,.trust-title,.proc-title,.svc-card h3,.trust-item h3,.proc-body h3,.demo-caption{color:#F2F0EB;}
+.demo-sub,.svc-sub,.svc-for,.svc-note,.trust-sub,.trust-desc,.proc-sub,.proc-body p{color:#C4C7CC;}
+.svc-card{background:#15181B;border-color:rgba(255,255,255,.1);}
+.svc-list li{color:#F2F0EB;border-top-color:rgba(255,255,255,.12);}
+.svc-list li::before{background:#8DB8DE;}
+.trust-item{border-top-color:rgba(255,255,255,.14);}
+.trust-fig,.trust-link,.trust-note{color:#8DB8DE;}
+.trust-link{border-bottom-color:rgba(141,184,222,.4);}
+.trust-link:hover{color:#B7D3EC;border-bottom-color:#B7D3EC;}
+.proc-num{background:#0E1012;color:#8DB8DE;}
+.proc-steps::before{background:rgba(255,255,255,.2);}
+@media (min-width:1080px){.proc-step:not(:last-child) .proc-num::after{background:rgba(255,255,255,.2);}}
+.demo-tabs button{border-color:rgba(255,255,255,.22);color:#F2F0EB;}
+.demo-tabs button:hover{border-color:#8DB8DE;}
+.demo-tabs button[aria-selected="true"]{background:#F2F0EB;border-color:#F2F0EB;color:#0E1012;}
+.demo-frame{background:#15181B;}
+.demo-badge{background:rgba(14,16,18,.72);color:#F2F0EB;border:1px solid rgba(255,255,255,.18);}
+
+/* 2. Un seul accent d'action : bouton crème sur fond foncé */
+.btn-blue,.demo-cta,.svc-btn,.proc-cta,.est-submit,.vsl-btn,.vsl-cta,.sticky-bar .sticky-main{background:#F2F0EB;color:#0E1012;}
+.btn-blue:hover,.demo-cta:hover,.svc-btn:hover,.proc-cta:hover,.est-submit:hover,.vsl-btn:hover,.vsl-cta:hover,.sticky-bar .sticky-main:hover{background:#fff;color:#0E1012;}
+.vsl-after.is-done .vsl-cta{background:#fff;color:#0E1012;}
+.demo-tabs button:focus-visible,.demo-cta:focus-visible,.svc-btn:focus-visible,.proc-cta:focus-visible{outline-color:#8DB8DE;}
+
+/* 3. Typographie : titres plus grands, texte plus lisible */
+.demo-title,.svc-title,.trust-title,.proc-title,.vsl-h2{font-size:clamp(34px,5vw,60px);line-height:1.04;letter-spacing:-.03em;}
+.demo-sub,.svc-sub,.trust-sub,.proc-sub{font-size:clamp(17px,1.6vw,19px);}
+.svc-for,.svc-note,.trust-desc,.proc-body p,.solu-cta p,.est-note{font-size:16px;line-height:1.55;}
+.hero-tag,.solu-label{color:#A9AEB4;}
+@media (max-width:1079px){
+  .demo-title,.svc-title,.trust-title,.proc-title,.vsl-h2{font-size:clamp(30px,8.4vw,38px);}
+  .lede,.solu-head .lede,.demo-sub,.trust-sub,.proc-sub{font-size:16px;}
+}
+
+/* 4. Photo plus grande */
+.demo-in{max-width:1040px;}
+.demo-frame{aspect-ratio:4/5;}
+@media (min-width:900px){.demo-frame{aspect-ratio:16/10;}}
+
+/* 5. Signature : le coin de film qui se décolle (comme dans le logo) */
+.demo-frame::before,.vsl-media::before{content:"";position:absolute;right:0;bottom:0;width:64px;height:64px;z-index:3;background:linear-gradient(135deg,#B7D3EC 0%,#5B9AD0 55%,#2E6CA0 100%);clip-path:polygon(0 0,100% 0,0 100%);box-shadow:none;pointer-events:none;}
+.demo-frame::after,.vsl-media::after{content:"";position:absolute;right:0;bottom:0;width:64px;height:64px;z-index:2;background:#0E1012;clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;}
+
+/* 6. Logo plus présent dans l'en-tête */
+.hdr-logo img{height:38px;width:auto;}
+
+/* 7. FAQ : 5 questions visibles, le reste sur demande */
+.faq-item.is-extra{display:none;}
+.faq-more{margin-top:20px;background:none;border:1px solid rgba(255,255,255,.22);color:#F2F0EB;font:inherit;font-weight:500;font-size:16px;min-height:48px;padding:0 24px;border-radius:4px;cursor:pointer;transition:border-color .2s;}
+.faq-more:hover{border-color:#8DB8DE;}
+.faq-more:focus-visible{outline:2px solid #8DB8DE;outline-offset:3px;}
+@media (min-width:700px){.demo-frame{max-width:none;}}
+@media (min-width:1080px){.trust-item{border-left-color:rgba(255,255,255,.14);}.trust-item:first-child{border-left:0;}}
