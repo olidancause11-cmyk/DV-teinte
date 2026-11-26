@@ -674,18 +674,18 @@
     card.hidden = false;
 
     var after = $('.vsl-after', dlg);
-    var openBtn = $('[data-vsl-open]', card);
+    var openBtns = $$('[data-vsl-open]', card);
     var sent = {}, maxPct = 0, played = false;
 
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) { io.disconnect(); trackCustom('VideoSectionView'); }
-      }, { threshold: 0.5 });
+      }, { threshold: 0.3 });
       io.observe(card);
     }
 
     function unlock() { document.documentElement.classList.remove('vsl-lock'); }
-    openBtn.addEventListener('click', function () {
+    function openVideo() {
       if (!video.getAttribute('src')) {
         video.poster = video.getAttribute('data-poster') || '';
         video.src = video.getAttribute('data-src');
@@ -695,7 +695,8 @@
       document.documentElement.classList.add('vsl-lock');
       var pr = video.play();
       if (pr && pr.catch) pr.catch(function () {});
-    });
+    }
+    openBtns.forEach(function (b) { b.addEventListener('click', openVideo); });
     video.addEventListener('play', function () {
       if (played) return; played = true;
       trackCustom('VideoPlay');

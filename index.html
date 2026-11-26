@@ -337,19 +337,22 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
 
       <a href="#formulaire" class="proc-cta" data-cta="processus">Planifier mon estimation gratuite</a>
 
-      <!-- Vidéo explicative (optionnelle) : masquée par défaut, affichée par script.js selon le test A/B -->
-      <div class="vsl" data-vsl hidden>
-        <button type="button" class="vsl-open" data-vsl-open aria-haspopup="dialog" aria-controls="vsl-dialog">
-          <span class="vsl-thumb"><img src="assets/video/vsl-poster.jpg" width="540" height="960" loading="lazy" decoding="async" alt=""><span class="vsl-play" aria-hidden="true"><svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor"><path d="M2 1.4v15.2a.8.8 0 0 0 1.2.7l12-7.6a.8.8 0 0 0 0-1.4L3.2.7A.8.8 0 0 0 2 1.4z"/></svg></span></span>
-          <span class="vsl-copy">
-            <span class="vsl-kicker">Pas sûr de la pellicule à choisir&nbsp;?</span>
-            <span class="vsl-title">Pas besoin de le savoir avant de nous appeler</span>
-            <span class="vsl-sub">En 1&nbsp;minute : ce qu’on regarde chez vous (chaleur, intimité, UV, type de vitrage) avant de recommander une pellicule.</span>
-            <span class="vsl-meta">Regarder la vidéo · 1&nbsp;min</span>
-          </span>
-        </button>
-      </div>
+    </div>
+  </section>
 
+  <!-- ============ VIDÉO EXPLICATIVE (section à part, optionnelle; affichée par script.js selon le test A/B) ============ -->
+  <section id="video" class="vsl-sec" data-vsl data-screen-label="Vidéo" hidden>
+    <div class="vsl-in">
+      <div class="vsl-text">
+        <p class="vsl-kicker">Pas sûr de la pellicule à choisir&nbsp;?</p>
+        <h2 class="vsl-h2">Pas besoin de le savoir avant de nous appeler</h2>
+        <p class="vsl-sub">En 1&nbsp;minute : ce qu’on regarde chez vous (chaleur, intimité, UV, type de vitrage) avant de recommander une pellicule.</p>
+      </div>
+      <button type="button" class="vsl-media" data-vsl-open aria-haspopup="dialog" aria-controls="vsl-dialog" aria-label="Regarder la vidéo (1 minute)">
+        <img src="assets/video/vsl-poster.jpg" width="540" height="960" loading="lazy" decoding="async" alt="">
+        <span class="vsl-play" aria-hidden="true"><svg width="22" height="24" viewBox="0 0 16 18" fill="currentColor"><path d="M2 1.4v15.2a.8.8 0 0 0 1.2.7l12-7.6a.8.8 0 0 0 0-1.4L3.2.7A.8.8 0 0 0 2 1.4z"/></svg></span>
+      </button>
+      <button type="button" class="vsl-btn" data-vsl-open aria-haspopup="dialog" aria-controls="vsl-dialog">Regarder la vidéo · 1&nbsp;min</button>
     </div>
   </section>
 
