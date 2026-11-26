@@ -31,6 +31,28 @@
     return 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2);
   }
 
+  /* ===== Vidéo explicative : test A/B (avec / sans vidéo) =====
+     VSL_SHARE = part des visiteurs qui voient la vidéo (0.5 = 50 %, 1 = tout le monde, 0 = personne).
+     Le choix est gardé dans le navigateur du visiteur. ?vsl=on / ?vsl=off force la variante (pour tester). */
+  var VSL_SHARE = 0.5;
+  function pickVslVariant() {
+    var forced = '';
+    try { forced = (new URLSearchParams(location.search).get('vsl') || '').toLowerCase(); } catch (e) {}
+    if (forced === 'on' || forced === 'off') return forced;
+    try { var saved = localStorage.getItem('dv_vsl'); if (saved === 'on' || saved === 'off') return saved; } catch (e) {}
+    var v = Math.random() < VSL_SHARE ? 'on' : 'off';
+    try { localStorage.setItem('dv_vsl', v); } catch (e) {}
+    return v;
+  }
+  var vslVariant = pickVslVariant();
+  function trackCustom(name, params) {
+    var p = Object.assign({ vsl_variant: vslVariant }, params || {});
+    try {
+      if (typeof window.fbq === 'function') window.fbq('trackCustom', name, p);
+      (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: 'dv_' + name.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase() }, p));
+    } catch (e) {}
+  }
+
   /* ===== En-tête, menu mobile, barre collante ===== */
   var header = $('[data-header]');
   var menuBtn = $('[data-menu-toggle]');
@@ -598,7 +620,7 @@
     var contentName = commercial ? 'Estimation commerciale' : 'Estimation résidentielle';
     var answers = { type_projet: est.projet };
     // même eventId côté navigateur et côté serveur : Meta dédoublonne (le message du client n'est jamais envoyé à Meta)
-    track('Lead', Object.assign({ content_name: contentName, form_version: 'v7' }, answers), { eventID: eventId });
+    track('Lead', Object.assign({ content_name: contentName, form_version: 'v7', vsl_variant: vslVariant }, answers), { eventID: eventId });
     try {
       fetch('/api/capi-lead', {
         method: 'POST',
@@ -638,6 +660,69 @@
       if (en.isIntersecting && !viewSent) { viewSent = true; track('ViewContent', { content_name: 'Formulaire estimation' }); }
     }, { threshold: 0.15 }).observe(section);
   }
+
+  /* ===== Vidéo explicative : carte dans « Comment ça fonctionne » + lecteur en fenêtre modale =====
+     Rien n'est téléchargé avant le clic (preload=none, source ajoutée à l'ouverture). Jamais de son automatique :
+     la lecture démarre seulement quand le visiteur clique « Regarder la vidéo ». */
+  (function initVsl() {
+    var card = $('[data-vsl]');
+    var dlg = $('[data-vsl-dialog]');
+    var video = dlg && $('video', dlg);
+    if (!card || !dlg || !video || typeof dlg.showModal !== 'function') return;
+    trackCustom('VslAssigned');
+    if (vslVariant !== 'on') return;
+    card.hidden = false;
+
+    var after = $('.vsl-after', dlg);
+    var openBtn = $('[data-vsl-open]', card);
+    var sent = {}, maxPct = 0, played = false;
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { io.disconnect(); trackCustom('VideoSectionView'); }
+      }, { threshold: 0.5 });
+      io.observe(card);
+    }
+
+    function unlock() { document.documentElement.classList.remove('vsl-lock'); }
+    openBtn.addEventListener('click', function () {
+      if (!video.getAttribute('src')) {
+        video.poster = video.getAttribute('data-poster') || '';
+        video.src = video.getAttribute('data-src');
+      }
+      after.classList.remove('is-done');
+      dlg.showModal();
+      document.documentElement.classList.add('vsl-lock');
+      var pr = video.play();
+      if (pr && pr.catch) pr.catch(function () {});
+    });
+    video.addEventListener('play', function () {
+      if (played) return; played = true;
+      trackCustom('VideoPlay');
+    });
+    video.addEventListener('timeupdate', function () {
+      if (!video.duration) return;
+      var pct = Math.floor(video.currentTime / video.duration * 100);
+      if (pct > maxPct) maxPct = pct;
+      [25, 50, 75].forEach(function (m) {
+        if (pct >= m && !sent[m]) { sent[m] = true; trackCustom('VideoProgress', { percent: m }); }
+      });
+    });
+    video.addEventListener('ended', function () {
+      maxPct = 100;
+      if (!sent[100]) { sent[100] = true; trackCustom('VideoProgress', { percent: 100 }); }
+      after.classList.add('is-done');
+    });
+    function closeDlg() { if (dlg.open) dlg.close(); }
+    dlg.addEventListener('close', function () {
+      video.pause(); unlock();
+      if (played) trackCustom('VideoClose', { percent_max: maxPct, seconds: Math.round(video.currentTime || 0) });
+    });
+    $('[data-vsl-close]', dlg).addEventListener('click', closeDlg);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDlg(); });
+    // « Obtenir mon estimation » dans la vidéo : on ferme le lecteur, le lien mène au formulaire
+    $('[data-vsl-cta]', dlg).addEventListener('click', function () { unlock(); closeDlg(); });
+  })();
 
   render();
 })();
