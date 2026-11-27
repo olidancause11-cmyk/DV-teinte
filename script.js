@@ -368,7 +368,7 @@
   var est = {
     showErr: false, sending: false, submitted: false,
     projet: 'Résidentiel',   // devient « Commercial » seulement via le bouton de la section commerciale
-    a: { prenom: '', nom: '', telephone: '', courriel: '', message: '' }
+    a: { prenom: '', nom: '', nomcomplet: '', telephone: '', courriel: '', message: '' }
   };
   // Données personnelles : le brouillon (nom, téléphone, courriel, message) n'est gardé que 24 h sur l'appareil, puis effacé
   var DRAFT_TTL = 24 * 3600 * 1000;
@@ -388,14 +388,31 @@
   var digits = function (v) { return (v || '').replace(/\D/g, ''); };
   var isCommercial = function () { return est.projet === 'Commercial'; };
 
+  // nouveau formulaire : un seul champ « Nom complet » (le prénom est le premier mot) et courriel facultatif
+  var fullName = form.hasAttribute('data-fullname');
+  var emailOptional = form.hasAttribute('data-email-optional');
+  function syncName() {
+    if (!fullName) return;
+    var n = (est.a.nomcomplet || '').trim().replace(/\s+/g, ' ');
+    var i = n.indexOf(' ');
+    est.a.prenom = i < 0 ? n : n.slice(0, i);
+    est.a.nom = i < 0 ? '' : n.slice(i + 1);
+  }
+  function chosenGoal() { var g = $('[data-objectif]', form); return g ? g.value : ''; }
+  function goalPrefix() { var g = chosenGoal(); return g ? '[Problème principal : ' + g + '] ' : ''; }
+  var ERR_MSG = { nomcomplet: 'Entrez votre nom.', telephone: 'Entrez un numéro de téléphone valide (10 chiffres).', courriel: 'Entrez un courriel valide.' };
   function errors() {
     var a = est.a, e = {};
-    if (!a.prenom.trim()) e.prenom = true;
-    if (!a.nom.trim()) e.nom = true;
+    syncName();
+    if (fullName) { if (!(a.nomcomplet || '').trim()) e.nomcomplet = true; }
+    else {
+      if (!a.prenom.trim()) e.prenom = true;
+      if (!a.nom.trim()) e.nom = true;
+    }
     var d = digits(a.telephone);
     // numéro nord-américain : 10 chiffres, ou 11 chiffres s’il commence par l’indicatif 1 (jamais 10 chiffres avec un 1 au début)
     if (!((d.length === 10 && d[0] !== '1') || (d.length === 11 && d[0] === '1'))) e.telephone = true;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
+    if (!(emailOptional && !a.courriel.trim()) && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.courriel.trim())) e.courriel = true;
     return e;
   }
 
@@ -405,7 +422,8 @@
     var hid = $('[data-hidden="projet"]', form);
     if (hid) hid.value = est.projet;
     submitBtn.disabled = est.sending;
-    submitBtn.textContent = est.sending ? 'Envoi…' : 'Obtenir mon estimation gratuite';
+    var btnLabel = $('[data-btn-label]', submitBtn) || submitBtn;
+    btnLabel.textContent = est.sending ? 'Envoi…' : 'Obtenir mon estimation gratuite';
     var errs = est.showErr ? errors() : {};
     $$('[data-field]', form).forEach(function (inp) {
       var k = inp.getAttribute('data-field');
@@ -418,6 +436,7 @@
   $$('[data-field]', form).forEach(function (inp) {
     inp.value = est.a[inp.getAttribute('data-field')] || '';
     inp.addEventListener('input', function () {
+      if (inp.setCustomValidity) inp.setCustomValidity('');
       est.a[inp.getAttribute('data-field')] = inp.value;
       persist();
       if (est.showErr) render();
@@ -489,7 +508,7 @@
     return {
       token: SHEET_TOKEN, hp: '', eventId: eventId,
       prenom: a.prenom.trim(), nom: a.nom.trim(), telephone: a.telephone.trim(), courriel: a.courriel.trim(),
-      message: a.message.trim().slice(0, 1500), projet: est.projet,
+      message: (goalPrefix() + a.message.trim()).trim().slice(0, 1500), projet: est.projet,
       campaign: at.campaign, adset: at.adset, ad: at.ad
     };
   }
@@ -533,7 +552,11 @@
     if (Object.keys(errors()).length) {
       est.showErr = true; render();
       var first = $('[aria-invalid="true"]', form);
-      if (first) first.focus();
+      if (first) {
+        first.focus();
+        var k = first.getAttribute('data-field');
+        if (!$('[data-err="' + k + '"]', form) && ERR_MSG[k] && first.setCustomValidity) { first.setCustomValidity(ERR_MSG[k]); first.reportValidity(); }
+      }
       return;
     }
     var a = est.a;
@@ -621,7 +644,7 @@
     var contentName = commercial ? 'Estimation commerciale' : 'Estimation résidentielle';
     var answers = { type_projet: est.projet };
     // même eventId côté navigateur et côté serveur : Meta dédoublonne (le message du client n'est jamais envoyé à Meta)
-    track('Lead', Object.assign({ content_name: contentName, form_version: 'v7', vsl_variant: vslVariant }, answers), { eventID: eventId });
+    track('Lead', Object.assign({ content_name: contentName, form_version: 'v7', vsl_variant: vslVariant, objectif: chosenGoal() }, answers), { eventID: eventId });
     try {
       fetch('/api/capi-lead', {
         method: 'POST',
@@ -662,43 +685,33 @@
     }, { threshold: 0.15 }).observe(section);
   }
 
-  /* ===== Vidéo explicative : carte dans « Comment ça fonctionne » + lecteur en fenêtre modale =====
-     Rien n'est téléchargé avant le clic (preload=none, source ajoutée à l'ouverture). Jamais de son automatique :
-     la lecture démarre seulement quand le visiteur clique « Regarder la vidéo ». */
+  /* ===== Vidéo (VSL) dans l'encadré du hero =====
+     Rien n'est téléchargé avant le clic (preload=none, source ajoutée au clic). La lecture démarre seulement quand le visiteur clique « Regarder la vidéo ». */
   (function initVsl() {
-    var card = $('[data-vsl]');
-    var dlg = $('[data-vsl-dialog]');
-    var video = dlg && $('video', dlg);
-    if (!card || !dlg || !video || typeof dlg.showModal !== 'function') return;
+    var box = $('[data-vsl-inline]');
+    var video = box && $('[data-vsl-video]', box);
+    var playBtn = box && $('[data-vsl-play]', box);
+    var thumb = box && $('[data-vsl-thumb]', box);
+    if (!box || !video || !playBtn) return;
     trackCustom('VslAssigned');
-    if (vslVariant !== 'on') return;
-    card.hidden = false;
-
-    var after = $('.vsl-after', dlg);
-    var openBtns = $$('[data-vsl-open]', card);
-    var sent = {}, maxPct = 0, played = false;
+    var sent = {}, maxPct = 0, played = false, pausedSent = false;
 
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) { io.disconnect(); trackCustom('VideoSectionView'); }
-      }, { threshold: 0.3 });
-      io.observe(card);
+      }, { threshold: 0.5 });
+      io.observe(box);
     }
-
-    function unlock() { document.documentElement.classList.remove('vsl-lock'); }
-    function openVideo() {
-      if (!video.getAttribute('src')) {
-        video.poster = video.getAttribute('data-poster') || '';
-        video.src = video.getAttribute('data-src');
-      }
-      after.classList.remove('is-done');
-      dlg.showModal();
-      document.documentElement.classList.add('vsl-lock');
+    playBtn.addEventListener('click', function () {
+      video.src = video.getAttribute('data-src');
+      video.hidden = false;
+      playBtn.hidden = true;
+      if (thumb) thumb.hidden = true;
       var pr = video.play();
       if (pr && pr.catch) pr.catch(function () {});
-    }
-    openBtns.forEach(function (b) { b.addEventListener('click', openVideo); });
+    });
     video.addEventListener('play', function () {
+      pausedSent = false;
       if (played) return; played = true;
       trackCustom('VideoPlay');
     });
@@ -713,17 +726,121 @@
     video.addEventListener('ended', function () {
       maxPct = 100;
       if (!sent[100]) { sent[100] = true; trackCustom('VideoProgress', { percent: 100 }); }
-      after.classList.add('is-done');
     });
-    function closeDlg() { if (dlg.open) dlg.close(); }
-    dlg.addEventListener('close', function () {
-      video.pause(); unlock();
-      if (played) trackCustom('VideoClose', { percent_max: maxPct, seconds: Math.round(video.currentTime || 0) });
+    function closeEvent() {
+      if (!played || pausedSent) return;
+      pausedSent = true;
+      trackCustom('VideoClose', { percent_max: maxPct, seconds: Math.round(video.currentTime || 0) });
+    }
+    video.addEventListener('pause', function () { if (!video.ended) closeEvent(); });
+    window.addEventListener('pagehide', function () { if (!video.paused) closeEvent(); });
+  })();
+
+  /* ===== Mur d'avis (colonnes selon la largeur, 6 avis puis tous) ===== */
+  (function initReviews() {
+    var colsBox = $('[data-wall-cols]');
+    if (!colsBox) return;
+    var toggle = $('[data-reviews-toggle]'), label = $('[data-reviews-label]'), chev = $('[data-reviews-chevron]');
+    var P = 'assets/v6/';
+    var REVIEWS = [
+      { name: 'Derek Bureau', text: 'Super belle expérience du début à la fin! L’équipe était vraiment sympathique, dynamique et professionnelle. La communication a été facile et agréable tout au long du processus.\n\nIls ont respecté l’heure d’arrivée prévue ainsi que tout ce qui avait été convenu au contrat. Le travail a été fait avec professionnalisme et le résultat est à la hauteur de nos attentes.\n\nUne entreprise fiable et agréable avec qui faire affaire. Je les recommande sans hésitation!', photos: ['avis-bureau.webp'] },
+      { name: 'Emmanuel Sierra', text: 'Excellent travail! Service professionnel, installation impeccable et résultat à la hauteur de nos attentes. L’intimité est garantie à 100 % et les pellicules installées sur nos demi-lune filtrent considérablement la lumière. Nous sommes très satisfaits du résultat et recommandons leurs services sans hésitation!', photos: ['avis-sierra-2.webp', 'avis-sierra-1.webp'] },
+      { name: 'adam', text: 'J’ai utilisé le service de soumission en ligne pour obtenir un estimé pour ma maison. En seulement quelques heures, j’ai obtenu un rendez-vous dans la même semaine. Le travail que nous proposent ces entrepreneurs est irréprochable. Je recommande à tous ⭐⭐⭐⭐⭐', photos: [] },
+      { name: 'Johanne Brunet', text: 'Excellent service! Un grand merci à cette équipe de deux jeunes entrepreneurs pour leur professionnalisme et leur respect. Le travail est soigné, les délais ont été respectés et tout a été nettoyé avant leur départ. Je ferai de nouveau appel à eux sans hésiter!', photos: ['avis-brunet.webp'] },
+      { name: 'Abhii Kanagaratnam', text: 'Derek and his team did an amazing job tinting our windows! Their work was very clean and professional. Highly recommend!', photos: ['avis-kanagaratnam.webp'] },
+      { name: 'Cassandre Salvi', text: 'Service A1 du début à la fin! Je recommande fortement. Le résultat est parfait.', photos: ['avis-salvi.webp'] },
+      { name: 'Nancy Morin', text: 'Très professionnels, sympathique et travaillant !!\nJe recommande à 100%', photos: [] },
+      { name: 'Marc Olivier Farmer', text: 'ceci est une super de compagnie . je recommande fortement!!!', photos: [] },
+      { name: 'alain vaillancourt', text: 'Travail impeccable rapide je le recommande', photos: [] },
+      { name: 'Patrick Demers', text: 'Bon prix', photos: ['avis-demers.webp'] }
+    ];
+    var all = false, cols = 0;
+    function n() { var w = window.innerWidth; return w < 560 ? 1 : w < 1000 ? 2 : 3; }
+    function make(tag, css, text) {
+      var e = document.createElement(tag);
+      if (css) e.setAttribute('style', css);
+      if (text != null) e.textContent = text;
+      return e;
+    }
+    function photo(src) {
+      var d = make('div', 'width:100%;aspect-ratio:3/4;border-radius:6px;background-color:#E9E9E6;overflow:hidden');
+      var i = make('img', 'width:100%;height:100%;object-fit:cover;display:block');
+      i.src = P + src; i.alt = 'Photo de l’installation partagée par le client'; i.loading = 'lazy'; i.decoding = 'async';
+      d.appendChild(i);
+      return d;
+    }
+    function card(r) {
+      var a = make('article', 'background:#FFFFFF;border:1px solid #E4E4E0;border-radius:10px;padding:clamp(18px,2vw,24px);display:flex;flex-direction:column;gap:12px');
+      a.appendChild(make('span', 'letter-spacing:2px;font-size:15px;line-height:1;color:#FBBC04', '★★★★★'));
+      a.appendChild(make('p', 'margin:0;font-size:16px;line-height:1.55;color:#080808;white-space:pre-line', r.text));
+      if (r.photos.length === 2) {
+        var g = make('div', 'display:grid;grid-template-columns:1fr 1fr;gap:8px');
+        r.photos.forEach(function (s) { g.appendChild(photo(s)); });
+        a.appendChild(g);
+      } else if (r.photos.length === 1) {
+        a.appendChild(photo(r.photos[0]));
+      }
+      var f = make('div', 'display:flex;align-items:baseline;justify-content:space-between;gap:12px');
+      f.appendChild(make('span', 'font-size:15px;font-weight:700;color:#132A4A', r.name));
+      f.appendChild(make('span', 'font-size:12px;color:#8A8A8A', 'Avis Google'));
+      a.appendChild(f);
+      return a;
+    }
+    function paint() {
+      cols = n();
+      colsBox.textContent = '';
+      var columns = [];
+      for (var c = 0; c < cols; c++) {
+        columns.push(colsBox.appendChild(make('div', 'flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(12px,1.4vw,16px)')));
+      }
+      (all ? REVIEWS : REVIEWS.slice(0, 6)).forEach(function (r, i) { columns[i % cols].appendChild(card(r)); });
+      if (toggle) toggle.setAttribute('aria-expanded', String(all));
+      if (label) label.textContent = all ? 'Voir moins' : 'Voir plus d’avis';
+      if (chev) chev.style.transform = all ? 'rotate(180deg)' : 'none';
+    }
+    if (toggle) toggle.addEventListener('click', function () { all = !all; paint(); });
+    window.addEventListener('resize', function () { if (n() !== cols) paint(); });
+    paint();
+  })();
+
+  /* ===== FAQ : une seule réponse ouverte à la fois (toutes fermées au départ, comme dans le design) ===== */
+  (function initFaq() {
+    var btns = $$('[data-faq-btn]');
+    if (!btns.length) return;
+    function set(b, open) {
+      var i = b.getAttribute('data-faq-btn');
+      b.setAttribute('aria-expanded', String(open));
+      var panel = $('[data-faq-panel="' + i + '"]');
+      if (panel) panel.hidden = !open;
+      var ch = $('[data-faq-chevron="' + i + '"]');
+      if (ch) ch.style.transform = open ? 'rotate(180deg)' : 'none';
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var wasOpen = b.getAttribute('aria-expanded') === 'true';
+        btns.forEach(function (o) { set(o, false); });
+        if (!wasOpen) set(b, true);
+      });
     });
-    $('[data-vsl-close]', dlg).addEventListener('click', closeDlg);
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDlg(); });
-    // « Obtenir mon estimation » dans la vidéo : on ferme le lecteur, le lien mène au formulaire
-    $('[data-vsl-cta]', dlg).addEventListener('click', function () { unlock(); closeDlg(); });
+  })();
+
+  /* ===== Formulaire : « Problème principal » (un seul choix, on peut le retirer) ===== */
+  (function initGoal() {
+    var chips = $$('[data-chip]');
+    var hid = $('[data-objectif]');
+    if (!chips.length || !hid) return;
+    var cur = -1;
+    function paint() {
+      chips.forEach(function (c, i) {
+        var on = i === cur;
+        c.setAttribute('aria-pressed', String(on));
+        c.style.background = on ? '#132A4A' : '#FFFFFF';
+        c.style.color = on ? '#FFFFFF' : '#080808';
+        c.style.borderColor = on ? '#132A4A' : '#CFCFCF';
+      });
+      hid.value = cur < 0 ? '' : chips[cur].textContent.trim();
+    }
+    chips.forEach(function (c, i) { c.addEventListener('click', function () { cur = cur === i ? -1 : i; paint(); }); });
   })();
 
   render();
