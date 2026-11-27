@@ -185,6 +185,9 @@ section[id]{scroll-margin-top:72px;}
 .footer-links a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px;}
 .footer-muted{color:#fff;}
 .footer-social{display:flex;gap:16px;margin-top:8px;}
+.footer-ico{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.28);border-radius:50%;color:#fff;transition:background .2s,border-color .2s;}
+.footer-ico:hover{background:rgba(255,255,255,.12);border-color:#fff;color:#fff;text-decoration:none;}
+.footer-ico:focus-visible{outline:2px solid #8DB8DE;outline-offset:3px;}
 .footer-bottom{border-top:1px solid rgba(184,212,227,.12);}
 .footer-bottom-inner{padding:20px 24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:13px;color:#fff;}
 .footer-bottom-inner a{color:#fff;}
