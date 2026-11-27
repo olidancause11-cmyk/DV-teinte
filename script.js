@@ -793,7 +793,7 @@
       for (var c = 0; c < cols; c++) {
         columns.push(colsBox.appendChild(make('div', 'flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:clamp(12px,1.4vw,16px)')));
       }
-      (all ? REVIEWS : REVIEWS.slice(0, 6)).forEach(function (r, i) { columns[i % cols].appendChild(card(r)); });
+      (all ? REVIEWS : REVIEWS.slice(0, cols === 1 ? 4 : 6)).forEach(function (r, i) { columns[i % cols].appendChild(card(r)); });
       if (toggle) toggle.setAttribute('aria-expanded', String(all));
       if (label) label.textContent = all ? 'Voir moins' : 'Voir plus d’avis';
       if (chev) chev.style.transform = all ? 'rotate(180deg)' : 'none';
