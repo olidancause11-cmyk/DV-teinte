@@ -20,11 +20,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png?v=2" />
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png?v=2" />
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=2" />
-<link rel="preload" as="image" href="./assets/photos/hero-facade.jpg" imagesrcset="./assets/photos/hero-facade-640.jpg 640w, ./assets/photos/hero-facade-900.jpg 900w, ./assets/photos/hero-facade.jpg 1206w" imagesizes="(min-width:1080px) 64vw, 75vw" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="preload" as="font" type="font/woff2" href="./assets/fonts/archivo-latin.woff2" crossorigin />
 <link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./dv6.css" />
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","@id":"https://dvteinte.com/#entreprise","name":"DV Teinte","legalName":"Dancause Vaillancourt Teinte","url":"https://dvteinte.com/","logo":"https://dvteinte.com/assets/logo-dv-teinte.png","image":"https://dvteinte.com/assets/photos/hero-facade.jpg","telephone":"+1-450-802-9892","email":"Contact@dvteinte.com","identifier":{"@type":"PropertyValue","name":"NEQ","value":"1182753237"},"description":"Installation professionnelle de pellicules solaires, de pellicules d'intimité et de films réfléchissants pour fenêtres résidentielles et commerciales sur la Rive-Sud de Montréal et dans les environs.","areaServed":[{"@type":"AdministrativeArea","name":"Rive-Sud de Montréal"},{"@type":"City","name":"Salaberry-de-Valleyfield"},{"@type":"City","name":"Châteauguay"},{"@type":"City","name":"Beauharnois"},{"@type":"City","name":"Vaudreuil-Dorion"}],"knowsAbout":["Installation de pellicules pour fenêtres","Pellicule solaire pour fenêtres","Pellicule d'intimité","Pellicule réfléchissante","Protection UV"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Services d'installation de pellicules pour fenêtres","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Pellicules solaires pour réduire la chaleur"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Pellicules d'intimité et miroir sans tain"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Protection UV pour fenêtres résidentielles"}}]},"sameAs":["https://www.instagram.com/dv_teinte"]}</script>
 <script>
 /* Arrivée par une pub : on ouvre toujours la page en haut (jamais directement sur le formulaire). */
@@ -49,7 +50,6 @@ fbq('track', 'PageView');
 <body>
 <div id="top">
 
-  <!-- ============ EN-TÊTE ============ -->
   <header class="hdr" data-header>
     <div class="hdr-in">
       <a href="#top" aria-label="DV Teinte — accueil" class="hdr-logo">
@@ -79,416 +79,233 @@ fbq('track', 'PageView');
     </nav>
   </header>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero" data-screen-label="Hero">
-    <div class="hero-media">
-      <img src="./assets/photos/hero-facade.jpg" srcset="./assets/photos/hero-facade-640.jpg 640w, ./assets/photos/hero-facade-900.jpg 900w, ./assets/photos/hero-facade.jpg 1206w" sizes="(min-width:1080px) 64vw, 75vw" alt="Installation de pellicule réfléchissante sur de grandes fenêtres d’une façade résidentielle, par DV Teinte" width="1206" height="2144" loading="eager" fetchpriority="high" />
-      <span class="hero-label">Installation DV Teinte</span>
-      <div class="hero-fx" aria-hidden="true"><i class="fx-glare fx-glare-a"></i><i class="fx-glare fx-glare-b"></i><i class="fx-vignette"></i></div>
-    </div>
-    <div class="hero-shade"></div>
-    <div class="hero-text">
-      <a href="#formulaire" class="promo-pill" data-cta="hero-offre"><span class="promo-dot"></span>Jusqu’à 400 $ de rabais, selon la grandeur du projet</a>
-      <h1 class="hero-h1">Installation de pellicules pour fenêtres sur la Rive-Sud et les environs</h1>
-      <p class="hero-hook"><span class="ln"><span class="ln-in">Plus d’intimité.</span></span><span class="ln ln-dim"><span class="ln-in">Zéro regard indiscret.</span></span></p>
-      <p class="hero-p">On installe des pellicules sur vos fenêtres : vous gardez la lumière et la vue, sans les regards de l’extérieur. Pour votre maison ou votre commerce.</p>
-      <a href="https://share.google/kLX6jMbjvzO1BwVfc" target="_blank" rel="noopener" class="hero-rating" aria-label="Note de 5 sur 5 basée sur 22 avis Google"><span class="rev-stars" aria-hidden="true">★★★★★</span><span><strong>5/5</strong> · 22 avis sur Google</span></a>
-      <div class="hero-cta"><a href="#formulaire" class="btn-blue" data-cta="hero">Obtenir mon estimation gratuite<span aria-hidden="true">→</span></a><a href="tel:4508029892" class="btn-tel" data-cta="hero-appel" aria-label="Appeler DV Teinte au 450 802-9892"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>450 802-9892</a></div>
-      <p class="hero-tag">Estimation gratuite à domicile · Garantie de 10 ans</p>
-    </div>
-  </section>
-
-  <!-- ============ DÉMONSTRATION : EXTÉRIEUR / INTÉRIEUR / AVEC OU SANS ============ -->
-  <section id="pellicules" class="demo" data-screen-label="Démonstration">
-    <span id="realisations" class="demo-anchor" aria-hidden="true"></span>
-    <div class="demo-in">
-      <div class="demo-head">
-        <h2 class="demo-title">Plus d’intimité, sans vivre les rideaux fermés</h2>
-        <p class="demo-sub">Voyez par vous-même ce que ça donne de l’intérieur et de l’extérieur.</p>
-      </div>
-
-      <div class="demo-tabs" role="tablist" aria-label="Choisir la démonstration" data-demo-tabs>
-        <button type="button" role="tab" id="demo-tab-ext" aria-controls="demo-view-ext" aria-selected="true" data-demo="ext">Vue extérieure</button>
-        <button type="button" role="tab" id="demo-tab-int" aria-controls="demo-view-int" aria-selected="false" tabindex="-1" data-demo="int">Vue intérieure</button>
-        <button type="button" role="tab" id="demo-tab-cmp" aria-controls="demo-view-cmp" aria-selected="false" tabindex="-1" data-demo="cmp">Avec ou sans pellicule</button>
-      </div>
-
-      <div class="demo-frame">
-        <figure class="demo-view is-on" id="demo-view-ext" role="tabpanel" aria-labelledby="demo-tab-ext">
-          <img src="./assets/photos/exterieur-brique.jpg" srcset="./assets/photos/exterieur-brique-640.jpg 640w, ./assets/photos/exterieur-brique-800.jpg 800w, ./assets/photos/exterieur-brique.jpg 1100w" sizes="(min-width:700px) 520px, 92vw" alt="Maison en brique rouge vue de l’extérieur : la fenêtre équipée d’une pellicule solaire réfléchissante reflète les arbres" width="1100" height="1466" loading="eager" decoding="async" style="object-position:50% 42%" />
-        </figure>
-        <figure class="demo-view" id="demo-view-int" role="tabpanel" aria-labelledby="demo-tab-int" aria-hidden="true">
-          <img src="./assets/photos/vue-interieur.jpg" srcset="./assets/photos/vue-interieur-640.jpg 640w, ./assets/photos/vue-interieur-900.jpg 900w, ./assets/photos/vue-interieur.jpg 1600w" sizes="(min-width:700px) 520px, 92vw" alt="Vue de l’intérieur à travers une fenêtre avec pellicule d’intimité : la rue et les maisons voisines restent bien visibles" width="1600" height="1600" loading="lazy" decoding="async" style="object-position:50% 50%" />
-        </figure>
-        <figure class="demo-view" id="demo-view-cmp" role="tabpanel" aria-labelledby="demo-tab-cmp" aria-hidden="true">
-          <img src="./assets/photos/avec-sans-pellicule.jpg" srcset="./assets/photos/avec-sans-pellicule-640.jpg 640w, ./assets/photos/avec-sans-pellicule-800.jpg 800w, ./assets/photos/avec-sans-pellicule.jpg 1080w" sizes="(min-width:700px) 520px, 92vw" alt="Teinture de vitres résidentielles : deux fenêtres côte à côte vues de l’intérieur, à gauche avec pellicule solaire, à droite sans pellicule" width="1080" height="1920" loading="lazy" decoding="async" style="object-position:50% 45%" />
-        </figure>
-        <span class="demo-badge">Photos de vraies installations DV Teinte</span>
-      </div>
-
-      <div class="demo-captions" aria-live="polite">
-        <p class="demo-caption is-on" data-caption="ext">Voyez l’effet miroir depuis l’extérieur pendant le jour.</p>
-        <p class="demo-caption" data-caption="int">Profitez toujours de votre vue sur dehors.</p>
-        <p class="demo-caption" data-caption="cmp">Comparez la luminosité avant et après.</p>
-      </div>
-
-      <a href="#formulaire" class="demo-cta" data-cta="demo">Obtenir mon estimation gratuite</a>
-    </div>
-  </section>
-
-  <!-- ============ NOS SERVICES : RÉSIDENTIEL ET COMMERCIAL ============ -->
-  <section id="services" class="svc" data-screen-label="Services">
-    <div class="svc-in">
-      <h2 class="svc-title">Pour votre maison ou votre commerce</h2>
-      <p class="svc-sub">Même résultat : de l’intimité et du confort, sans remplacer vos fenêtres.</p>
-      <div class="svc-grid">
-        <article class="svc-card">
-          <h3>Résidentiel</h3>
-          <p class="svc-for">Maison, condo ou appartement</p>
-          <ul class="svc-list">
-            <li>Vos voisins ne voient plus chez vous, le jour, rideaux ouverts</li>
-            <li>Moins de chaleur et d’éblouissement dans les pièces au soleil</li>
-            <li>Meubles et planchers mieux protégés du soleil</li>
-          </ul>
-          <a href="#formulaire" class="svc-btn" data-cta="services-residentiel">Protéger mon intimité</a>
-          <p class="svc-note">Estimation gratuite à domicile, sans engagement</p>
-        </article>
-        <article id="commercial" class="svc-card">
-          <h3>Commercial</h3>
-          <p class="svc-for">Bureaux, commerces et locaux professionnels</p>
-          <ul class="svc-list">
-            <li>Intimité pour vos employés et vos clients</li>
-            <li>Moins d’éblouissement et de chaleur près des fenêtres</li>
-            <li>Une solution adaptée à vos fenêtres et à vos besoins</li>
-          </ul>
-          <a href="#formulaire" class="svc-btn" data-cta="services-commercial" data-pick-projet="Commercial">Obtenir une soumission commerciale</a>
-          <p class="svc-note">On vous rappelle en moins de 30 minutes, de 8 h à 20 h</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TROUVEZ LA BONNE SOLUTION ============ -->
-  <section id="avantages" class="solu wrap-1320 pad-sec" data-screen-label="Trouvez la bonne solution">
-    <div class="solu-head">
-      <h2 class="h2 solu-title">Qu’est-ce qui vous dérange avec vos fenêtres&nbsp;?</h2>
-      <p class="lede">Chaque maison est différente. On vous aide à trouver la pellicule qui répond à vos besoins.</p>
-    </div>
-
-    <div class="solu-tabs" role="tablist" aria-label="Votre problème" data-solu-tabs>
-      <button type="button" role="tab" id="solu-tab-intimite" aria-controls="solu-panel-intimite" aria-selected="true" data-solu="intimite" data-cta-text="Protéger mon intimité">
-        <span class="solu-label">Intimité</span>
-        <span class="solu-q">Les voisins voient trop chez vous&nbsp;?</span>
-      </button>
-      <button type="button" role="tab" id="solu-tab-chaleur" aria-controls="solu-panel-chaleur" aria-selected="false" tabindex="-1" data-solu="chaleur" data-cta-text="Réduire la chaleur chez moi">
-        <span class="solu-label">Chaleur</span>
-        <span class="solu-q">Votre maison devient trop chaude au soleil&nbsp;?</span>
-      </button>
-      <button type="button" role="tab" id="solu-tab-uv" aria-controls="solu-panel-uv" aria-selected="false" tabindex="-1" data-solu="uv" data-cta-text="Protéger mes meubles du soleil">
-        <span class="solu-label">Protection UV</span>
-        <span class="solu-q">Le soleil abîme vos meubles&nbsp;?</span>
-      </button>
-    </div>
-
-    <div class="solu-panels">
-      <div class="solu-panel" role="tabpanel" id="solu-panel-intimite" aria-labelledby="solu-tab-intimite">
-        <h2 class="solu-h2">Pellicules d’intimité et miroir sans tain</h2>
-        <p class="solu-mq">Les voisins voient trop chez vous&nbsp;?</p>
-        <p class="solu-statement">Une pellicule d’intimité réfléchissante (miroir sans tain) vous donne plus d’intimité le jour, sans toujours fermer vos rideaux.</p>
-        <ul class="solu-points">
-          <li>Rideaux ouverts, intimité gardée</li>
-          <li>Lumière naturelle conservée</li>
-          <li>Vue vers l’extérieur préservée</li>
-        </ul>
-      </div>
-      <div class="solu-panel" role="tabpanel" id="solu-panel-chaleur" aria-labelledby="solu-tab-chaleur" hidden>
-        <h2 class="solu-h2">Pellicules solaires pour réduire la chaleur</h2>
-        <p class="solu-mq">Votre maison devient trop chaude au soleil&nbsp;?</p>
-        <p class="solu-statement">Réduisez la chaleur qui entre par vos fenêtres avec une pellicule solaire ou anti-chaleur adaptée.</p>
-        <ul class="solu-points">
-          <li>Chaleur réduite aux fenêtres très exposées</li>
-          <li>Moins d’éblouissement</li>
-          <li>Des pièces plus confortables</li>
-        </ul>
-      </div>
-      <div class="solu-panel" role="tabpanel" id="solu-panel-uv" aria-labelledby="solu-tab-uv" hidden>
-        <h2 class="solu-h2">Protection UV pour fenêtres résidentielles</h2>
-        <p class="solu-mq">Le soleil abîme vos meubles&nbsp;?</p>
-        <p class="solu-statement">Aidez à protéger vos meubles et vos planchers contre les rayons UV avec un film solaire pour fenêtres résidentielles.</p>
-        <ul class="solu-points">
-          <li>Aide à limiter la décoloration liée aux UV</li>
-          <li>Meubles, planchers et tissus</li>
-          <li>Lumière naturelle conservée</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="solu-cta">
-      <a href="#formulaire" class="btn-blue btn-mt" data-cta="problemes" data-solu-cta>Protéger mon intimité<span aria-hidden="true">→</span></a>
-      <p>On recommande la bonne pellicule pour vous lors de l’estimation. Gratuit et sans engagement.</p>
-    </div>
-  </section>
-
-  <!-- ============ POURQUOI NOUS FAIRE CONFIANCE ============ -->
-  <section id="confiance" class="trust" data-screen-label="Confiance">
-    <div class="trust-in">
-      <h2 class="trust-title">Vos fenêtres, entre de bonnes mains</h2>
-      <p class="trust-sub">On prend le temps de comprendre vos besoins pour vous proposer la bonne pellicule et une installation professionnelle.</p>
-
-      <div class="trust-cols">
-        <div class="trust-item">
-          <p class="trust-fig"><span class="trust-num">10</span><span class="trust-unit">ans</span></p>
-          <h3>De garantie sur l’installation</h3>
-          <p class="trust-desc">Une installation professionnelle accompagnée d’une garantie de 10 ans.</p>
+  <main class="dv6">
+<section data-screen-label="01 Hero" style="position:relative;overflow:hidden;color:#FFFFFF;background:radial-gradient(ellipse 70% 80% at 78% 40%, rgba(19,42,74,0.85) 0%, rgba(19,42,74,0) 70%), #080808">
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 160px);background-position:clamp(20px,5vw,64px) 0"></div>
+  <div aria-hidden="true" style="position:relative;height:77px;border-bottom:1px solid rgba(255,255,255,0.14)"></div>
+  <div style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(36px,5vw,80px) clamp(20px,5vw,64px) clamp(56px,7vw,104px)">
+    <div style="display:flex;flex-wrap:wrap;gap:40px clamp(40px,6vw,96px);align-items:center">
+      <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:clamp(20px,2.2vw,30px)">
+        <div style="display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;color:#FFFFFF">
+          <span style="letter-spacing:2px;font-size:17px;color:#FBBC04">★★★★★</span>
+          <span>5/5 sur Google · 32 avis</span>
         </div>
-        <div class="trust-item">
-          <span class="trust-fig" aria-hidden="true"></span>
-          <h3>La confiance de nos clients</h3>
-          <p class="trust-desc">Découvrez ce que nos clients pensent de leur expérience avec DV Teinte.</p>
-          <a href="https://share.google/kLX6jMbjvzO1BwVfc" target="_blank" rel="noopener" class="trust-link">Voir les avis Google</a>
+        <h1 style="font-size:clamp(40px,5.2vw,80px);line-height:1;letter-spacing:-0.04em;margin:0;max-width:15ch;text-wrap:balance;color:#FFFFFF">Réglez enfin ce qui vous dérange avec vos fenêtres.</h1>
+        <p style="margin:0;max-width:42ch;font-size:clamp(19px,1.6vw,22px);line-height:1.45;color:rgba(255,255,255,0.74)">Chaleur, intimité, éblouissement ou UV : DV Teinte fournit et installe la pellicule adaptée à votre problème.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;max-width:600px;margin-top:4px">
+          <a href="#formulaire" data-cta="hero" class="btn dvh897c14" style="flex:1 1 300px;min-width:0;min-height:68px;font-size:18px;padding:18px 22px;justify-content:space-between;text-align:left;gap:16px;color:#FFFFFF;background:#132A4A;border:1px solid rgba(255,255,255,0.28)">
+            <span>Obtenir mon estimation gratuite</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+          <a href="tel:4508029892" data-cta="hero-appel" class="btn dvh57778a" style="flex:0 1 auto;min-height:68px;font-size:18px;padding:18px 22px;justify-content:center;gap:10px;color:#FFFFFF;background:transparent;border:1px solid rgba(255,255,255,0.45);text-decoration:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <span>Appeler</span>
+          </a>
         </div>
-        <div class="trust-item">
-          <span class="trust-fig" aria-hidden="true"></span>
-          <h3>Une solution qui règle votre problème</h3>
-          <p class="trust-desc">On vient chez vous, on regarde vos fenêtres et on vous propose ce qui répond vraiment à votre besoin, sans engagement.</p>
-          <p class="trust-note">Estimation gratuite à domicile</p>
+        <div style="position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);border-top:1px solid rgba(255,255,255,0.22);margin-top:4px;max-width:520px">
+          
+          <div style="padding:16px 12px 0 0;display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:clamp(17px,1.5vw,20px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF">Estimation gratuite</span>
+            <span style="font-size:14px;line-height:1.35;color:rgba(255,255,255,0.62)">directement chez vous</span>
+          </div>
+          <div style="padding:16px 12px 0;border-left:1px solid rgba(255,255,255,0.16);display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:clamp(17px,1.5vw,20px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF">10 ans</span>
+            <span style="font-size:14px;line-height:1.35;color:rgba(255,255,255,0.62)">de garantie d’installation</span>
+          </div>
+          <div style="padding:16px 0 0 12px;border-left:1px solid rgba(255,255,255,0.16);display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:clamp(17px,1.5vw,20px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;color:#FFFFFF">Rive-Sud</span>
+            <span style="font-size:14px;line-height:1.35;color:rgba(255,255,255,0.62)">de Montréal et environs</span>
+          </div>
         </div>
       </div>
-
-    </div>
-  </section>
-
-  <!-- ============ AVIS GOOGLE ============ -->
-  <section id="avis" class="rev-sec" data-screen-label="Avis Google">
-    <div class="rev-head">
-      <div class="stack-18">
-        <p class="eyebrow">Avis Google</p>
-        <h2 class="h2">Ce que disent nos clients</h2>
+      <div style="flex:1 1 clamp(300px,30vw,400px);max-width:min(440px, calc((100vh - 120px) * 0.5625));margin:0 auto;min-width:0">
+        <div style="background:#132A4A;border:1px solid rgba(255,255,255,0.14);padding:clamp(10px,1.2vw,14px);clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,0 100%);display:flex;flex-direction:column;gap:clamp(10px,1.2vw,14px)">
+          <div data-vsl-inline style="position:relative;aspect-ratio:9/16;width:100%;background:#0D1F38;overflow:hidden">
+            <img data-vsl-thumb src="assets/video/vsl-poster-v5.jpg" alt="" width="540" height="960" decoding="async" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+            <button type="button" data-vsl-play aria-label="Regarder la vidéo" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:18px;border:0;padding:0;cursor:pointer;background:none;font:inherit">
+              <span style="width:clamp(72px,7vw,88px);height:clamp(72px,7vw,88px);background:#FFFFFF;color:#132A4A;display:flex;align-items:center;justify-content:center;outline:1px solid rgba(255,255,255,0.6);outline-offset:8px"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><path d="M7 4.5v15l12.5-7.5z"></path></svg></span>
+              <span style="background:#FFFFFF;color:#080808;font-size:15px;font-weight:800;padding:10px 14px;white-space:nowrap">Regarder la vidéo</span>
+            </button>
+            <video data-vsl-video controls playsinline preload="none" hidden width="720" height="1280" data-src="assets/video/vsl-dv-teinte-v5.mp4" style="position:absolute;inset:0;width:100%;height:100%;background:#000;object-fit:contain">Votre navigateur ne peut pas lire cette vidéo.</video>
+          </div>
+        </div>
       </div>
-      <a href="https://share.google/kLX6jMbjvzO1BwVfc" target="_blank" rel="noopener" class="rev-badge">
-        <span class="rev-score">5,0</span>
-        <span class="rev-meta"><span class="rev-stars">★★★★★</span><span class="rev-count">Avis sur Google →</span></span>
+    </div>
+  </div>
+</section>
+
+<span id="avantages" class="dv6-anchor"></span>
+<section id="processus" data-screen-label="02 Process" style="background:#FFFFFF;color:#080808;padding:clamp(40px,5.5vw,72px) 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px)">
+    <span style="display:block;font-size:14px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#132A4A">Comment ça se passe</span>
+    <h2 style="margin:clamp(16px,2vw,24px) 0 0;font-size:clamp(32px,4vw,56px);line-height:1.04;letter-spacing:-0.035em;max-width:20ch;text-wrap:balance;color:#080808">Vous nous expliquez le problème. On s’occupe du reste.</h2>
+    <ol style="list-style:none;margin:clamp(24px,3.5vw,48px) 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, max(calc((100% - 96px) / 3), calc((900px - 100vw) * 999))),1fr));gap:clamp(24px,4vw,40px) clamp(20px,3vw,48px)">
+        <li style="display:flex;flex-wrap:wrap;align-items:baseline;align-content:flex-start;gap:clamp(6px,1.2vw,16px) 16px;padding-top:clamp(14px,1.8vw,20px);border-top:1px solid #C8C8C8">
+          <span style="flex:0 0 min(100%, max(0px, calc((100vw - 900px) * 999)));min-width:2ch;font-size:clamp(26px,3vw,42px);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#132A4A">01</span>
+          <div style="flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <h3 style="margin:0;font-size:clamp(20px,1.8vw,24px);font-weight:800;line-height:1.2;letter-spacing:-0.02em;color:#080808">On regarde votre projet</h3>
+            <p style="margin:0;max-width:30ch;font-size:17px;line-height:1.5;color:#4A4A4A">On vérifie vos fenêtres et ce que vous voulez régler.</p>
+          </div>
+        </li>
+        <li style="display:flex;flex-wrap:wrap;align-items:baseline;align-content:flex-start;gap:clamp(6px,1.2vw,16px) 16px;padding-top:clamp(14px,1.8vw,20px);border-top:1px solid #C8C8C8">
+          <span style="flex:0 0 min(100%, max(0px, calc((100vw - 900px) * 999)));min-width:2ch;font-size:clamp(26px,3vw,42px);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#132A4A">02</span>
+          <div style="flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <h3 style="margin:0;font-size:clamp(20px,1.8vw,24px);font-weight:800;line-height:1.2;letter-spacing:-0.02em;color:#080808">On vous recommande la solution</h3>
+            <p style="margin:0;max-width:30ch;font-size:17px;line-height:1.5;color:#4A4A4A">On vous explique simplement ce qui convient le mieux.</p>
+          </div>
+        </li>
+        <li style="display:flex;flex-wrap:wrap;align-items:baseline;align-content:flex-start;gap:clamp(6px,1.2vw,16px) 16px;padding-top:clamp(14px,1.8vw,20px);border-top:1px solid #C8C8C8">
+          <span style="flex:0 0 min(100%, max(0px, calc((100vw - 900px) * 999)));min-width:2ch;font-size:clamp(26px,3vw,42px);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#132A4A">03</span>
+          <div style="flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <h3 style="margin:0;font-size:clamp(20px,1.8vw,24px);font-weight:800;line-height:1.2;letter-spacing:-0.02em;color:#080808">On s’occupe de l’installation</h3>
+            <p style="margin:0;max-width:30ch;font-size:17px;line-height:1.5;color:#4A4A4A">Pose professionnelle, finitions propres, garantie 10 ans.</p>
+          </div>
+        </li>
+    </ol>
+    <div style="margin-top:clamp(28px,3.5vw,48px);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <a href="#formulaire" data-cta="processus" class="btn dvh897c14" style="width:auto;max-width:100%;min-height:56px;font-size:16px;padding:14px 20px;justify-content:space-between;text-align:left;gap:14px;color:#FFFFFF;background:#132A4A;border:1px solid #132A4A;text-decoration:none">
+        <span>Obtenir mon estimation gratuite</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </a>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;max-width:100%">
+        <img src="assets/v6/avatars.webp" width="70" height="28" alt="" style="display:block;height:28px;width:auto;flex:none">
+        <p style="margin:0;flex:none;font-size:clamp(13px,3.5vw,15px);line-height:1.35;color:#4A4A4A;text-align:left;white-space:nowrap">100+ personnes ont retrouvé du confort<br>chez eux grâce à DV Teinte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<span id="pellicules" class="dv6-anchor"></span>
+<section id="realisations" data-screen-label="03 Preuve" style="background:#FFFFFF;color:#080808;padding:clamp(24px,4vw,48px) 0 clamp(64px,8vw,112px)">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px)">
+    <h2 style="margin:0;font-size:clamp(32px,4vw,56px);line-height:1.04;letter-spacing:-0.035em;max-width:18ch;text-wrap:balance;color:#080808">Des résultats qu’on voit tout de suite.</h2>
+    <p style="margin:clamp(12px,1.4vw,18px) 0 0;max-width:40ch;font-size:clamp(17px,1.4vw,19px);line-height:1.45;color:#4A4A4A">De vraies installations. De vrais résultats chez nos clients.</p>
+    <div style="margin-top:clamp(32px,4.5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(12px,1.6vw,20px)">
+      <div style="position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:#EDEDED"><img src="assets/v6/avant-apres-146.webp" loading="lazy" decoding="async" alt="Avant et après la pose de pellicule réfléchissante, maison 146" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;top:12px;left:12px;background:#FFFFFF;color:#080808;font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px;pointer-events:none">Avant</span><span style="position:absolute;top:12px;left:calc(50% + 12px);background:#132A4A;color:#FFFFFF;font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px;pointer-events:none">Après</span></div>
+      <div style="position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:#EDEDED"><img src="assets/v6/avant-apres-692.webp" loading="lazy" decoding="async" alt="Avant et après la pose de pellicule, grande fenêtre maison 692" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;top:12px;left:12px;background:#FFFFFF;color:#080808;font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px;pointer-events:none">Avant</span><span style="position:absolute;top:12px;left:calc(50% + 12px);background:#132A4A;color:#FFFFFF;font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px;pointer-events:none">Après</span></div>
+    </div>
+    <div style="margin-top:clamp(32px,4vw,48px);display:flex;justify-content:center">
+      <a href="#formulaire" data-cta="preuve" class="btn dvh897c14" style="width:auto;max-width:100%;min-height:56px;font-size:16px;padding:14px 20px;justify-content:space-between;text-align:left;gap:14px;color:#FFFFFF;background:#132A4A;border:1px solid #132A4A;text-decoration:none">
+        <span>Obtenir mon estimation gratuite</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
       </a>
     </div>
-    <div class="rev-track" data-rev-track role="region" aria-label="Avis Google" tabindex="0">
-      <figure class="rev-card">
-        <div class="rev-top"><span class="rev-stars">★★★★★</span><span class="rev-tag">Bon prix</span></div>
-        <blockquote>Super belle expérience du début à la fin! L’équipe était vraiment sympathique, dynamique et professionnelle. La communication a été facile et agréable tout au long du processus.
+  </div>
+</section>
 
-Ils ont respecté l’heure d’arrivée prévue ainsi que tout ce qui avait été convenu au contrat. Le travail a été fait avec professionnalisme et le résultat est à la hauteur de nos attentes.
-
-Une entreprise fiable et agréable avec qui faire affaire. Je les recommande sans hésitation!</blockquote>
-        <figcaption><span class="rev-name">Derek Bureau</span><span class="rev-when">Google · octobre 2026</span></figcaption>
-      </figure>
-      <figure class="rev-card">
-        <div class="rev-top"><span class="rev-stars">★★★★★</span><span class="rev-tag">Bon prix</span></div>
-        <blockquote>Service absolument impeccable! Je recommande 10/10 le propriétaire Derek est super sympathique</blockquote>
-        <figcaption><span class="rev-name">gizmo bedi</span><span class="rev-when">Google · octobre 2026</span></figcaption>
-      </figure>
-      <figure class="rev-card">
-        <div class="rev-top"><span class="rev-stars">★★★★★</span></div>
-        <blockquote>Très professionnel bon service je recommande</blockquote>
-        <figcaption><span class="rev-name">Bil Bilodeau</span><span class="rev-when">Google · juillet 2026</span></figcaption>
-      </figure>
+<section data-screen-label="04 Avis" style="background:#F7F7F5;color:#080808;padding:clamp(64px,8vw,112px) 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,5vw,64px)">
+    <h2 style="margin:0;font-size:clamp(32px,4vw,56px);line-height:1.04;letter-spacing:-0.035em;max-width:18ch;text-wrap:balance;color:#080808">Ce sont nos clients qui en parlent le mieux.</h2>
+    <div style="margin-top:clamp(14px,1.6vw,20px);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:clamp(16px,1.4vw,18px);color:#080808">
+      <span style="letter-spacing:2px;font-size:18px;line-height:1;color:#FBBC04">★★★★★</span>
+      <span><strong style="font-weight:800">5/5</strong> sur Google · <strong style="font-weight:800;color:#132A4A">32 avis</strong></span>
     </div>
-    <div class="rev-ctrl">
-      <div class="rev-dots" data-rev-dots>
-        <button type="button" aria-label="Avis 1"></button>
-        <button type="button" aria-label="Avis 2"></button>
-        <button type="button" aria-label="Avis 3"></button>
+    <div style="position:relative;margin-top:clamp(32px,4.5vw,56px)">
+      <div data-wall style="overflow:hidden;max-height:none;transition:max-height 0.6s ease">
+        <div data-wall-cols style="display:flex;align-items:flex-start;gap:clamp(12px,1.4vw,16px)"></div>
       </div>
-      <div class="rev-arrows">
-        <button type="button" aria-label="Avis précédent" data-rev-prev>←</button>
-        <button type="button" aria-label="Avis suivant" data-rev-next>→</button>
       </div>
-    </div>
-    <div class="rev-cta"><a href="#formulaire" class="btn-blue" data-cta="avis">Obtenir mon estimation gratuite<span aria-hidden="true">→</span></a></div>
-  </section>
-
-  <!-- ============ COMMENT ÇA FONCTIONNE ============ -->
-  <section id="processus" class="proc" data-screen-label="Comment ça fonctionne">
-    <div class="proc-in">
-      <h2 class="proc-title">Comment ça fonctionne&nbsp;?</h2>
-      <p class="proc-sub">On s’occupe de tout, du choix de la pellicule jusqu’à l’installation.</p>
-
-      <ol class="proc-steps">
-        <li class="proc-step">
-          <span class="proc-num">01</span>
-          <div class="proc-body">
-            <h3>Expliquez-nous votre besoin</h3>
-            <p>Remplissez le formulaire. On vous contacte pour discuter de votre projet.</p>
-          </div>
-        </li>
-        <li class="proc-step">
-          <span class="proc-num">02</span>
-          <div class="proc-body">
-            <h3>On vient voir vos fenêtres</h3>
-            <p>On examine vos vitrages et on choisit la pellicule adaptée à vos besoins et à vos fenêtres.</p>
-          </div>
-        </li>
-        <li class="proc-step">
-          <span class="proc-num">03</span>
-          <div class="proc-body">
-            <h3>On fait l’installation</h3>
-            <p>Une fois la soumission acceptée, notre équipe s’occupe de la pose.</p>
-          </div>
-        </li>
-      </ol>
-
-      <a href="#formulaire" class="proc-cta" data-cta="processus">Planifier mon estimation gratuite</a>
-
-    </div>
-  </section>
-
-  <!-- ============ VIDÉO EXPLICATIVE (section à part, optionnelle; affichée par script.js selon le test A/B) ============ -->
-  <section id="video" class="vsl-sec" data-vsl data-screen-label="Vidéo" hidden>
-    <div class="vsl-in">
-      <div class="vsl-text">
-        <h2 class="vsl-h2">Quel problème voulez-vous régler avec vos fenêtres&nbsp;?</h2>
-        <p class="vsl-sub">On vous explique les différentes options et comment choisir la bonne.</p>
-      </div>
-      <button type="button" class="vsl-media" data-vsl-open aria-haspopup="dialog" aria-controls="vsl-dialog" aria-label="Regarder la vidéo (1 minute)">
-        <img src="assets/video/vsl-poster-v5.jpg" width="540" height="960" loading="lazy" decoding="async" alt="">
-        <span class="vsl-play" aria-hidden="true"><svg width="22" height="24" viewBox="0 0 16 18" fill="currentColor"><path d="M2 1.4v15.2a.8.8 0 0 0 1.2.7l12-7.6a.8.8 0 0 0 0-1.4L3.2.7A.8.8 0 0 0 2 1.4z"/></svg></span>
+    <div style="margin-top:clamp(20px,2.6vw,28px);display:flex;justify-content:center">
+      <button class="dvhbad719" type="button" data-reviews-toggle aria-expanded="false" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:12px 24px;border:1.5px solid #132A4A;border-radius:999px;background:#FFFFFF;color:#132A4A;font:inherit;font-size:16px;font-weight:700;cursor:pointer">
+        <span data-reviews-label>Voir plus d’avis</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" style="flex:none;transition:transform 0.3s;transform:none" data-reviews-chevron=""><path d="m6 9 6 6 6-6"></path></svg>
       </button>
-      <button type="button" class="vsl-btn" data-vsl-open aria-haspopup="dialog" aria-controls="vsl-dialog">Regarder la vidéo · 1&nbsp;min</button>
     </div>
-  </section>
-
-  <!-- ============ ESTIMATION (FORMULAIRE) ============ -->
-  <section id="estimation" class="est-sec" data-screen-label="Formulaire" data-est-section>
-    <div class="stack-22">
-      <h2 class="h2">Demandez votre estimation</h2>
-      <p class="lede">Laissez-nous vos coordonnées. On vous rappelle ensuite pour planifier l’estimation à domicile.</p>
-      <p class="est-promo"><span class="promo-dot"></span>Jusqu’à 400 $ de rabais, selon la grandeur du projet</p>
-      <p class="est-assure">Estimation gratuite à domicile · Installation professionnelle · Garantie de 10 ans sur l’installation</p>
-      <p class="est-call">Préférez parler à quelqu’un? <a href="tel:4508029892" data-cta="formulaire-appel">450 802-9892</a> (de 8 h à 20 h)</p>
+    <div style="margin-top:clamp(28px,3.4vw,40px);display:flex;justify-content:center">
+      <a href="#formulaire" data-cta="avis" class="btn dvh897c14" style="width:auto;max-width:100%;min-height:56px;font-size:16px;padding:14px 20px;justify-content:space-between;text-align:left;gap:14px;color:#FFFFFF;background:#132A4A;border:1px solid #132A4A;text-decoration:none">
+        <span>Obtenir mon estimation gratuite</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </a>
     </div>
+  </div>
+</section>
 
-    <div class="est-card" id="formulaire">
-      <form data-est-form action="https://formsubmit.co/contact@dvteinte.com" method="POST" novalidate>
-        <div class="est-top">
-          <div class="est-meta"><span data-est-label>Demande d’estimation gratuite</span></div>
-        </div>
+<section id="faq" data-screen-label="05 FAQ" style="background:#FFFFFF;color:#080808;padding:clamp(64px,8vw,112px) 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px);display:flex;flex-wrap:wrap;gap:32px clamp(40px,6vw,96px);align-items:flex-start">
+    <h2 style="flex:1 1 280px;min-width:0;font-size:clamp(34px,4.4vw,60px);line-height:1.02;letter-spacing:-0.04em;margin:0;max-width:12ch;text-wrap:balance;color:#080808">Questions fréquentes</h2>
+    <div style="flex:2 1 520px;min-width:0;border-bottom:2px solid #080808">
+      <div style="border-top:2px solid #080808">
+        <button type="button" data-faq-btn="0" aria-expanded="false" style="width:100%;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;background:none;border:0;font:inherit;font-size:clamp(18px,1.6vw,21px);font-weight:700;line-height:1.35;color:#080808;text-align:left;cursor:pointer"><span>Est-ce que ça va assombrir ma maison?</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none;transition:transform 0.2s;transform:none" data-faq-chevron="0"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p data-faq-panel="0" hidden style="margin:0;padding:0 0 24px;max-width:62ch;font-size:18px;color:#3A3A3A">Pas nécessairement. Certaines pellicules sont presque invisibles et gardent la lumière naturelle; d’autres sont plus foncées. On vous montre les options et leur rendu avant de choisir.</p>
+      </div>
+      <div style="border-top:2px solid #080808">
+        <button type="button" data-faq-btn="1" aria-expanded="false" style="width:100%;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;background:none;border:0;font:inherit;font-size:clamp(18px,1.6vw,21px);font-weight:700;line-height:1.35;color:#080808;text-align:left;cursor:pointer"><span>Est-ce que l’effet miroir fonctionne le soir?</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none;transition:transform 0.2s;transform:none" data-faq-chevron="1"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p data-faq-panel="1" hidden style="margin:0;padding:0 0 24px;max-width:62ch;font-size:18px;color:#3A3A3A">L’effet miroir fonctionne quand il fait plus clair dehors que dedans. Le soir, avec les lumières allumées à l’intérieur, on peut voir à travers. Si l’intimité le soir est importante, on a aussi des pellicules adaptées pour le soir.</p>
+      </div>
+      <div style="border-top:2px solid #080808">
+        <button type="button" data-faq-btn="2" aria-expanded="false" style="width:100%;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;background:none;border:0;font:inherit;font-size:clamp(18px,1.6vw,21px);font-weight:700;line-height:1.35;color:#080808;text-align:left;cursor:pointer"><span>Quand pouvez-vous venir faire l’estimation?</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none;transition:transform 0.2s;transform:none" data-faq-chevron="2"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p data-faq-panel="2" hidden style="margin:0;padding:0 0 24px;max-width:62ch;font-size:18px;color:#3A3A3A">On vous rappelle en moins de 30 minutes, entre 10h et 20h, et on planifie l’estimation à domicile selon vos disponibilités.</p>
+      </div>
+      <div style="border-top:2px solid #080808">
+        <button type="button" data-faq-btn="3" aria-expanded="false" style="width:100%;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;background:none;border:0;font:inherit;font-size:clamp(18px,1.6vw,21px);font-weight:700;line-height:1.35;color:#080808;text-align:left;cursor:pointer"><span>Combien ça coûte?</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none;transition:transform 0.2s;transform:none" data-faq-chevron="3"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <p data-faq-panel="3" hidden style="margin:0;padding:0 0 24px;max-width:62ch;font-size:18px;color:#3A3A3A">Le prix dépend de la superficie, du nombre de fenêtres et de la pellicule choisie. L’estimation à domicile est gratuite et sans engagement.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="est-body">
-          <h3 class="contact-title">Où peut-on vous joindre?</h3>
-          <p class="contact-sub">On vous rappelle en moins de 30 minutes, entre 8 h et 20 h, pour discuter de votre projet et préparer votre estimation gratuite, sans engagement.</p>
-          <div class="fields">
-            <div class="field"><label for="dv-prenom">Prénom</label><input id="dv-prenom" name="prenom" enterkeyhint="next" type="text" inputmode="text" autocomplete="given-name" data-field="prenom" /><span class="field-err" data-err="prenom" hidden>Entrez votre prénom.</span></div>
-            <div class="field"><label for="dv-nom">Nom</label><input id="dv-nom" name="nom" enterkeyhint="next" type="text" inputmode="text" autocomplete="family-name" data-field="nom" /><span class="field-err" data-err="nom" hidden>Entrez votre nom.</span></div>
-            <div class="field field-wide"><label for="dv-telephone">Téléphone</label><input id="dv-telephone" name="telephone" enterkeyhint="next" type="tel" inputmode="tel" autocomplete="tel" placeholder="450 555-0123" data-field="telephone" /><span class="field-err" data-err="telephone" hidden>Entrez un numéro de téléphone valide (10 chiffres).</span></div>
-            <div class="field field-wide"><label for="dv-courriel">Courriel</label><input id="dv-courriel" name="email" enterkeyhint="next" type="email" inputmode="email" autocomplete="email" data-field="courriel" /><span class="field-err" data-err="courriel" hidden>Entrez un courriel valide.</span></div>
-            <div class="field field-wide"><label for="dv-message">Message ou précisions <span class="opt-label">(facultatif)</span></label><textarea id="dv-message" name="message" rows="3" maxlength="1500" placeholder="Ex. : nombre de fenêtres, délai souhaité, questions…" data-field="message"></textarea></div>
+<span id="commercial" class="dv6-anchor"></span>
+<section id="formulaire" data-est-section data-screen-label="06 Formulaire" style="background:#132A4A;color:#FFFFFF;padding:clamp(64px,8vw,120px) 0">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px)">
+    
+    <div style="display:flex;flex-wrap:wrap;gap:40px clamp(40px,6vw,96px);align-items:flex-start">
+      <div style="flex:1 1 340px;min-width:0">
+        <h2 style="font-size:clamp(34px,4.4vw,60px);line-height:1.06;letter-spacing:-0.03em;margin:0;max-width:16ch;text-wrap:balance;color:#FFFFFF">Voyons ce qui ferait le plus de sens chez vous.</h2>
+        <p style="font-size:clamp(18px,1.5vw,20px);line-height:1.45;margin:20px 0 0;max-width:38ch;color:rgba(255,255,255,0.85)">Dites-nous simplement ce que vous aimeriez régler avec vos fenêtres. Notre équipe s’occupe du reste.</p>
+        <ul style="list-style:none;margin:28px 0 0;padding:0;border-top:1px solid rgba(255,255,255,0.22);max-width:440px">
+          <li style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.22);font-size:17px;line-height:1.4"><strong>Estimation gratuite</strong> à domicile, sans engagement</li>
+          <li style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.22);font-size:17px;line-height:1.4"><strong>Garantie d’installation</strong> de 10 ans</li>
+          <li style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.22);font-size:17px;line-height:1.4"><strong><span style="color:#FBBC04;letter-spacing:1px">★★★★★</span> 5,0/5</strong> sur Google</li>
+          <li style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.22);font-size:17px;line-height:1.4"><strong>Service professionnel</strong> fourni et installé par notre équipe</li>
+        </ul>
+      </div>
+      <div style="flex:1 1 460px;min-width:0;background:#FFFFFF;color:#080808;padding:clamp(20px,4vw,44px)">
+        <form data-est-form data-fullname data-email-optional action="https://formsubmit.co/contact@dvteinte.com" method="POST" style="display:flex;flex-direction:column;gap:22px">
+            <div><label for="v2-nom" style="display:block;font-size:16px;font-weight:700;margin-bottom:8px;color:#080808">Nom complet</label><input id="v2-nom" name="nomcomplet" data-field="nomcomplet" required autocomplete="name" class="input" style="min-height:58px;font-size:18px;padding:14px 16px;background:#FFFFFF;border:2px solid #CFCFCF"></div>
+            <div><label for="v2-tel" style="display:block;font-size:16px;font-weight:700;margin-bottom:8px;color:#080808">Téléphone</label><input id="v2-tel" name="telephone" data-field="telephone" type="tel" required autocomplete="tel" inputmode="tel" class="input" style="min-height:58px;font-size:18px;padding:14px 16px;background:#FFFFFF;border:2px solid #CFCFCF"></div>
+            <div><label for="v2-mail" style="display:block;font-size:16px;font-weight:700;margin-bottom:8px;color:#080808">Courriel <span style="font-weight:400;color:#6A6A6A">(facultatif)</span></label><input id="v2-mail" name="email" data-field="courriel" type="email" autocomplete="email" class="input" style="min-height:58px;font-size:18px;padding:14px 16px;background:#FFFFFF;border:2px solid #CFCFCF"></div>
+            <fieldset style="border:0;margin:0;padding:0">
+              <legend style="font-size:18px;font-weight:800;margin-bottom:12px;padding:0">Problème principal</legend>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(130px,30%),1fr));gap:8px">
+                <button type="button" data-chip="0" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">Chaleur</button>
+                <button type="button" data-chip="1" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">Intimité</button>
+                <button type="button" data-chip="2" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">UV</button>
+                <button type="button" data-chip="3" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">Éblouissement</button>
+                <button type="button" data-chip="4" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">Plusieurs</button>
+                <button type="button" data-chip="5" aria-pressed="false" style="min-height:56px;padding:12px;font:inherit;font-size:16px;font-weight:600;line-height:1.2;text-align:left;cursor:pointer;border:2px solid #CFCFCF;background:#FFFFFF;color:#080808">Je ne sais pas</button>
+              </div>
+            </fieldset>
+            <div><label for="v4-msg" style="display:block;font-size:16px;font-weight:700;margin-bottom:8px;color:#080808">Message <span style="font-weight:400;color:#6A6A6A">(facultatif)</span></label><textarea id="v4-msg" name="message" data-field="message" maxlength="1500" rows="3" class="input" style="min-height:96px;font-size:18px;padding:14px 16px;background:#FFFFFF;border:2px solid #CFCFCF;resize:vertical"></textarea></div>
+                        <input type="hidden" name="objectif" data-objectif value="">
+            <input name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" data-hp>
+            <input type="hidden" name="type_de_projet" data-hidden="projet" value="Résidentiel">
+            <input type="hidden" name="CAMPAIGN" data-attr="campaign" value="">
+            <input type="hidden" name="ADSET" data-attr="adset" value="">
+            <input type="hidden" name="AD" data-attr="ad" value="">
+            <input type="hidden" name="_subject" value="Nouvelle demande d’estimation — DV Teinte">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+              <button type="submit" data-est-submit class="btn btn-primary" style="width:100%;min-height:68px;font-size:18px;padding:18px 22px;justify-content:space-between;text-align:left;gap:16px;color:#FFFFFF">
+                <span data-btn-label>Obtenir mon estimation gratuite</span>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="square" style="flex:none"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </button>
+              <span style="font-size:16px;color:#4A4A4A">On vous rappelle dans le 30 min entre 10h et 20h</span>
+              <p data-send-err role="alert" hidden style="margin:0;font-size:16px;color:#B3261E">Une erreur est survenue lors de l’envoi. Veuillez réessayer ou nous appeler au 450 802-9892.</p>
+              <span data-promo hidden style="font-size:16px;color:#080808;padding-top:14px;border-top:2px solid #EDEDED"><strong>Promotion en cours :</strong> jusqu’à 400 $ de rabais selon la grandeur du projet.</span>
+            </div>
+          </form>
+        <div data-est-thanks hidden style="display:flex;flex-direction:column;gap:14px;padding:12px 0">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#132A4A" stroke-width="2.5" stroke-linecap="square"><path d="M20 6 9 17l-5-5"></path></svg>
+            <h3 style="font-size:28px;line-height:1.15;margin:0">Merci, votre demande est reçue.</h3>
+            <p style="margin:0;font-size:18px;color:#3A3A3A">L’équipe DV Teinte vous contacte pour planifier la visite à domicile.</p>
           </div>
-          <input name="_honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot" data-hp />
-
-          <input type="hidden" name="type_de_projet" data-hidden="projet" value="Résidentiel" />
-          <!-- Attribution publicitaire : remplis automatiquement depuis ?SQF_CAMPAIGN=…&SQF_ADSET=…&SQF_AD=… -->
-          <input type="hidden" name="CAMPAIGN" data-attr="campaign" value="" />
-          <input type="hidden" name="ADSET" data-attr="adset" value="" />
-          <input type="hidden" name="AD" data-attr="ad" value="" />
-          <!-- Configuration FormSubmit -->
-          <input type="hidden" name="_subject" value="Nouvelle demande d’estimation — DV Teinte" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_captcha" value="false" />
-        </div>
-
-        <div class="est-foot">
-          <span class="est-free">Gratuit et sans engagement</span>
-          <button type="submit" class="est-submit" data-est-submit>Obtenir mon estimation gratuite</button>
-        </div>
-        <p class="est-note">Vos informations servent uniquement à traiter votre demande d’estimation.</p>
-        <p class="est-send-err" role="alert" data-send-err hidden>Une erreur est survenue lors de l’envoi. Veuillez réessayer ou nous appeler au 450 802-9892.</p>
-      </form>
-
-      <div class="est-thanks" role="status" data-est-thanks hidden>
-        <span class="thanks-check" aria-hidden="true"><svg viewBox="0 0 52 52" width="72" height="72"><circle class="tc-ring" cx="26" cy="26" r="25"/><path class="tc-tick" d="M15 27l8 8 14-16"/></svg></span>
-        <h3>Votre demande a bien été envoyée</h3>
-        <p class="thanks-lead">Notre équipe vous appellera en moins de 30 minutes, entre 8 h et 20 h, à partir de ce numéro&nbsp;:</p>
-        <div class="thanks-number" aria-label="Numéro de téléphone de DV Teinte : 450 802-9892"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>450 802-9892</span></div>
-        <p class="thanks-tip">Gardez ce numéro en tête pour ne pas manquer notre appel.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+  </main>
 
-  <!-- ============ FAQ ============ -->
-  <section id="faq" class="faq-sec" data-screen-label="FAQ">
-    <div class="faq-in">
-      <h2 class="h2">Questions fréquentes</h2>
-      <div class="faq-list" data-faq>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="true">Combien coûte l’installation?<span aria-hidden="true">−</span></button></h3>
-          <p>Le prix dépend de la grandeur du projet (nombre et dimensions des fenêtres) et de la pellicule choisie. L’estimation à domicile est gratuite et sans engagement, et vous pouvez profiter d’un rabais allant jusqu’à 400 $ selon la grandeur du projet.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Quand pouvez-vous venir faire l’estimation?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>On vous rappelle en moins de 30 minutes, entre 8 h et 20 h, et on planifie l’estimation à domicile selon vos disponibilités.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Combien de temps dure l’installation?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Cela dépend du nombre de fenêtres. On vous donne une durée précise lors de l’estimation.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Quelles villes desservez-vous?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>On dessert la Rive-Sud de Montréal : Salaberry-de-Valleyfield, Châteauguay, Beauharnois, Vaudreuil-Dorion et les environs.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Qu’est-ce que couvre la garantie de 10 ans?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>L’installation est garantie 10 ans. On vous précise les conditions de la garantie lors de l’estimation.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce que l’effet miroir fonctionne la nuit?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Non. L’effet miroir fonctionne quand il fait plus clair dehors qu’à l’intérieur. Le soir, avec vos lumières allumées, on peut voir à l’intérieur. Prévoyez des rideaux ou des stores pour la nuit.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce qu’on voit encore dehors?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Oui. De l’intérieur, la vue reste claire, un peu comme avec des lunettes de soleil. Plus la teinte est foncée, plus la vue est assombrie.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce que la pellicule rend la maison plus sombre?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Un peu, selon la teinte choisie. Une teinte claire conserve plus de lumière; une teinte foncée donne plus d’intimité et bloque plus de chaleur. On vous montre les options lors de l’estimation.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce que ça réduit vraiment la chaleur?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Oui, une pellicule solaire pour fenêtres bloque une partie de la chaleur du soleil avant qu’elle n’entre. La différence se ressent surtout dans les pièces exposées au soleil direct. Le résultat dépend de la pellicule, du vitrage et de l’orientation.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce que ça protège contre les UV?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Oui. Les pellicules solaires que nous installons bloquent la grande majorité des rayons UV, ce qui réduit la décoloration. La lumière visible et la chaleur peuvent aussi y contribuer.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Est-ce que la pellicule peut être retirée?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Oui. Elle peut être retirée par un professionnel. Dans la plupart des cas, le verre n’est pas endommagé.</p>
-        </div>
-        <div class="faq-item">
-          <h3><button type="button" aria-expanded="false">Combien de temps dure une pellicule?<span aria-hidden="true">+</span></button></h3>
-          <p hidden>Une teinture de vitres résidentielles bien installée dure plusieurs années. La durée dépend du produit, de l’exposition au soleil et de l’entretien. On vous précise la garantie applicable lors de l’estimation.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ ZONE DESSERVIE ============ -->
-  <section class="local-sec" data-screen-label="Zone desservie">
-    <div class="local-in">
-      <h2>Installation de pellicules pour fenêtres à Valleyfield, Châteauguay et sur la Rive-Sud</h2>
-      <p>DV Teinte se spécialise dans l’installation professionnelle de pellicules solaires, de pellicules d’intimité et de films réfléchissants pour fenêtres résidentielles et commerciales. Nous desservons la Rive-Sud de Montréal, Salaberry-de-Valleyfield, Châteauguay, Beauharnois, Vaudreuil-Dorion et les environs. Nos solutions permettent de réduire la chaleur, de limiter l’éblouissement, de filtrer les rayons UV et d’améliorer l’intimité sans remplacer les fenêtres.</p>
-    </div>
-  </section>
-
-  <!-- ============ APPEL FINAL ============ -->
-  <section class="final" data-screen-label="CTA final">
-    <img src="./assets/photos/facade-apres.jpg" alt="" aria-hidden="true" width="675" height="1200" loading="lazy" decoding="async" />
-    <div class="final-shade"></div>
-    <div class="final-in">
-      <h2 class="h2 final-title">Prêt à profiter pleinement de vos fenêtres?</h2>
-      <p class="final-p">Dites-nous ce qui vous dérange et obtenez une estimation adaptée à votre projet.</p>
-      <a href="#formulaire" class="btn-blue btn-mt-sm" data-cta="appel-final">Obtenir mon estimation gratuite<span aria-hidden="true">→</span></a>
-    </div>
-  </section>
-
-  <!-- ============ PIED DE PAGE (conservé tel quel) ============ -->
   <footer class="site-footer">
     <div class="footer-wrap footer-grid">
       <div>
@@ -526,23 +343,10 @@ Une entreprise fiable et agréable avec qui faire affaire. Je les recommande san
     </div>
   </footer>
 
-  <!-- ============ BARRE COLLANTE (mobile) ============ -->
   <div class="sticky-bar" data-sticky>
     <a href="#formulaire" class="sticky-main" data-cta="barre-mobile">Estimation gratuite<span aria-hidden="true">→</span></a>
     <a href="tel:4508029892" class="sticky-tel" aria-label="Appeler DV Teinte au 450 802-9892" data-cta="barre-mobile-appel"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a>
   </div>
-
-  <!-- ============ VIDÉO (fenêtre modale, aucun téléchargement avant le clic) ============ -->
-  <dialog class="vsl-dlg" id="vsl-dialog" aria-label="Vidéo : comment on choisit la pellicule pour vos fenêtres" data-vsl-dialog>
-    <div class="vsl-dlg-in">
-      <button type="button" class="vsl-close" data-vsl-close aria-label="Fermer la vidéo"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button>
-      <div class="vsl-stage"><video class="vsl-video" controls playsinline preload="none" width="720" height="1280" data-src="assets/video/vsl-dv-teinte-v5.mp4" data-poster="assets/video/vsl-poster-v5.jpg">Votre navigateur ne peut pas lire cette vidéo.</video></div>
-      <div class="vsl-after">
-        <a href="#formulaire" class="vsl-cta" data-cta="video" data-vsl-cta>Obtenir mon estimation gratuite<span aria-hidden="true">→</span></a>
-        <p class="vsl-note">On vous rappelle en moins de 30 minutes, de 8&nbsp;h à 20&nbsp;h · Garantie de 10&nbsp;ans · Estimation à domicile gratuite</p>
-      </div>
-    </div>
-  </dialog>
 
 </div>
 <script src="./script.js"></script>

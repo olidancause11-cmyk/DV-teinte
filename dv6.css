@@ -1,0 +1,47 @@
+/* DV Teinte — nouveau design de la page d'accueil (reproduit du fichier de design).
+   Tout est limité à .dv6 : l'en-tête, le pied de page et la barre mobile du site ne changent pas. */
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-vietnamese.woff2") format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-vietnamese.woff2") format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:600;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-vietnamese.woff2") format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:800;font-stretch:100%;font-display:swap;src:url("assets/fonts/archivo-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+
+.dv6{
+  --color-bg:#FFFFFF;--color-surface:#F3F3F3;--color-text:#080808;--color-accent:#132A4A;--color-divider:#080808;
+  --color-accent-100:#EEF2F7;--color-accent-200:#D9E1EC;--color-accent-300:#B3C2D6;--color-accent-400:#7D93B2;--color-accent-500:#3F5A80;--color-accent-600:#1F3D66;--color-accent-700:#0D1F38;--color-accent-800:#09172A;--color-accent-900:#060F1C;
+  --font-heading:"Archivo",system-ui,sans-serif;--font-heading-weight:800;--font-body:"Archivo",system-ui,sans-serif;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--radius-md:0px;
+  background:#FFFFFF;color:#080808;font-family:var(--font-body);font-size:18px;line-height:1.55;font-weight:400;text-wrap:pretty;-webkit-font-smoothing:antialiased;
+}
+.dv6-anchor{display:block;height:0;scroll-margin-top:72px;}
+.dv6 h1,.dv6 h2,.dv6 h3,.dv6 h4,.dv6 h5,.dv6 h6{font-family:var(--font-heading);font-weight:var(--font-heading-weight);line-height:1.12;letter-spacing:-0.015em;margin:0 0 var(--space-2);}
+.dv6 p{margin:0 0 var(--space-3);}
+.dv6 a{color:var(--color-accent);text-underline-offset:3px;}
+.dv6 a:hover{color:var(--color-accent-600);}
+.dv6 img{display:block;max-width:100%;}
+.dv6 :focus{outline:none;}
+.dv6 :focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;}
+.dv6 section[data-screen-label="01 Hero"] :focus-visible{outline-color:#FFFFFF;}
+.dv6 ::selection{background:color-mix(in srgb,var(--color-accent) 30%,transparent);}
+.dv6 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;text-decoration:none;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:14px;line-height:1.2;color:var(--color-text);background:transparent;border:1px solid transparent;padding:var(--space-2) calc(var(--space-3) * 1.2);border-radius:var(--radius-md);}
+.dv6 .btn svg{display:block;}
+.dv6 .btn:disabled{opacity:.45;cursor:not-allowed;}
+.dv6 .btn-primary{background:var(--color-accent);color:var(--color-bg);}
+.dv6 .btn-primary:hover{background:var(--color-accent-600);}
+.dv6 .btn-primary:active{background:var(--color-accent-700);}
+.dv6 .input{width:100%;min-height:36px;padding:6px 10px;font:inherit;font-size:14px;color:var(--color-text);caret-color:var(--color-accent);background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-md);}
+.dv6 .input:hover{border-color:color-mix(in srgb,var(--color-text) 45%,transparent);}
+.dv6 .input:focus-visible{border-color:var(--color-accent);outline-offset:0;}
+.dv6 textarea.input{min-height:90px;resize:vertical;}
+.dv6 button{font-family:inherit;}
+@media (prefers-reduced-motion:reduce){.dv6 *{animation:none !important;transition:none !important;}}
+/* états au survol / au clic repris du design */
+.dv6 .dvh57778a:hover{background:#FFFFFF !important;color:#080808 !important}
+.dv6 .dvh57778a:active{background:#E6E6E6 !important;color:#080808 !important}
+.dv6 .dvh897c14:hover{background:#1F3D66 !important;color:#FFFFFF !important}
+.dv6 .dvh897c14:active{background:#0D1F38 !important}
+.dv6 .dvhbad719:hover{background:#EEF2F7 !important}
